@@ -1,0 +1,26 @@
+<svg width="1200" height="320" viewBox="0 0 1200 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">aipages logo</title>
+  <desc id="desc">Minimal logo for aipages with a document icon and lowercase wordmark.</desc>
+
+  <rect width="1200" height="320" fill="white"/>
+
+  <!-- Icon -->
+  <g transform="translate(95 65)" stroke="#1557FF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <!-- document outline -->
+    <path d="M30 0H130L190 60V190C190 206.569 176.569 220 160 220H30C13.4315 220 0 206.569 0 190V30C0 13.4315 13.4315 0 30 0Z"/>
+    <!-- folded corner -->
+    <path d="M130 0V60H190"/>
+
+    <!-- simple circuit/page lines -->
+    <path d="M0 120H72"/>
+    <circle cx="92" cy="120" r="16" fill="white"/>
+
+    <path d="M24 172L52 144H110"/>
+    <circle cx="130" cy="144" r="16" fill="white"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="350" y="218" font-family="Inter, Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="128" font-weight="800" letter-spacing="-5">
+    <tspan fill="#1557FF">ai</tspan><tspan fill="#071733">pages</tspan>
+  </text>
+</svg>
