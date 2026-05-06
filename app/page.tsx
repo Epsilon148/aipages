@@ -68,7 +68,7 @@ export default function Home() {
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {categories.slice(2).map((category) => (
+          {categories.slice(1).map((category) => (
             <a
               key={category.slug}
               href="#tools"

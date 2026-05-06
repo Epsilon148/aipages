@@ -8,13 +8,7 @@ export const categories: Category[] = [
   {
     name: "Alle Tools",
     slug: "alle",
-    description: "Alle KI-Tools und KI-Bundles im AI Pages Verzeichnis.",
-  },
-  {
-    name: "KI-Bundles",
-    slug: "ki-bundles",
-    description:
-      "Kuratierte Sammlungen und Tool-Kombinationen für konkrete KI-Workflows.",
+    description: "Alle einzelnen KI-Tools im AI Pages Verzeichnis.",
   },
   {
     name: "Produktivität",
@@ -24,7 +18,7 @@ export const categories: Category[] = [
   },
   {
     name: "Business & Office",
-    slug: "business-office",
+    slug: "business",
     description:
       "Digitale Helfer für Dokumente, Tabellen, Präsentationen, Kommunikation und Büroprozesse.",
   },
@@ -42,7 +36,7 @@ export const categories: Category[] = [
   },
   {
     name: "Automatisierung",
-    slug: "automatisierung",
+    slug: "automation-agents",
     description:
       "No-Code- und KI-Tools für Workflows, Prozesse, Schnittstellen und wiederkehrende Aufgaben.",
   },
