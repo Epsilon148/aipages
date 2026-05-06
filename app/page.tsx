@@ -33,7 +33,7 @@ export default function Home() {
                 href="#tools"
                 className="inline-flex items-center justify-center rounded-2xl bg-cyan-300 px-6 py-4 text-base font-black text-slate-950 shadow-2xl shadow-cyan-500/20 transition hover:bg-cyan-200"
               >
-                Tools entdecken
+                KI-Tools entdecken
               </a>
               <a
                 href="#kategorien"
@@ -48,7 +48,7 @@ export default function Home() {
             <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
               <p className="text-4xl font-black text-white">{tools.length}</p>
               <p className="mt-2 text-sm font-medium text-slate-400">
-                kuratierte Tools
+                kuratierte KI-Tools
               </p>
             </div>
             <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
@@ -76,11 +76,11 @@ export default function Home() {
             Kategorien
           </p>
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Von Website-Buildern bis No-Code-Automation.
+            KI-Tools und KI-Bundles für viele Anwendungsbereiche.
           </h2>
           <p className="mt-4 text-base leading-7 text-slate-300">
-            AI Pages bündelt Tools, die besonders relevant für Webseiten,
-            Landingpages und Online-Marketing sind.
+            AI Pages bündelt hilfreiche KI-Tools und KI-Bundles für Business,
+            Produktivität, Content, Marketing, Design, Automatisierung und mehr.
           </p>
         </div>
 
@@ -114,7 +114,7 @@ export default function Home() {
                 Featured
               </p>
               <h2 className="text-3xl font-bold tracking-tight text-white">
-                Empfohlene Tools für den Start.
+                Empfohlene KI-Tools für den Start.
               </h2>
             </div>
             <a

@@ -2,15 +2,17 @@ export const site = {
   name: "AI Pages",
   domain: "aipages.de",
   url: "https://aipages.de",
-  email: "hallo@aipages.de",
-  claim: "Die besten KI-Tools für Webseiten, Landingpages und Online-Marketing.",
+  email: "kontakt@aipages.de",
+  claim: "Die besten KI-Tools und KI-Bundles für deinen digitalen Alltag.",
   description:
-    "Entdecke geprüfte Tools für Website-Erstellung, Landingpage-Texte, SEO, Design, Logos und No-Code-Automatisierung — fokussiert auf Gründer, Selbstständige und kleine Teams.",
+    "Entdecke kuratierte KI-Tools, KI-Bundles und digitale Helfer für Business, Produktivität, Marketing, Design, Automatisierung, Content, Recherche und mehr.",
   locale: "de-DE",
   author: "AI Pages",
-  legalName: "Bitte vollständigen Namen eintragen",
-  legalStreet: "Bitte Straße und Hausnummer eintragen",
-  legalCity: "Bitte PLZ und Ort eintragen",
+
+  legalName: "Stanislav Gavrishenko",
+  legalStreet: "Frohnhauserstr.132",
+  legalCity: "45144 Essen",
+  legalCountry: "Deutschland",
 } as const;
 
 export type Site = typeof site;
