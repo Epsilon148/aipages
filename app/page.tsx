@@ -2,6 +2,7 @@ import { categories } from "@/data/categories";
 import { bundles } from "@/data/bundles";
 import { tools } from "@/data/tools";
 import { BundleDirectory } from "@/components/BundleDirectory";
+import { BundleStrip } from "@/components/BundleStrip";
 import { Icon } from "@/components/Icon";
 import { ToolDirectory } from "@/components/ToolDirectory";
 import { site } from "@/lib/site";
@@ -49,6 +50,8 @@ export default function Home() {
         </div>
       </section>
 
+      <BundleStrip />
+
       <section id="kategorien" className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
         <div className="mb-10 max-w-3xl">
           <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-300/10 px-4 py-2 text-sm font-semibold text-violet-200">
@@ -56,10 +59,10 @@ export default function Home() {
             Kategorien
           </p>
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Einzelne KI-Tools und kombinierte KI-Bundles.
+            Tools einzeln entdecken oder als KI-Bundle kombinieren.
           </h2>
           <p className="mt-4 text-base leading-7 text-slate-300">
-            AI Pages zeigt dir einzelne Tools nach Kategorie und zusätzlich
+            AI Pages zeigt dir einzelne KI-Tools nach Kategorie und zusätzlich
             kuratierte Tool-Pakete für konkrete Workflows.
           </p>
         </div>
