@@ -23,7 +23,16 @@ const bootLines = [
 ];
 
 export default function Home() {
-  const [phase, setPhase] = useState<Phase>("intro");
+  const [phase, setPhase] = useState<Phase>(() => {
+  if (
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 767px)").matches
+  ) {
+    return "terminal";
+  }
+
+  return "intro";
+});
   const [typedLength, setTypedLength] = useState(0);
   const [bootIndex, setBootIndex] = useState(0);
 
