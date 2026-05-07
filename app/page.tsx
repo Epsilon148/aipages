@@ -24,15 +24,16 @@ const bootLines = [
 
 export default function Home() {
   const [phase, setPhase] = useState<Phase>(() => {
-  if (
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 767px)").matches
-  ) {
-    return "terminal";
-  }
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 767px)").matches
+    ) {
+      return "terminal";
+    }
 
-  return "intro";
-});
+    return "intro";
+  });
+
   const [typedLength, setTypedLength] = useState(0);
   const [bootIndex, setBootIndex] = useState(0);
 
@@ -158,6 +159,7 @@ export default function Home() {
         bundle.name,
         bundle.badge,
         bundle.description,
+        bundle.why,
         bundle.audience,
         bundle.notFor,
         ...bundle.tools,
@@ -595,13 +597,36 @@ export default function Home() {
                   </p>
 
                   <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
+                    <p className="mb-3 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
+                      WARUM DIESE KOMBINATION EFFEKTIV IST
+                    </p>
+                    <p>{activeBundle.why}</p>
+                  </div>
+
+                  <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
+                    <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
+                      KLICKBARE KI WERKZEUGE
+                    </p>
+
+                    <div className="flex flex-wrap gap-3">
+                      {activeBundle.toolLinks.map((tool) => (
+                        <a
+                          key={`${activeBundle.slug}-${tool.name}`}
+                          href={tool.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="border border-[#164e63] px-3 py-2 text-xs uppercase tracking-[0.2em] text-[#7ee7ff] hover:text-[#7cff9b]"
+                        >
+                          &gt; {tool.name}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
                     <p>
                       <span className="text-[#7cff9b]">&gt;</span> ZIELGRUPPE:{" "}
                       {activeBundle.audience}
-                    </p>
-                    <p>
-                      <span className="text-[#7cff9b]">&gt;</span> TOOLS:{" "}
-                      {activeBundle.tools.join(" / ")}
                     </p>
                     <p>
                       <span className="text-[#7cff9b]">&gt;</span> IDEAL FUER:{" "}
@@ -610,6 +635,10 @@ export default function Home() {
                   </div>
 
                   <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
+                    <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
+                      WORKFLOW
+                    </p>
+
                     {activeBundle.workflow.map((step, index) => (
                       <p key={step}>
                         <span className="text-[#7cff9b]">&gt;</span>{" "}
