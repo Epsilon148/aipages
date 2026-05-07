@@ -59,6 +59,65 @@ const MATRIX_FONT: Record<string, string[]> = {
   "?": ["01110", "10001", "00010", "00100", "00100", "00000", "00100"],
 };
 
+function MatrixCharacter({
+  character,
+  index,
+  pixel,
+  gap,
+  onColor,
+  offColor,
+}: {
+  character: string;
+  index: number;
+  pixel: number;
+  gap: number;
+  onColor: string;
+  offColor: string;
+}) {
+  const pattern = MATRIX_FONT[character.toUpperCase()] ?? MATRIX_FONT["?"];
+
+  return (
+    <div
+      key={`${character}-${index}`}
+      className="grid shrink-0"
+      style={
+        {
+          gridTemplateColumns: `repeat(5, ${pixel}px)`,
+          gridTemplateRows: `repeat(7, ${pixel}px)`,
+          gap: `${gap}px`,
+        } as CSSProperties
+      }
+    >
+      {pattern.flatMap((row, rowIndex) =>
+        row.split("").map((cell, cellIndex) => {
+          const isOn = cell === "1";
+
+          return (
+            <span
+              key={`${rowIndex}-${cellIndex}`}
+              aria-hidden="true"
+              className="block"
+              style={
+                {
+                  width: `${pixel}px`,
+                  height: `${Math.max(3, Math.round(pixel * 0.58))}px`,
+                  borderRadius: "0px",
+                  background: isOn ? onColor : offColor,
+                  opacity: isOn ? 1 : 0.42,
+                  boxShadow: isOn
+                    ? `0 0 3px ${onColor}, 0 0 9px rgba(126, 231, 255, 0.28)`
+                    : "inset 0 0 0 1px rgba(20, 90, 110, 0.04)",
+                  filter: isOn ? "saturate(1.12)" : "none",
+                } as CSSProperties
+              }
+            />
+          );
+        })
+      )}
+    </div>
+  );
+}
+
 export function MatrixText({
   text,
   pixel = 5,
@@ -68,59 +127,38 @@ export function MatrixText({
   offColor = "rgba(20, 90, 110, 0.16)",
   className = "",
 }: MatrixTextProps) {
+  const words = text.split(" ");
+
   return (
     <div
       aria-label={text}
       className={`flex flex-wrap items-start ${className}`}
       style={{
-        gap: `${charGap}px`,
+        columnGap: `${charGap * 2.2}px`,
+        rowGap: `${Math.max(10, charGap * 2)}px`,
       }}
     >
-      {text.split("").map((character, index) => {
-        const pattern =
-          MATRIX_FONT[character.toUpperCase()] ?? MATRIX_FONT["?"];
-
-        return (
-          <div
-            key={`${character}-${index}`}
-            className="grid"
-            style={
-              {
-                gridTemplateColumns: `repeat(5, ${pixel}px)`,
-                gridTemplateRows: `repeat(7, ${pixel}px)`,
-                gap: `${gap}px`,
-              } as CSSProperties
-            }
-          >
-            {pattern.flatMap((row, rowIndex) =>
-              row.split("").map((cell, cellIndex) => {
-                const isOn = cell === "1";
-
-                return (
-                  <span
-                    key={`${rowIndex}-${cellIndex}`}
-                    aria-hidden="true"
-                    className="block"
-                    style={
-                      {
-                        width: `${pixel}px`,
-                        height: `${Math.max(3, Math.round(pixel * 0.58))}px`,
-                        borderRadius: "0px",
-                        background: isOn ? onColor : offColor,
-                        opacity: isOn ? 1 : 0.42,
-                        boxShadow: isOn
-                          ? `0 0 3px ${onColor}, 0 0 9px rgba(126, 231, 255, 0.28)`
-                          : "inset 0 0 0 1px rgba(20, 90, 110, 0.04)",
-                        filter: isOn ? "saturate(1.12)" : "none",
-                      } as CSSProperties
-                    }
-                  />
-                );
-              })
-            )}
-          </div>
-        );
-      })}
+      {words.map((word, wordIndex) => (
+        <div
+          key={`${word}-${wordIndex}`}
+          className="flex shrink-0 items-start"
+          style={{
+            gap: `${charGap}px`,
+          }}
+        >
+          {word.split("").map((character, characterIndex) => (
+            <MatrixCharacter
+              key={`${word}-${character}-${characterIndex}`}
+              character={character}
+              index={characterIndex}
+              pixel={pixel}
+              gap={gap}
+              onColor={onColor}
+              offColor={offColor}
+            />
+          ))}
+        </div>
+      ))}
     </div>
   );
 }

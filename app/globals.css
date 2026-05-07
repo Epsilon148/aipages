@@ -28,9 +28,7 @@ body {
   margin: 0;
   min-height: 100vh;
   overflow-x: hidden;
-  background:
-    radial-gradient(ellipse at center, rgba(10, 38, 44, 0.28) 0%, rgba(1, 3, 3, 0.92) 56%, #000 100%),
-    linear-gradient(180deg, #010303 0%, #000 100%);
+  background: #010303;
   color: var(--crt-blue);
   font-family: "Courier New", Courier, monospace;
 }
@@ -62,19 +60,9 @@ input {
   }
 }
 
-@keyframes crt-sweep {
-  from {
-    transform: translateY(-140px);
-  }
-
-  to {
-    transform: translateY(120vh);
-  }
-}
-
 @keyframes crt-flicker {
   0% {
-    opacity: 0.96;
+    opacity: 0.99;
   }
 
   50% {
@@ -82,7 +70,23 @@ input {
   }
 
   100% {
-    opacity: 0.98;
+    opacity: 0.995;
+  }
+}
+
+@keyframes crt-band-drift {
+  from {
+    background-position:
+      0 0,
+      0 0,
+      0 0;
+  }
+
+  to {
+    background-position:
+      0 320px,
+      0 320px,
+      0 0;
   }
 }
 
@@ -106,29 +110,34 @@ input {
   min-height: 100vh;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at center, rgba(8, 42, 48, 0.22) 0%, rgba(1, 3, 3, 0.94) 58%, #000 100%),
+    radial-gradient(
+      ellipse at center,
+      rgba(6, 26, 31, 0.18) 0%,
+      rgba(1, 3, 3, 0.97) 58%,
+      #000 100%
+    ),
     #010303;
-  animation: crt-flicker 4s steps(2, end) infinite;
+  animation: crt-flicker 6s steps(2, end) infinite;
 }
 
-/* CRT scanlines */
+/* Feine CRT-Scanlines */
 .terminal-screen::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 50;
   pointer-events: none;
-  opacity: 0.16;
+  opacity: 0.07;
   background-image: linear-gradient(
     to bottom,
-    rgba(126, 231, 255, 0.055) 1px,
+    rgba(126, 231, 255, 0.04) 1px,
     transparent 1px
   );
   background-size: 100% 4px;
   mix-blend-mode: screen;
 }
 
-/* Monitor vignette + weak vertical sweep */
+/* Dicke, kaum sichtbare, nach unten laufende Bildschirm-Wellen */
 .terminal-screen::after {
   content: "";
   position: fixed;
@@ -136,32 +145,51 @@ input {
   z-index: 51;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at center, transparent 38%, rgba(0, 0, 0, 0.9) 100%),
-    linear-gradient(
+    repeating-linear-gradient(
       to bottom,
-      transparent 0%,
-      rgba(126, 231, 255, 0.035) 48%,
-      transparent 100%
+      transparent 0px,
+      transparent 42px,
+      rgba(126, 231, 255, 0.016) 58px,
+      rgba(126, 231, 255, 0.03) 82px,
+      rgba(126, 231, 255, 0.014) 112px,
+      transparent 146px,
+      transparent 220px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 150px,
+      rgba(124, 255, 155, 0.01) 176px,
+      rgba(126, 231, 255, 0.014) 206px,
+      transparent 238px,
+      transparent 320px
+    ),
+    radial-gradient(
+      ellipse at center,
+      transparent 48%,
+      rgba(0, 0, 0, 0.82) 100%
     );
-  background-size: 100% 100%, 100% 120px;
-  animation: crt-sweep 6.2s linear infinite;
+  background-size:
+    100% 320px,
+    100% 320px,
+    100% 100%;
+  animation: crt-band-drift 8s linear infinite;
 }
 
-/* Old monitor noise */
+/* Sehr leichter statischer Monitor-Noise */
 .terminal-noise {
   position: fixed;
   inset: 0;
   z-index: 49;
   pointer-events: none;
-  opacity: 0.045;
+  opacity: 0.02;
   background-image:
-    radial-gradient(circle at 20% 30%, rgba(126, 231, 255, 0.55) 0 1px, transparent 1px),
-    radial-gradient(circle at 70% 80%, rgba(126, 231, 255, 0.28) 0 1px, transparent 1px),
-    radial-gradient(circle at 45% 55%, rgba(124, 255, 155, 0.18) 0 1px, transparent 1px);
-  background-size: 29px 29px, 43px 43px, 71px 71px;
+    radial-gradient(circle at 20% 30%, rgba(126, 231, 255, 0.34) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 80%, rgba(126, 231, 255, 0.18) 0 1px, transparent 1px),
+    radial-gradient(circle at 45% 55%, rgba(124, 255, 155, 0.1) 0 1px, transparent 1px);
+  background-size: 31px 31px, 47px 47px, 79px 79px;
 }
 
-/* Thin, square terminal frames only */
 .terminal-panel {
   border: 1px solid var(--crt-border);
   background: rgba(0, 0, 0, 0.72);
@@ -193,12 +221,12 @@ input {
 
 .terminal-glow {
   color: var(--crt-blue);
-  text-shadow: 0 0 4px rgba(126, 231, 255, 0.42);
+  text-shadow: 0 0 3px rgba(126, 231, 255, 0.26);
 }
 
 .terminal-green-glow {
   color: var(--crt-green);
-  text-shadow: 0 0 4px rgba(124, 255, 155, 0.35);
+  text-shadow: 0 0 3px rgba(124, 255, 155, 0.24);
 }
 
 .terminal-cursor {
@@ -208,7 +236,7 @@ input {
   margin-left: 0.22em;
   transform: translateY(0.14em);
   background: var(--crt-blue);
-  box-shadow: 0 0 6px rgba(126, 231, 255, 0.6);
+  box-shadow: 0 0 5px rgba(126, 231, 255, 0.45);
   animation: crt-blink 1s steps(1, end) infinite;
 }
 
