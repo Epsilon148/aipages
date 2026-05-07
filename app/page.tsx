@@ -1,185 +1,654 @@
-import { categories } from "@/data/categories";
-import { bundles } from "@/data/bundles";
-import { tools } from "@/data/tools";
-import { BundleDirectory } from "@/components/BundleDirectory";
-import { BundleStrip } from "@/components/BundleStrip";
-import { Icon } from "@/components/Icon";
-import { ToolDirectory } from "@/components/ToolDirectory";
-import { site } from "@/lib/site";
+"use client";
 
-const featuredTools = tools.filter((tool) => tool.featured).slice(0, 6);
-const featuredBundles = bundles.filter((bundle) => bundle.featured).slice(0, 4);
+import { useEffect, useMemo, useState } from "react";
+import { bundles } from "@/data/bundles";
+import { categories } from "@/data/categories";
+import { tools } from "@/data/tools";
+import { MatrixText } from "@/components/MatrixText";
+
+type Phase = "intro" | "accepted" | "denied" | "boot" | "terminal";
+type ViewMode = "tools" | "bundles";
+
+const bootPrompt = "AIPAGES BEITRETEN (Y/N)";
+
+const bootLines = [
+  "PROZESS WIRD GESTARTET",
+  "SYSTEMKERN WIRD GEWECKT",
+  "SIGNAL WIRD GESUCHT",
+  "VERBINDUNG WIRD AUFGEBAUT",
+  "WERKZEUGDATEN WERDEN GEPRUEFT",
+  "BUNDLESTACKS WERDEN GELADEN",
+  "INTERFACE WIRD GELADEN",
+  "AIPAGES BEREIT",
+];
 
 export default function Home() {
-  return (
-    <>
-      <section className="relative overflow-hidden px-6 py-24 sm:px-8 lg:py-32">
-        <div className="absolute left-1/2 top-10 h-80 w-80 -translate-x-1/2 rounded-full bg-cyan-400/20 blur-3xl" />
-        <div className="absolute right-10 top-32 h-72 w-72 rounded-full bg-violet-500/20 blur-3xl" />
+  const [phase, setPhase] = useState<Phase>("intro");
+  const [typedLength, setTypedLength] = useState(0);
+  const [bootIndex, setBootIndex] = useState(0);
 
-        <div className="relative mx-auto max-w-7xl">
-          <div className="max-w-4xl">
-            <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-200">
-              <Icon name="spark" className="h-4 w-4" />
-              KI-Tool-Verzeichnis für {site.domain}
-            </p>
+  const [viewMode, setViewMode] = useState<ViewMode>("tools");
+  const [activeCategory, setActiveCategory] = useState("alle");
+  const [query, setQuery] = useState("");
+  const [activeToolSlug, setActiveToolSlug] = useState(tools[0]?.slug ?? "");
+  const [activeBundleSlug, setActiveBundleSlug] = useState(
+    bundles[0]?.slug ?? ""
+  );
 
-            <h1 className="text-5xl font-black tracking-tight text-white sm:text-6xl lg:text-7xl">
-              {site.claim}
-            </h1>
+  useEffect(() => {
+    if (phase !== "intro") return;
 
-            <p className="mt-7 max-w-3xl text-lg leading-8 text-slate-300 sm:text-xl">
-              {site.description}
-            </p>
+    setTypedLength(0);
 
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <a
-                href="#tools"
-                className="inline-flex items-center justify-center rounded-2xl bg-cyan-300 px-6 py-4 text-base font-black text-slate-950 shadow-2xl shadow-cyan-500/20 transition hover:bg-cyan-200"
-              >
-                Einzeltools entdecken
-              </a>
-              <a
-                href="#bundles"
-                className="inline-flex items-center justify-center rounded-2xl border border-violet-300/30 bg-slate-900 px-6 py-4 text-base font-bold text-violet-100 transition hover:border-violet-200 hover:bg-slate-800 hover:text-white"
-              >
-                KI-Bundles ansehen
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+    const startTimer = window.setTimeout(() => {
+      const typingTimer = window.setInterval(() => {
+        setTypedLength((current) => {
+          if (current >= bootPrompt.length) {
+            window.clearInterval(typingTimer);
+            return current;
+          }
 
-      <BundleStrip />
+          return current + 1;
+        });
+      }, 70);
+    }, 500);
 
-      <section id="kategorien" className="mx-auto max-w-7xl px-6 py-16 sm:px-8">
-        <div className="mb-10 max-w-3xl">
-          <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-300/10 px-4 py-2 text-sm font-semibold text-violet-200">
-            <Icon name="bolt" className="h-4 w-4" />
-            Kategorien
-          </p>
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Tools einzeln entdecken oder als KI-Bundle kombinieren.
-          </h2>
-          <p className="mt-4 text-base leading-7 text-slate-300">
-            AI Pages zeigt dir einzelne KI-Tools nach Kategorie und zusätzlich
-            kuratierte Tool-Pakete für konkrete Workflows.
-          </p>
-        </div>
+    return () => {
+      window.clearTimeout(startTimer);
+    };
+  }, [phase]);
 
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {categories.slice(1).map((category) => (
-            <a
-              key={category.slug}
-              href="#tools"
-              className="group rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition hover:-translate-y-1 hover:border-violet-300/40 hover:bg-white/[0.07]"
-            >
-              <div className="mb-5 grid h-12 w-12 place-items-center rounded-2xl bg-violet-300/10 text-violet-200 ring-1 ring-violet-300/20">
-                <Icon name="grid" className="h-5 w-5" />
+  useEffect(() => {
+    if (phase !== "intro" || typedLength < bootPrompt.length) return;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      const key = event.key.toLowerCase();
+
+      if (key === "y") setPhase("accepted");
+      if (key === "n") setPhase("denied");
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [phase, typedLength]);
+
+  useEffect(() => {
+    if (phase === "accepted") {
+      const timer = window.setTimeout(() => {
+        setBootIndex(0);
+        setPhase("boot");
+      }, 750);
+
+      return () => window.clearTimeout(timer);
+    }
+
+    if (phase === "denied") {
+      const timer = window.setTimeout(() => {
+        setPhase("intro");
+      }, 1400);
+
+      return () => window.clearTimeout(timer);
+    }
+  }, [phase]);
+
+  useEffect(() => {
+    if (phase !== "boot") return;
+
+    if (bootIndex >= bootLines.length) {
+      const timer = window.setTimeout(() => {
+        setPhase("terminal");
+      }, 750);
+
+      return () => window.clearTimeout(timer);
+    }
+
+    const timer = window.setTimeout(() => {
+      setBootIndex((current) => current + 1);
+    }, 460);
+
+    return () => window.clearTimeout(timer);
+  }, [phase, bootIndex]);
+
+  const visibleTools = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
+
+    return tools.filter((tool) => {
+      const matchesCategory =
+        activeCategory === "alle" || tool.category === activeCategory;
+
+      const searchableText = [
+        tool.name,
+        tool.badge,
+        tool.pricing,
+        tool.description,
+        tool.audience,
+        ...tool.tags,
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      const matchesQuery =
+        normalizedQuery.length === 0 ||
+        searchableText.includes(normalizedQuery);
+
+      return matchesCategory && matchesQuery;
+    });
+  }, [activeCategory, query]);
+
+  const visibleBundles = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
+
+    return bundles.filter((bundle) => {
+      const matchesCategory =
+        activeCategory === "alle" || bundle.category === activeCategory;
+
+      const searchableText = [
+        bundle.name,
+        bundle.badge,
+        bundle.description,
+        bundle.audience,
+        bundle.notFor,
+        ...bundle.tools,
+        ...bundle.workflow,
+        ...bundle.bestFor,
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      const matchesQuery =
+        normalizedQuery.length === 0 ||
+        searchableText.includes(normalizedQuery);
+
+      return matchesCategory && matchesQuery;
+    });
+  }, [activeCategory, query]);
+
+  const activeTool =
+    visibleTools.find((tool) => tool.slug === activeToolSlug) ??
+    visibleTools[0] ??
+    tools[0];
+
+  const activeBundle =
+    visibleBundles.find((bundle) => bundle.slug === activeBundleSlug) ??
+    visibleBundles[0] ??
+    bundles[0];
+
+  const resultCount =
+    viewMode === "tools" ? visibleTools.length : visibleBundles.length;
+
+  if (phase !== "terminal") {
+    return (
+      <main className="relative z-10 min-h-screen px-5 py-5">
+        {phase === "intro" ? (
+          <div className="pt-6">
+            <MatrixText
+              text={bootPrompt.slice(0, typedLength)}
+              pixel={5}
+              gap={2}
+              charGap={7}
+            />
+
+            {typedLength >= bootPrompt.length ? (
+              <div className="mt-8">
+                <span className="terminal-cursor" />
               </div>
-              <h3 className="text-xl font-bold text-white">
-                {category.name}
-              </h3>
-              <p className="mt-3 text-sm leading-6 text-slate-400">
-                {category.description}
-              </p>
-            </a>
-          ))}
-        </div>
-      </section>
+            ) : null}
 
-      <section className="mx-auto max-w-7xl px-6 py-10 sm:px-8">
-        <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-8 shadow-2xl shadow-violet-950/20">
-          <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-violet-300/20 bg-violet-300/10 px-4 py-2 text-sm font-semibold text-violet-200">
-                <Icon name="check" className="h-4 w-4" />
-                Featured Bundles
-              </p>
-              <h2 className="text-3xl font-bold tracking-tight text-white">
-                Empfohlene KI-Bundles für den Start.
-              </h2>
-            </div>
-            <a
-              href="#bundles"
-              className="text-sm font-bold text-violet-200 transition hover:text-violet-100"
-            >
-              Alle Bundles ansehen →
-            </a>
+            <p className="fixed bottom-5 left-5 text-[11px] uppercase tracking-[0.28em] text-[#14566a]">
+              TASTE Y ODER N
+            </p>
           </div>
+        ) : null}
 
-          <div className="grid gap-4 md:grid-cols-2">
-            {featuredBundles.map((bundle) => (
-              <div
-                key={bundle.slug}
-                className="rounded-2xl border border-white/10 bg-slate-950/60 p-5"
-              >
-                <p className="mb-2 text-sm font-semibold text-violet-200">
-                  {bundle.badge}
-                </p>
-                <h3 className="text-lg font-black text-white">
-                  {bundle.name}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-slate-400">
-                  {bundle.description}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {bundle.tools.slice(0, 5).map((tool) => (
-                    <span
-                      key={tool}
-                      className="rounded-full bg-violet-300/10 px-3 py-1 text-xs text-violet-100 ring-1 ring-violet-300/20"
-                    >
-                      {tool}
-                    </span>
-                  ))}
+        {phase === "accepted" ? (
+          <div className="pt-6">
+            <MatrixText
+              text="ACCEPTED"
+              pixel={5}
+              gap={2}
+              charGap={8}
+              onColor="#7cff9b"
+              offColor="rgba(31, 107, 63, 0.14)"
+            />
+          </div>
+        ) : null}
+
+        {phase === "denied" ? (
+          <div className="pt-6">
+            <MatrixText
+              text="ACCESS DENIED"
+              pixel={5}
+              gap={2}
+              charGap={8}
+            />
+          </div>
+        ) : null}
+
+        {phase === "boot" ? (
+          <div className="pt-6">
+            <MatrixText
+              text="ACCEPTED"
+              pixel={4}
+              gap={2}
+              charGap={7}
+              onColor="#7cff9b"
+              offColor="rgba(31, 107, 63, 0.14)"
+            />
+
+            <div className="mt-10 space-y-4">
+              {bootLines.slice(0, bootIndex).map((line, index) => (
+                <div
+                  key={line}
+                  className="flex flex-wrap items-center gap-x-6 gap-y-2"
+                >
+                  <MatrixText
+                    text={String(index + 1).padStart(2, "0")}
+                    pixel={3}
+                    gap={1}
+                    charGap={4}
+                    onColor="#7cff9b"
+                    offColor="rgba(31, 107, 63, 0.12)"
+                  />
+                  <MatrixText
+                    text={line}
+                    pixel={3}
+                    gap={1}
+                    charGap={5}
+                  />
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-10 sm:px-8">
-        <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-8 shadow-2xl shadow-cyan-950/20">
-          <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-200">
-                <Icon name="check" className="h-4 w-4" />
-                Featured Tools
-              </p>
-              <h2 className="text-3xl font-bold tracking-tight text-white">
-                Einzelne KI-Tools für deinen Stack.
-              </h2>
+              ))}
             </div>
-            <a
-              href="#tools"
-              className="text-sm font-bold text-cyan-200 transition hover:text-cyan-100"
-            >
-              Alle Tools ansehen →
-            </a>
           </div>
+        ) : null}
+      </main>
+    );
+  }
 
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {featuredTools.map((tool) => (
-              <div
-                key={tool.slug}
-                className="rounded-2xl border border-white/10 bg-slate-950/60 p-5"
-              >
-                <p className="mb-2 text-sm font-semibold text-cyan-200">
-                  {tool.badge}
+  return (
+    <main className="relative z-10 min-h-screen px-4 py-4 sm:px-6 sm:py-6">
+      <div className="mx-auto max-w-[1400px]">
+        <header className="terminal-panel-strong mb-10 px-5 py-5">
+          <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
+            <div>
+              <MatrixText text="AIPAGES" pixel={7} gap={2} charGap={8} />
+              <p className="mt-4 text-xs uppercase tracking-[0.24em] text-[#3ca7bf]">
+                TERMINAL INDEX // KI TOOLS UND KI BUNDLES
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-4 lg:items-end">
+              <nav className="flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setViewMode("tools");
+                    setActiveCategory("alle");
+                    setQuery("");
+                  }}
+                  className="border border-[#164e63] bg-transparent px-4 py-3"
+                >
+                  <MatrixText
+                    text="TOOLS"
+                    pixel={3}
+                    gap={1}
+                    charGap={4}
+                    onColor={viewMode === "tools" ? "#7cff9b" : "#7ee7ff"}
+                    offColor={
+                      viewMode === "tools"
+                        ? "rgba(31, 107, 63, 0.14)"
+                        : "rgba(20, 90, 110, 0.12)"
+                    }
+                  />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setViewMode("bundles");
+                    setActiveCategory("alle");
+                    setQuery("");
+                  }}
+                  className="border border-[#164e63] bg-transparent px-4 py-3"
+                >
+                  <MatrixText
+                    text="BUNDLES"
+                    pixel={3}
+                    gap={1}
+                    charGap={4}
+                    onColor={viewMode === "bundles" ? "#7cff9b" : "#7ee7ff"}
+                    offColor={
+                      viewMode === "bundles"
+                        ? "rgba(31, 107, 63, 0.14)"
+                        : "rgba(20, 90, 110, 0.12)"
+                    }
+                  />
+                </button>
+
+                <a
+                  href="/impressum"
+                  className="border border-[#164e63] bg-transparent px-4 py-3"
+                >
+                  <MatrixText text="LEGAL" pixel={3} gap={1} charGap={4} />
+                </a>
+              </nav>
+
+              <p className="text-xs uppercase tracking-[0.28em] text-[#14566a]">
+                SYSTEM BEREIT // {resultCount} EINTRAEGE
+              </p>
+            </div>
+          </div>
+        </header>
+
+        <section className="mb-12">
+          <div className="max-w-[980px]">
+            <MatrixText
+              text="KI TOOLS FINDEN"
+              pixel={6}
+              gap={2}
+              charGap={8}
+            />
+
+            <div className="mt-5">
+              <MatrixText
+                text="STACKS KOMBINIEREN"
+                pixel={6}
+                gap={2}
+                charGap={8}
+                onColor="#7cff9b"
+                offColor="rgba(31, 107, 63, 0.14)"
+              />
+            </div>
+
+            <p className="terminal-copy mt-8 max-w-4xl">
+              AIPAGES IST EIN KURATIERTER INDEX FUER EINZELNE KI TOOLS UND
+              KOMBINIERTE KI BUNDLES. WAEHLE EINEN MODUS, FILTERE NACH
+              KATEGORIE UND OEFNE LINKS EINEN EINTRAG. DIE AKTIVE INFORMATION
+              WIRD RECHTS ANGEZEIGT.
+            </p>
+          </div>
+        </section>
+
+        <section className="terminal-rule mb-10 pb-8">
+          <div className="grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
+            <div>
+              <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#3ca7bf]">
+                KATEGORIE SIGNAL
+              </p>
+
+              <div className="flex flex-wrap gap-x-6 gap-y-3">
+                {categories.map((category) => {
+                  const isActive = activeCategory === category.slug;
+
+                  return (
+                    <button
+                      key={category.slug}
+                      type="button"
+                      onClick={() => setActiveCategory(category.slug)}
+                      className="border-0 bg-transparent px-0 py-1 text-left"
+                    >
+                      <span
+                        className={
+                          isActive
+                            ? "text-xs uppercase tracking-[0.28em] text-[#7cff9b]"
+                            : "text-xs uppercase tracking-[0.28em] text-[#14566a]"
+                        }
+                      >
+                        {category.name}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <label className="block">
+              <span className="mb-3 block text-xs uppercase tracking-[0.28em] text-[#3ca7bf]">
+                SUCHSIGNAL
+              </span>
+              <input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder={
+                  viewMode === "tools" ? "tool suchen" : "bundle suchen"
+                }
+                className="w-full border border-[#164e63] bg-black px-4 py-3 text-sm uppercase tracking-[0.18em] text-[#7ee7ff] outline-none placeholder:text-[#14566a]"
+              />
+            </label>
+          </div>
+        </section>
+
+        <div className="grid gap-12 xl:grid-cols-[0.58fr_1fr]">
+          <section>
+            <div className="mb-6 flex items-center justify-between gap-4">
+              <p className="text-xs uppercase tracking-[0.35em] text-[#3ca7bf]">
+                {viewMode === "tools" ? "WERKZEUGREGISTER" : "BUNDLEREGISTER"}
+              </p>
+              <p className="text-xs uppercase tracking-[0.28em] text-[#14566a]">
+                {resultCount} EINTRAEGE
+              </p>
+            </div>
+
+            <div className="max-h-[680px] overflow-y-auto pr-3 no-scrollbar">
+              {viewMode === "tools"
+                ? visibleTools.map((tool, index) => {
+                    const isActive = activeTool?.slug === tool.slug;
+
+                    return (
+                      <button
+                        key={tool.slug}
+                        type="button"
+                        onClick={() => setActiveToolSlug(tool.slug)}
+                        onMouseEnter={() => setActiveToolSlug(tool.slug)}
+                        className="block w-full border-0 border-b border-[#164e63] bg-transparent py-5 text-left"
+                      >
+                        <p
+                          className={
+                            isActive
+                              ? "mb-3 text-xs uppercase tracking-[0.35em] text-[#7cff9b]"
+                              : "mb-3 text-xs uppercase tracking-[0.35em] text-[#14566a]"
+                          }
+                        >
+                          {String(index + 1).padStart(2, "0")} // {tool.badge}
+                        </p>
+
+                        <MatrixText
+                          text={tool.name.toUpperCase()}
+                          pixel={4}
+                          gap={1}
+                          charGap={5}
+                          onColor={isActive ? "#7cff9b" : "#3ca7bf"}
+                          offColor={
+                            isActive
+                              ? "rgba(31, 107, 63, 0.14)"
+                              : "rgba(20, 90, 110, 0.09)"
+                          }
+                        />
+                      </button>
+                    );
+                  })
+                : visibleBundles.map((bundle, index) => {
+                    const isActive = activeBundle?.slug === bundle.slug;
+
+                    return (
+                      <button
+                        key={bundle.slug}
+                        type="button"
+                        onClick={() => setActiveBundleSlug(bundle.slug)}
+                        onMouseEnter={() => setActiveBundleSlug(bundle.slug)}
+                        className="block w-full border-0 border-b border-[#164e63] bg-transparent py-5 text-left"
+                      >
+                        <p
+                          className={
+                            isActive
+                              ? "mb-3 text-xs uppercase tracking-[0.35em] text-[#7cff9b]"
+                              : "mb-3 text-xs uppercase tracking-[0.35em] text-[#14566a]"
+                          }
+                        >
+                          {String(index + 1).padStart(2, "0")} // {bundle.badge}
+                        </p>
+
+                        <MatrixText
+                          text={bundle.name.toUpperCase()}
+                          pixel={4}
+                          gap={1}
+                          charGap={5}
+                          onColor={isActive ? "#7cff9b" : "#3ca7bf"}
+                          offColor={
+                            isActive
+                              ? "rgba(31, 107, 63, 0.14)"
+                              : "rgba(20, 90, 110, 0.09)"
+                          }
+                        />
+                      </button>
+                    );
+                  })}
+            </div>
+          </section>
+
+          <section>
+            <div className="terminal-panel-strong px-5 py-5 sm:px-6 sm:py-6">
+              <div className="terminal-rule pb-5">
+                <MatrixText
+                  text={
+                    viewMode === "tools"
+                      ? "AKTIVES WERKZEUG"
+                      : "AKTIVES BUNDLE"
+                  }
+                  pixel={3}
+                  gap={1}
+                  charGap={4}
+                  onColor="#7cff9b"
+                  offColor="rgba(31, 107, 63, 0.12)"
+                />
+              </div>
+
+              {viewMode === "tools" && activeTool ? (
+                <div>
+                  <div className="mt-8">
+                    <MatrixText
+                      text={activeTool.name.toUpperCase()}
+                      pixel={6}
+                      gap={2}
+                      charGap={8}
+                    />
+                  </div>
+
+                  <p className="terminal-copy mt-8 max-w-4xl">
+                    {activeTool.description}
+                  </p>
+
+                  <div className="terminal-copy mt-8 grid gap-2 border-t border-[#164e63] pt-6 md:grid-cols-2">
+                    <p>
+                      <span className="text-[#7cff9b]">&gt;</span> KATEGORIE:{" "}
+                      {activeTool.category}
+                    </p>
+                    <p>
+                      <span className="text-[#7cff9b]">&gt;</span> PREISMODELL:{" "}
+                      {activeTool.pricing}
+                    </p>
+                    <p>
+                      <span className="text-[#7cff9b]">&gt;</span> ZIELGRUPPE:{" "}
+                      {activeTool.audience}
+                    </p>
+                    <p>
+                      <span className="text-[#7cff9b]">&gt;</span> TAGS:{" "}
+                      {activeTool.tags.join(" / ")}
+                    </p>
+                  </div>
+
+                  <a
+                    href={activeTool.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-8 inline-block border border-[#164e63] px-4 py-3 text-xs uppercase tracking-[0.25em] text-[#7cff9b]"
+                  >
+                    &gt; externes ziel oeffnen
+                  </a>
+                </div>
+              ) : null}
+
+              {viewMode === "bundles" && activeBundle ? (
+                <div>
+                  <div className="mt-8">
+                    <MatrixText
+                      text={activeBundle.name.toUpperCase()}
+                      pixel={5}
+                      gap={2}
+                      charGap={7}
+                    />
+                  </div>
+
+                  <p className="terminal-copy mt-8 max-w-4xl">
+                    {activeBundle.description}
+                  </p>
+
+                  <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
+                    <p>
+                      <span className="text-[#7cff9b]">&gt;</span> ZIELGRUPPE:{" "}
+                      {activeBundle.audience}
+                    </p>
+                    <p>
+                      <span className="text-[#7cff9b]">&gt;</span> TOOLS:{" "}
+                      {activeBundle.tools.join(" / ")}
+                    </p>
+                    <p>
+                      <span className="text-[#7cff9b]">&gt;</span> IDEAL FUER:{" "}
+                      {activeBundle.bestFor.join(" / ")}
+                    </p>
+                  </div>
+
+                  <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
+                    {activeBundle.workflow.map((step, index) => (
+                      <p key={step}>
+                        <span className="text-[#7cff9b]">&gt;</span>{" "}
+                        {String(index + 1).padStart(2, "0")} {step}
+                      </p>
+                    ))}
+                  </div>
+
+                  <p className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
+                    <span className="text-[#7cff9b]">&gt;</span> NICHT IDEAL:{" "}
+                    {activeBundle.notFor}
+                  </p>
+                </div>
+              ) : null}
+            </div>
+
+            <div className="mt-8">
+              <MatrixText
+                text="TERMINAL LOG"
+                pixel={3}
+                gap={1}
+                charGap={4}
+                onColor="#3ca7bf"
+                offColor="rgba(20, 90, 110, 0.09)"
+              />
+
+              <div className="terminal-copy mt-5 grid gap-2 md:grid-cols-2">
+                <p>
+                  <span className="text-[#7cff9b]">&gt;</span> toolregister
+                  geladen
                 </p>
-                <h3 className="text-lg font-black text-white">{tool.name}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-400">
-                  {tool.description}
+                <p>
+                  <span className="text-[#7cff9b]">&gt;</span> bundlestacks
+                  geladen
+                </p>
+                <p>
+                  <span className="text-[#7cff9b]">&gt;</span> menschliche
+                  pruefung erforderlich
+                </p>
+                <p>
+                  <span className="text-[#7cff9b]">&gt;</span> system bereit{" "}
+                  <span className="terminal-cursor" />
                 </p>
               </div>
-            ))}
-          </div>
+            </div>
+          </section>
         </div>
-      </section>
-
-      <ToolDirectory />
-      <BundleDirectory />
-    </>
+      </div>
+    </main>
   );
 }

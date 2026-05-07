@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} – KI-Tools für Webseiten und Online-Marketing`,
+    default: `${site.name} – KI-Tools und KI-Bundles`,
     template: `%s – ${site.name}`,
   },
   description: site.description,
@@ -54,10 +52,9 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body>
-        <div className="min-h-screen bg-slate-950 text-slate-100 antialiased">
-          <Header />
-          <main>{children}</main>
-          <Footer />
+        <div className="terminal-screen min-h-screen antialiased">
+          <div className="terminal-noise" />
+          {children}
         </div>
       </body>
     </html>

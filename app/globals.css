@@ -2,7 +2,17 @@
 
 :root {
   color-scheme: dark;
-  background: #020617;
+  background: #010303;
+
+  --crt-bg: #010303;
+  --crt-blue: #7ee7ff;
+  --crt-blue-soft: #3ca7bf;
+  --crt-blue-dim: #14566a;
+  --crt-green: #7cff9b;
+  --crt-green-dim: #1f6b3f;
+  --crt-border: #164e63;
+  --crt-text: rgba(170, 232, 245, 0.78);
+  --crt-muted: #155e75;
 }
 
 * {
@@ -11,16 +21,18 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--crt-bg);
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: hidden;
   background:
-    radial-gradient(circle at top left, rgba(34, 211, 238, 0.16), transparent 34rem),
-    radial-gradient(circle at top right, rgba(139, 92, 246, 0.18), transparent 32rem),
-    linear-gradient(180deg, #020617 0%, #0f172a 48%, #020617 100%);
-  color: #f8fafc;
+    radial-gradient(ellipse at center, rgba(10, 38, 44, 0.28) 0%, rgba(1, 3, 3, 0.92) 56%, #000 100%),
+    linear-gradient(180deg, #010303 0%, #000 100%);
+  color: var(--crt-blue);
+  font-family: "Courier New", Courier, monospace;
 }
 
 a {
@@ -28,7 +40,190 @@ a {
   text-decoration: none;
 }
 
+button,
+input {
+  font-family: inherit;
+}
+
 ::selection {
-  background: rgba(103, 232, 249, 0.35);
+  background: rgba(126, 231, 255, 0.28);
   color: #ffffff;
+}
+
+@keyframes crt-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes crt-sweep {
+  from {
+    transform: translateY(-140px);
+  }
+
+  to {
+    transform: translateY(120vh);
+  }
+}
+
+@keyframes crt-flicker {
+  0% {
+    opacity: 0.96;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.98;
+  }
+}
+
+@keyframes crt-jitter {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  33% {
+    transform: translateX(-1px);
+  }
+
+  66% {
+    transform: translateX(1px);
+  }
+}
+
+.terminal-screen {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at center, rgba(8, 42, 48, 0.22) 0%, rgba(1, 3, 3, 0.94) 58%, #000 100%),
+    #010303;
+  animation: crt-flicker 4s steps(2, end) infinite;
+}
+
+/* CRT scanlines */
+.terminal-screen::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(126, 231, 255, 0.055) 1px,
+    transparent 1px
+  );
+  background-size: 100% 4px;
+  mix-blend-mode: screen;
+}
+
+/* Monitor vignette + weak vertical sweep */
+.terminal-screen::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 51;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 38%, rgba(0, 0, 0, 0.9) 100%),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(126, 231, 255, 0.035) 48%,
+      transparent 100%
+    );
+  background-size: 100% 100%, 100% 120px;
+  animation: crt-sweep 6.2s linear infinite;
+}
+
+/* Old monitor noise */
+.terminal-noise {
+  position: fixed;
+  inset: 0;
+  z-index: 49;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(126, 231, 255, 0.55) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 80%, rgba(126, 231, 255, 0.28) 0 1px, transparent 1px),
+    radial-gradient(circle at 45% 55%, rgba(124, 255, 155, 0.18) 0 1px, transparent 1px);
+  background-size: 29px 29px, 43px 43px, 71px 71px;
+}
+
+/* Thin, square terminal frames only */
+.terminal-panel {
+  border: 1px solid var(--crt-border);
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.terminal-panel-strong {
+  border: 2px solid var(--crt-border);
+  background: rgba(0, 0, 0, 0.82);
+}
+
+.terminal-copy {
+  color: var(--crt-text);
+  letter-spacing: 0.035em;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.terminal-muted {
+  color: var(--crt-muted);
+}
+
+.terminal-blue {
+  color: var(--crt-blue);
+}
+
+.terminal-green {
+  color: var(--crt-green);
+}
+
+.terminal-glow {
+  color: var(--crt-blue);
+  text-shadow: 0 0 4px rgba(126, 231, 255, 0.42);
+}
+
+.terminal-green-glow {
+  color: var(--crt-green);
+  text-shadow: 0 0 4px rgba(124, 255, 155, 0.35);
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 0.65em;
+  height: 1.05em;
+  margin-left: 0.22em;
+  transform: translateY(0.14em);
+  background: var(--crt-blue);
+  box-shadow: 0 0 6px rgba(126, 231, 255, 0.6);
+  animation: crt-blink 1s steps(1, end) infinite;
+}
+
+.terminal-jitter:hover {
+  animation: crt-jitter 0.14s steps(2, end);
+}
+
+.terminal-rule {
+  border-bottom: 1px solid var(--crt-border);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
