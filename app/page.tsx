@@ -338,12 +338,7 @@ export default function Home() {
                   />
                 </button>
 
-                <a
-                  href="/impressum"
-                  className="border border-[#164e63] bg-transparent px-4 py-3"
-                >
-                  <MatrixText text="LEGAL" pixel={3} gap={1} charGap={4} />
-                </a>
+                
               </nav>
 
               <p className="text-xs uppercase tracking-[0.28em] text-[#14566a]">
@@ -682,7 +677,14 @@ export default function Home() {
                   <span className="text-[#7cff9b]">&gt;</span> system bereit{" "}
                   <span className="terminal-cursor" />
                 </p>
-              </div>
+              </div><div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-[#164e63] pt-5 text-xs uppercase tracking-[0.28em] text-[#14566a]">
+  <a href="/impressum" className="hover:text-[#7cff9b]">
+    impressum
+  </a>
+  <a href="/datenschutz" className="hover:text-[#7cff9b]">
+    datenschutz
+  </a>
+</div>
             </div>
           </section>
         </div>
