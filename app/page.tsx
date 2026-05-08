@@ -359,7 +359,7 @@ export default function Home() {
 
             <div className="mt-5">
               <MatrixText
-                text="STACKS KOMBINIEREN"
+                text="KI BUNDLES NUTZEN"
                 pixel={6}
                 gap={2}
                 charGap={8}
@@ -369,10 +369,10 @@ export default function Home() {
             </div>
 
             <p className="terminal-copy mt-8 max-w-4xl">
-              AIPAGES IST EIN KURATIERTER INDEX FUER EINZELNE KI TOOLS UND
-              KOMBINIERTE KI BUNDLES. WAEHLE EINEN MODUS, FILTERE NACH
-              KATEGORIE UND OEFNE LINKS EINEN EINTRAG. DIE AKTIVE INFORMATION
-              WIRD RECHTS ANGEZEIGT.
+              AIPAGES IST EIN VERZEICHNIS FUER KI WERKZEUGE UND KI BUNDLES.
+              EINZELNE TOOLS ZEIGEN, WAS EIN SYSTEM KANN. BUNDLES ZEIGEN,
+              WELCHE TOOLS ZUSAMMEN GUT FUNKTIONIEREN UND FUER WELCHEN ZWECK
+              SIE SINNVOLL SIND.
             </p>
           </div>
         </section>
