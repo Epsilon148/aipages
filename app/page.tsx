@@ -284,7 +284,12 @@ export default function Home() {
         <header className="terminal-panel-strong mb-10 px-5 py-5">
           <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
             <div>
-              <MatrixText text="AIPAGES" pixel={7} gap={2} charGap={8} />
+              <div className="hidden sm:block">
+                <MatrixText text="AIPAGES" pixel={7} gap={2} charGap={8} />
+              </div>
+              <div className="sm:hidden">
+                <MatrixText text="AIPAGES" pixel={5} gap={1} charGap={5} />
+              </div>
               <p className="mt-4 text-xs uppercase tracking-[0.24em] text-[#3ca7bf]">
                 TERMINAL INDEX // KI TOOLS UND KI BUNDLES
               </p>
@@ -350,22 +355,44 @@ export default function Home() {
 
         <section className="mb-12">
           <div className="max-w-[980px]">
-            <MatrixText
-              text="KI TOOLS FINDEN"
-              pixel={6}
-              gap={2}
-              charGap={8}
-            />
-
-            <div className="mt-5">
+            <div className="hidden sm:block">
               <MatrixText
-                text="KI BUNDLES NUTZEN"
+                text="KI TOOLS FINDEN"
                 pixel={6}
                 gap={2}
                 charGap={8}
-                onColor="#7cff9b"
-                offColor="rgba(31, 107, 63, 0.14)"
               />
+
+              <div className="mt-5">
+                <MatrixText
+                  text="KI BUNDLES NUTZEN"
+                  pixel={6}
+                  gap={2}
+                  charGap={8}
+                  onColor="#7cff9b"
+                  offColor="rgba(31, 107, 63, 0.14)"
+                />
+              </div>
+            </div>
+
+            <div className="sm:hidden">
+              <MatrixText
+                text="KI TOOLS FINDEN"
+                pixel={4}
+                gap={1}
+                charGap={5}
+              />
+
+              <div className="mt-4">
+                <MatrixText
+                  text="KI BUNDLES NUTZEN"
+                  pixel={4}
+                  gap={1}
+                  charGap={5}
+                  onColor="#7cff9b"
+                  offColor="rgba(31, 107, 63, 0.14)"
+                />
+              </div>
             </div>
 
             <p className="terminal-copy mt-8 max-w-4xl">
@@ -384,7 +411,7 @@ export default function Home() {
                 KATEGORIE SIGNAL
               </p>
 
-              <div className="flex flex-wrap gap-x-6 gap-y-3">
+              <div className="flex gap-x-6 overflow-x-auto pb-2 no-scrollbar sm:flex-wrap sm:gap-y-3">
                 {categories.map((category) => {
                   const isActive = activeCategory === category.slug;
 
@@ -398,8 +425,8 @@ export default function Home() {
                       <span
                         className={
                           isActive
-                            ? "text-xs uppercase tracking-[0.28em] text-[#7cff9b]"
-                            : "text-xs uppercase tracking-[0.28em] text-[#14566a]"
+                            ? "whitespace-nowrap text-xs uppercase tracking-[0.28em] text-[#7cff9b]"
+                            : "whitespace-nowrap text-xs uppercase tracking-[0.28em] text-[#14566a]"
                         }
                       >
                         {category.name}
@@ -437,7 +464,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="max-h-[680px] overflow-y-auto pr-3 no-scrollbar">
+            <div className="max-h-[430px] overflow-y-auto pr-3 no-scrollbar sm:max-h-[680px]">
               {viewMode === "tools"
                 ? visibleTools.map((tool, index) => {
                     const isActive = activeTool?.slug === tool.slug;
@@ -515,7 +542,7 @@ export default function Home() {
           </section>
 
           <section>
-            <div className="terminal-panel-strong px-5 py-5 sm:px-6 sm:py-6">
+            <div className="terminal-panel-strong px-4 py-4 sm:px-6 sm:py-6">
               <div className="terminal-rule pb-5">
                 <MatrixText
                   text={
@@ -677,7 +704,9 @@ export default function Home() {
                   <span className="text-[#7cff9b]">&gt;</span> system bereit{" "}
                   <span className="terminal-cursor" />
                 </p>
-              </div><div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-[#164e63] pt-5 text-xs uppercase tracking-[0.28em] text-[#14566a]">
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-[#164e63] pt-5 text-xs uppercase tracking-[0.28em] text-[#14566a]">
   <a href="/impressum" className="hover:text-[#7cff9b]">
     impressum
   </a>
@@ -692,3 +721,4 @@ export default function Home() {
     </main>
   );
 }
+
