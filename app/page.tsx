@@ -16,7 +16,7 @@ const bootLines = [
   "SYSTEMKERN WIRD GEWECKT",
   "SIGNAL WIRD GESUCHT",
   "VERBINDUNG WIRD AUFGEBAUT",
-  "WERKZEUGDATEN WERDEN GEPRUEFT",
+  "WERKZEUGDATEN WERDEN GEPRÜFT",
   "BUNDLESTACKS WERDEN GELADEN",
   "INTERFACE WIRD GELADEN",
   "AIPAGES BEREIT",
@@ -342,7 +342,7 @@ export default function Home() {
               </nav>
 
               <p className="text-xs uppercase tracking-[0.28em] text-[#14566a]">
-                SYSTEM BEREIT // {resultCount} EINTRAEGE
+                SYSTEM BEREIT // {resultCount} EINTRÄGE
               </p>
             </div>
           </div>
@@ -369,9 +369,9 @@ export default function Home() {
             </div>
 
             <p className="terminal-copy mt-8 max-w-4xl">
-              AIPAGES IST EIN KURATIERTER INDEX FUER EINZELNE KI TOOLS UND
-              KOMBINIERTE KI BUNDLES. WAEHLE EINEN MODUS, FILTERE NACH
-              KATEGORIE UND OEFNE LINKS EINEN EINTRAG. DIE AKTIVE INFORMATION
+              AIPAGES IST EIN KURATIERTER INDEX FÜR EINZELNE KI TOOLS UND
+              KOMBINIERTE KI BUNDLES. WÄHLE EINEN MODUS, FILTERE NACH
+              KATEGORIE UND ÖFFNE LINKS EINEN EINTRAG. DIE AKTIVE INFORMATION
               WIRD RECHTS ANGEZEIGT.
             </p>
           </div>
@@ -433,7 +433,7 @@ export default function Home() {
                 {viewMode === "tools" ? "WERKZEUGREGISTER" : "BUNDLEREGISTER"}
               </p>
               <p className="text-xs uppercase tracking-[0.28em] text-[#14566a]">
-                {resultCount} EINTRAEGE
+                {resultCount} EINTRÄGE
               </p>
             </div>
 
@@ -571,7 +571,7 @@ export default function Home() {
                     rel="noreferrer"
                     className="mt-8 inline-block border border-[#164e63] px-4 py-3 text-xs uppercase tracking-[0.25em] text-[#7cff9b]"
                   >
-                    &gt; externes ziel oeffnen
+                    &gt; externes ziel öffnen
                   </a>
                 </div>
               ) : null}
@@ -624,7 +624,7 @@ export default function Home() {
                       {activeBundle.audience}
                     </p>
                     <p>
-                      <span className="text-[#7cff9b]">&gt;</span> IDEAL FUER:{" "}
+                      <span className="text-[#7cff9b]">&gt;</span> IDEAL FÜR:{" "}
                       {activeBundle.bestFor.join(" / ")}
                     </p>
                   </div>
@@ -671,7 +671,7 @@ export default function Home() {
                 </p>
                 <p>
                   <span className="text-[#7cff9b]">&gt;</span> menschliche
-                  pruefung erforderlich
+                  prüfung erforderlich
                 </p>
                 <p>
                   <span className="text-[#7cff9b]">&gt;</span> system bereit{" "}
