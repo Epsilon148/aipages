@@ -1,18 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: dark;
-  background: #010303;
-
-  --crt-bg: #010303;
-  --crt-blue: #7ee7ff;
-  --crt-blue-soft: #3ca7bf;
-  --crt-blue-dim: #14566a;
-  --crt-green: #7cff9b;
-  --crt-green-dim: #1f6b3f;
-  --crt-border: #164e63;
-  --crt-text: rgba(170, 232, 245, 0.78);
-  --crt-muted: #155e75;
+  color-scheme: light;
+  background: #f7f7f2;
+  color: #000000;
 }
 
 * {
@@ -20,17 +11,16 @@
 }
 
 html {
-  scroll-behavior: smooth;
-  background: var(--crt-bg);
+  min-height: 100%;
+  background: #f7f7f2;
 }
 
 body {
+  min-height: 100%;
   margin: 0;
-  min-height: 100vh;
-  overflow-x: hidden;
-  background: #010303;
-  color: var(--crt-blue);
-  font-family: "Courier New", Courier, monospace;
+  background: #f7f7f2;
+  color: #000000;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
@@ -39,213 +29,65 @@ a {
 }
 
 button,
-input {
-  font-family: inherit;
+input,
+textarea,
+select {
+  font: inherit;
 }
 
-::selection {
-  background: rgba(126, 231, 255, 0.28);
-  color: #ffffff;
-}
-
-@keyframes crt-blink {
-  0%,
-  49% {
-    opacity: 1;
-  }
-
-  50%,
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes crt-flicker {
-  0% {
-    opacity: 0.99;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0.995;
-  }
-}
-
-@keyframes crt-band-drift {
-  from {
-    background-position:
-      0 0,
-      0 0,
-      0 0;
-  }
-
-  to {
-    background-position:
-      0 320px,
-      0 320px,
-      0 0;
-  }
-}
-
-@keyframes crt-jitter {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  33% {
-    transform: translateX(-1px);
-  }
-
-  66% {
-    transform: translateX(1px);
-  }
+button {
+  cursor: pointer;
 }
 
 .terminal-screen {
-  position: relative;
   min-height: 100vh;
-  overflow: hidden;
   background:
-    radial-gradient(
-      ellipse at center,
-      rgba(6, 26, 31, 0.18) 0%,
-      rgba(1, 3, 3, 0.97) 58%,
-      #000 100%
-    ),
-    #010303;
-  animation: crt-flicker 6s steps(2, end) infinite;
+    linear-gradient(to right, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.028) 1px, transparent 1px),
+    #f7f7f2;
+  background-size: 48px 48px, 48px 48px, auto;
+  color: #000000;
 }
 
-/* Feine CRT-Scanlines */
-.terminal-screen::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  pointer-events: none;
-  opacity: 0.07;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(126, 231, 255, 0.04) 1px,
-    transparent 1px
-  );
-  background-size: 100% 4px;
-  mix-blend-mode: screen;
-}
-
-/* Dicke, kaum sichtbare, nach unten laufende Bildschirm-Wellen */
-.terminal-screen::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 51;
-  pointer-events: none;
-  background:
-    repeating-linear-gradient(
-      to bottom,
-      transparent 0px,
-      transparent 42px,
-      rgba(126, 231, 255, 0.016) 58px,
-      rgba(126, 231, 255, 0.03) 82px,
-      rgba(126, 231, 255, 0.014) 112px,
-      transparent 146px,
-      transparent 220px
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      transparent 0px,
-      transparent 150px,
-      rgba(124, 255, 155, 0.01) 176px,
-      rgba(126, 231, 255, 0.014) 206px,
-      transparent 238px,
-      transparent 320px
-    ),
-    radial-gradient(
-      ellipse at center,
-      transparent 48%,
-      rgba(0, 0, 0, 0.82) 100%
-    );
-  background-size:
-    100% 320px,
-    100% 320px,
-    100% 100%;
-  animation: crt-band-drift 8s linear infinite;
-}
-
-/* Sehr leichter statischer Monitor-Noise */
+.terminal-screen::before,
+.terminal-screen::after,
 .terminal-noise {
-  position: fixed;
-  inset: 0;
-  z-index: 49;
-  pointer-events: none;
-  opacity: 0.02;
-  background-image:
-    radial-gradient(circle at 20% 30%, rgba(126, 231, 255, 0.34) 0 1px, transparent 1px),
-    radial-gradient(circle at 70% 80%, rgba(126, 231, 255, 0.18) 0 1px, transparent 1px),
-    radial-gradient(circle at 45% 55%, rgba(124, 255, 155, 0.1) 0 1px, transparent 1px);
-  background-size: 31px 31px, 47px 47px, 79px 79px;
+  display: none;
 }
 
-.terminal-panel {
-  border: 1px solid var(--crt-border);
-  background: rgba(0, 0, 0, 0.72);
-}
-
+.terminal-panel,
 .terminal-panel-strong {
-  border: 2px solid var(--crt-border);
-  background: rgba(0, 0, 0, 0.82);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  color: #000000;
 }
 
 .terminal-copy {
-  color: var(--crt-text);
-  letter-spacing: 0.035em;
-  line-height: 1.8;
-  font-size: 14px;
+  color: rgba(0, 0, 0, 0.68);
+  line-height: 1.75;
 }
 
-.terminal-muted {
-  color: var(--crt-muted);
-}
-
-.terminal-blue {
-  color: var(--crt-blue);
-}
-
-.terminal-green {
-  color: var(--crt-green);
-}
-
-.terminal-glow {
-  color: var(--crt-blue);
-  text-shadow: 0 0 3px rgba(126, 231, 255, 0.26);
-}
-
-.terminal-green-glow {
-  color: var(--crt-green);
-  text-shadow: 0 0 3px rgba(124, 255, 155, 0.24);
+.terminal-rule {
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 .terminal-cursor {
   display: inline-block;
-  width: 0.65em;
-  height: 1.05em;
-  margin-left: 0.22em;
-  transform: translateY(0.14em);
-  background: var(--crt-blue);
-  box-shadow: 0 0 5px rgba(126, 231, 255, 0.45);
-  animation: crt-blink 1s steps(1, end) infinite;
+  width: 0.7em;
+  height: 1em;
+  margin-left: 0.25em;
+  background: #000000;
+  vertical-align: -0.12em;
+  animation: cursor-blink 1s steps(1) infinite;
 }
 
-.terminal-jitter:hover {
-  animation: crt-jitter 0.14s steps(2, end);
-}
-
-.terminal-rule {
-  border-bottom: 1px solid var(--crt-border);
+@keyframes cursor-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
 }
 
 .no-scrollbar {
