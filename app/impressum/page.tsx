@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MatrixText } from "@/components/MatrixText";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -11,76 +12,85 @@ export const metadata: Metadata = {
 
 export default function ImpressumPage() {
   return (
-    <section className="mx-auto max-w-4xl px-6 py-20 sm:px-8">
-      <p className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-cyan-200">
-        Anbieterkennzeichnung
-      </p>
+    <main className="relative z-10 min-h-screen px-4 py-6 sm:px-6 sm:py-10">
+      <section className="mx-auto max-w-4xl">
+        <a
+          href="/"
+          className="mb-8 inline-block text-xs uppercase tracking-[0.28em] text-[#14566a] hover:text-[#7cff9b]"
+        >
+          &lt; zurück zum Terminal
+        </a>
 
-      <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl">
-        Impressum
-      </h1>
+        <div className="terminal-panel-strong px-4 py-5 sm:px-6 sm:py-7">
+          <MatrixText text="IMPRESSUM" pixel={5} gap={2} charGap={7} />
 
-      <div className="mt-10 space-y-8 rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-slate-300 sm:p-8">
-        <section>
-          <h2 className="mb-3 text-xl font-bold text-white">
-            Angaben gemäß § 5 DDG
-          </h2>
-          <p>{site.legalName}</p>
-          <p>{site.legalStreet}</p>
-          <p>{site.legalCity}</p>
-          <p>{site.legalCountry}</p>
-        </section>
-
-        <section>
-          <h2 className="mb-3 text-xl font-bold text-white">Kontakt</h2>
-          <p>
-            E-Mail:{" "}
-            <a
-              href={`mailto:${site.email}`}
-              className="font-semibold text-cyan-200 hover:text-cyan-100"
-            >
-              {site.email}
-            </a>
+          <p className="terminal-copy mt-8">
+            Anbieterkennzeichnung für {site.name}. Diese Seite gehört zum
+            öffentlichen KI-Tool-Verzeichnis unter {site.domain}.
           </p>
-        </section>
 
-        <section>
-          <h2 className="mb-3 text-xl font-bold text-white">
-            Verantwortlich für den Inhalt
-          </h2>
-          <p>{site.legalName}</p>
-          <p>{site.legalStreet}</p>
-          <p>{site.legalCity}</p>
-          <p>{site.legalCountry}</p>
-        </section>
+          <div className="terminal-copy mt-8 grid gap-8 border-t border-[#164e63] pt-6">
+            <section>
+              <p className="mb-3 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
+                Angaben gemäß § 5 DDG
+              </p>
+              <p>{site.legalName}</p>
+              <p>{site.legalStreet}</p>
+              <p>{site.legalCity}</p>
+              <p>{site.legalCountry}</p>
+            </section>
 
-        <section>
-          <h2 className="mb-3 text-xl font-bold text-white">
-            Hinweis zum Projektstatus
-          </h2>
-          <p className="leading-7">
-            {site.name} befindet sich derzeit im Aufbau. Die Website ist ein
-            kuratiertes Informationsangebot rund um KI-Tools, KI-Bundles und
-            digitale Helfer für unterschiedliche Anwendungsbereiche.
-          </p>
-          <p className="mt-3 leading-7">
-            Aktuell werden keine Produkte direkt verkauft, keine Zahlungen
-            verarbeitet und keine Nutzerkonten angeboten.
-          </p>
-        </section>
+            <section>
+              <p className="mb-3 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
+                Kontakt
+              </p>
+              <p>
+                E-Mail:{" "}
+                <a href={`mailto:${site.email}`} className="text-[#7ee7ff] hover:text-[#7cff9b]">
+                  {site.email}
+                </a>
+              </p>
+            </section>
 
-        <section>
-          <h2 className="mb-3 text-xl font-bold text-white">
-            Haftung für externe Links
-          </h2>
-          <p className="leading-7">
-            Diese Website enthält Links zu externen Websites Dritter. Auf deren
-            Inhalte haben wir keinen Einfluss. Für die Inhalte der verlinkten
-            Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten
-            verantwortlich.
-          </p>
-        </section>
-      </div>
-    </section>
+            <section>
+              <p className="mb-3 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
+                Verantwortlich für den Inhalt
+              </p>
+              <p>{site.legalName}</p>
+              <p>{site.legalStreet}</p>
+              <p>{site.legalCity}</p>
+              <p>{site.legalCountry}</p>
+            </section>
+
+            <section>
+              <p className="mb-3 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
+                Projektstatus
+              </p>
+              <p>
+                {site.name} befindet sich im Aufbau. Die Website ist ein
+                Informationsangebot rund um KI-Tools, KI-Bundles und digitale
+                Helfer für unterschiedliche Anwendungsbereiche.
+              </p>
+              <p className="mt-3">
+                Aktuell werden keine Produkte direkt verkauft, keine Zahlungen
+                verarbeitet und keine Nutzerkonten angeboten.
+              </p>
+            </section>
+
+            <section>
+              <p className="mb-3 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
+                Externe Links
+              </p>
+              <p>
+                Diese Website enthält Links zu externen Websites Dritter. Auf
+                deren Inhalte haben wir keinen Einfluss. Für die Inhalte der
+                verlinkten Seiten ist der jeweilige Anbieter oder Betreiber
+                verantwortlich.
+              </p>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

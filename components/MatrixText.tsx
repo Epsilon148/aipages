@@ -61,6 +61,7 @@ const MATRIX_FONT: Record<string, string[]> = {
   ".": ["00000", "00000", "00000", "00000", "00000", "01100", "01100"],
   ":": ["00000", "01100", "01100", "00000", "01100", "01100", "00000"],
   "?": ["01110", "10001", "00010", "00100", "00100", "00000", "00100"],
+  "&": ["01000", "10100", "10100", "01000", "10101", "10010", "01101"],
 };
 
 function MatrixCharacter({
@@ -78,7 +79,8 @@ function MatrixCharacter({
   onColor: string;
   offColor: string;
 }) {
-  const pattern = MATRIX_FONT[character.toUpperCase()] ?? MATRIX_FONT["?"];
+  const normalizedCharacter = character === "ß" ? "ß" : character.toUpperCase();
+  const pattern = MATRIX_FONT[normalizedCharacter] ?? MATRIX_FONT["?"];
 
   return (
     <div

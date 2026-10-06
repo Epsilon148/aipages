@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { bundles } from "@/data/bundles";
+import { bundles, type Bundle } from "@/data/bundles";
 import { categories } from "@/data/categories";
-import { tools } from "@/data/tools";
+import { tools, type Tool } from "@/data/tools";
 import { MatrixText } from "@/components/MatrixText";
 
 type Phase = "intro" | "accepted" | "denied" | "boot" | "terminal";
@@ -22,6 +22,22 @@ const bootLines = [
   "AIPAGES BEREIT",
 ];
 
+function DetailRow({ label, value }: { label: string; value: string }) {
+  return (
+    <p>
+      <span className="text-[#7cff9b]">&gt;</span> {label}: {value}
+    </p>
+  );
+}
+
+function EmptyState({ mode }: { mode: ViewMode }) {
+  return (
+    <div className="terminal-panel px-5 py-8 text-sm uppercase tracking-[0.22em] text-[#14566a]">
+      Keine Einträge gefunden. Suchsignal oder Kategorie ändern. Modus: {mode}.
+    </div>
+  );
+}
+
 export default function Home() {
   const [phase, setPhase] = useState<Phase>(() => {
     if (
@@ -36,7 +52,6 @@ export default function Home() {
 
   const [typedLength, setTypedLength] = useState(0);
   const [bootIndex, setBootIndex] = useState(0);
-
   const [viewMode, setViewMode] = useState<ViewMode>("tools");
   const [activeCategory, setActiveCategory] = useState("alle");
   const [query, setQuery] = useState("");
@@ -122,7 +137,7 @@ export default function Home() {
     return () => window.clearTimeout(timer);
   }, [phase, bootIndex]);
 
-  const visibleTools = useMemo(() => {
+  const visibleTools = useMemo<Tool[]>(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
     return tools.filter((tool) => {
@@ -135,6 +150,7 @@ export default function Home() {
         tool.pricing,
         tool.description,
         tool.audience,
+        tool.category,
         ...tool.tags,
       ]
         .join(" ")
@@ -148,7 +164,7 @@ export default function Home() {
     });
   }, [activeCategory, query]);
 
-  const visibleBundles = useMemo(() => {
+  const visibleBundles = useMemo<Bundle[]>(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
     return bundles.filter((bundle) => {
@@ -162,6 +178,7 @@ export default function Home() {
         bundle.why,
         bundle.audience,
         bundle.notFor,
+        bundle.category,
         ...bundle.tools,
         ...bundle.workflow,
         ...bundle.bestFor,
@@ -180,15 +197,23 @@ export default function Home() {
   const activeTool =
     visibleTools.find((tool) => tool.slug === activeToolSlug) ??
     visibleTools[0] ??
-    tools[0];
+    null;
 
   const activeBundle =
     visibleBundles.find((bundle) => bundle.slug === activeBundleSlug) ??
     visibleBundles[0] ??
-    bundles[0];
+    null;
 
   const resultCount =
     viewMode === "tools" ? visibleTools.length : visibleBundles.length;
+
+  const categoryName =
+    categories.find((category) => category.slug === activeCategory)?.name ??
+    activeCategory;
+
+  function getCategoryLabel(slug: string) {
+    return categories.find((category) => category.slug === slug)?.name ?? slug;
+  }
 
   if (phase !== "terminal") {
     return (
@@ -209,7 +234,7 @@ export default function Home() {
             ) : null}
 
             <p className="fixed bottom-5 left-5 text-[11px] uppercase tracking-[0.28em] text-[#14566a]">
-              TASTE Y ODER N
+              Taste Y oder N
             </p>
           </div>
         ) : null}
@@ -280,13 +305,18 @@ export default function Home() {
 
   return (
     <main className="relative z-10 min-h-screen px-4 py-4 sm:px-6 sm:py-6">
-      <div className="mx-auto max-w-[1400px]">
-        <header className="terminal-panel-strong mb-10 px-5 py-5">
+      <div className="mx-auto max-w-[1440px]">
+        <header className="terminal-panel-strong mb-8 px-4 py-4 sm:mb-10 sm:px-5 sm:py-5">
           <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
             <div>
-              <MatrixText text="AIPAGES" pixel={7} gap={2} charGap={8} />
-              <p className="mt-4 text-xs uppercase tracking-[0.24em] text-[#3ca7bf]">
-                TERMINAL INDEX // KI TOOLS UND KI BUNDLES
+              <div className="hidden sm:block">
+                <MatrixText text="AIPAGES" pixel={7} gap={2} charGap={8} />
+              </div>
+              <div className="sm:hidden">
+                <MatrixText text="AIPAGES" pixel={5} gap={1} charGap={5} />
+              </div>
+              <p className="mt-4 text-xs uppercase tracking-[0.22em] text-[#3ca7bf] sm:tracking-[0.24em]">
+                KI TOOLS // KI BUNDLES // DIGITALES VERZEICHNIS
               </p>
             </div>
 
@@ -337,42 +367,60 @@ export default function Home() {
                     }
                   />
                 </button>
-
-                
               </nav>
 
               <p className="text-xs uppercase tracking-[0.28em] text-[#14566a]">
-                SYSTEM BEREIT // {resultCount} EINTRÄGE
+                System bereit // {resultCount} Einträge
               </p>
             </div>
           </div>
         </header>
 
-        <section className="mb-12">
-          <div className="max-w-[980px]">
-            <MatrixText
-              text="KI TOOLS FINDEN"
-              pixel={6}
-              gap={2}
-              charGap={8}
-            />
-
-            <div className="mt-5">
+        <section className="mb-10 sm:mb-12">
+          <div className="max-w-[1000px]">
+            <div className="hidden sm:block">
               <MatrixText
-                text="STACKS KOMBINIEREN"
+                text="KI TOOLS FINDEN"
                 pixel={6}
                 gap={2}
                 charGap={8}
-                onColor="#7cff9b"
-                offColor="rgba(31, 107, 63, 0.14)"
               />
+              <div className="mt-5">
+                <MatrixText
+                  text="KI BUNDLES NUTZEN"
+                  pixel={6}
+                  gap={2}
+                  charGap={8}
+                  onColor="#7cff9b"
+                  offColor="rgba(31, 107, 63, 0.14)"
+                />
+              </div>
+            </div>
+
+            <div className="sm:hidden">
+              <MatrixText
+                text="KI TOOLS FINDEN"
+                pixel={4}
+                gap={1}
+                charGap={5}
+              />
+              <div className="mt-4">
+                <MatrixText
+                  text="KI BUNDLES NUTZEN"
+                  pixel={4}
+                  gap={1}
+                  charGap={5}
+                  onColor="#7cff9b"
+                  offColor="rgba(31, 107, 63, 0.14)"
+                />
+              </div>
             </div>
 
             <p className="terminal-copy mt-8 max-w-4xl">
-              AIPAGES IST EIN KURATIERTER INDEX FÜR EINZELNE KI TOOLS UND
-              KOMBINIERTE KI BUNDLES. WÄHLE EINEN MODUS, FILTERE NACH
-              KATEGORIE UND ÖFFNE LINKS EINEN EINTRAG. DIE AKTIVE INFORMATION
-              WIRD RECHTS ANGEZEIGT.
+              AIPAGES IST EIN VERZEICHNIS FÜR KI-WERKZEUGE UND KI-BUNDLES.
+              EINZELNE TOOLS ZEIGEN, WAS EIN SYSTEM KANN. BUNDLES ZEIGEN,
+              WELCHE TOOLS ZUSAMMEN GUT FUNKTIONIEREN UND FÜR WELCHEN ZWECK
+              SIE SINNVOLL SIND.
             </p>
           </div>
         </section>
@@ -381,10 +429,10 @@ export default function Home() {
           <div className="grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
             <div>
               <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#3ca7bf]">
-                KATEGORIE SIGNAL
+                Kategorie Signal // {categoryName}
               </p>
 
-              <div className="flex flex-wrap gap-x-6 gap-y-3">
+              <div className="flex gap-x-6 gap-y-3 overflow-x-auto pb-2 no-scrollbar md:flex-wrap md:overflow-visible">
                 {categories.map((category) => {
                   const isActive = activeCategory === category.slug;
 
@@ -393,13 +441,13 @@ export default function Home() {
                       key={category.slug}
                       type="button"
                       onClick={() => setActiveCategory(category.slug)}
-                      className="border-0 bg-transparent px-0 py-1 text-left"
+                      className="shrink-0 border-0 bg-transparent px-0 py-1 text-left"
                     >
                       <span
                         className={
                           isActive
-                            ? "text-xs uppercase tracking-[0.28em] text-[#7cff9b]"
-                            : "text-xs uppercase tracking-[0.28em] text-[#14566a]"
+                            ? "whitespace-nowrap text-xs uppercase tracking-[0.24em] text-[#7cff9b] sm:tracking-[0.28em]"
+                            : "whitespace-nowrap text-xs uppercase tracking-[0.24em] text-[#14566a] sm:tracking-[0.28em]"
                         }
                       >
                         {category.name}
@@ -412,7 +460,7 @@ export default function Home() {
 
             <label className="block">
               <span className="mb-3 block text-xs uppercase tracking-[0.28em] text-[#3ca7bf]">
-                SUCHSIGNAL
+                Suchsignal
               </span>
               <input
                 value={query}
@@ -426,18 +474,26 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="grid gap-12 xl:grid-cols-[0.58fr_1fr]">
+        <div className="grid gap-10 xl:grid-cols-[0.58fr_1fr] xl:gap-12">
           <section>
             <div className="mb-6 flex items-center justify-between gap-4">
               <p className="text-xs uppercase tracking-[0.35em] text-[#3ca7bf]">
-                {viewMode === "tools" ? "WERKZEUGREGISTER" : "BUNDLEREGISTER"}
+                {viewMode === "tools" ? "Werkzeugregister" : "Bundleregister"}
               </p>
               <p className="text-xs uppercase tracking-[0.28em] text-[#14566a]">
-                {resultCount} EINTRÄGE
+                {resultCount} Einträge
               </p>
             </div>
 
-            <div className="max-h-[680px] overflow-y-auto pr-3 no-scrollbar">
+            <div className="max-h-[430px] overflow-y-auto pr-2 no-scrollbar sm:max-h-[680px] sm:pr-3">
+              {viewMode === "tools" && visibleTools.length === 0 ? (
+                <EmptyState mode={viewMode} />
+              ) : null}
+
+              {viewMode === "bundles" && visibleBundles.length === 0 ? (
+                <EmptyState mode={viewMode} />
+              ) : null}
+
               {viewMode === "tools"
                 ? visibleTools.map((tool, index) => {
                     const isActive = activeTool?.slug === tool.slug;
@@ -515,7 +571,7 @@ export default function Home() {
           </section>
 
           <section>
-            <div className="terminal-panel-strong px-5 py-5 sm:px-6 sm:py-6">
+            <div className="terminal-panel-strong px-4 py-4 sm:px-6 sm:py-6">
               <div className="terminal-rule pb-5">
                 <MatrixText
                   text={
@@ -533,12 +589,20 @@ export default function Home() {
 
               {viewMode === "tools" && activeTool ? (
                 <div>
-                  <div className="mt-8">
+                  <div className="mt-8 hidden sm:block">
                     <MatrixText
                       text={activeTool.name.toUpperCase()}
                       pixel={6}
                       gap={2}
                       charGap={8}
+                    />
+                  </div>
+                  <div className="mt-8 sm:hidden">
+                    <MatrixText
+                      text={activeTool.name.toUpperCase()}
+                      pixel={4}
+                      gap={1}
+                      charGap={5}
                     />
                   </div>
 
@@ -547,22 +611,13 @@ export default function Home() {
                   </p>
 
                   <div className="terminal-copy mt-8 grid gap-2 border-t border-[#164e63] pt-6 md:grid-cols-2">
-                    <p>
-                      <span className="text-[#7cff9b]">&gt;</span> KATEGORIE:{" "}
-                      {activeTool.category}
-                    </p>
-                    <p>
-                      <span className="text-[#7cff9b]">&gt;</span> PREISMODELL:{" "}
-                      {activeTool.pricing}
-                    </p>
-                    <p>
-                      <span className="text-[#7cff9b]">&gt;</span> ZIELGRUPPE:{" "}
-                      {activeTool.audience}
-                    </p>
-                    <p>
-                      <span className="text-[#7cff9b]">&gt;</span> TAGS:{" "}
-                      {activeTool.tags.join(" / ")}
-                    </p>
+                    <DetailRow
+                      label="KATEGORIE"
+                      value={getCategoryLabel(activeTool.category)}
+                    />
+                    <DetailRow label="PREISMODELL" value={activeTool.pricing} />
+                    <DetailRow label="ZIELGRUPPE" value={activeTool.audience} />
+                    <DetailRow label="TAGS" value={activeTool.tags.join(" / ")} />
                   </div>
 
                   <a
@@ -571,19 +626,27 @@ export default function Home() {
                     rel="noreferrer"
                     className="mt-8 inline-block border border-[#164e63] px-4 py-3 text-xs uppercase tracking-[0.25em] text-[#7cff9b]"
                   >
-                    &gt; externes ziel öffnen
+                    &gt; externes Ziel öffnen
                   </a>
                 </div>
               ) : null}
 
               {viewMode === "bundles" && activeBundle ? (
                 <div>
-                  <div className="mt-8">
+                  <div className="mt-8 hidden sm:block">
                     <MatrixText
                       text={activeBundle.name.toUpperCase()}
                       pixel={5}
                       gap={2}
                       charGap={7}
+                    />
+                  </div>
+                  <div className="mt-8 sm:hidden">
+                    <MatrixText
+                      text={activeBundle.name.toUpperCase()}
+                      pixel={4}
+                      gap={1}
+                      charGap={5}
                     />
                   </div>
 
@@ -593,14 +656,14 @@ export default function Home() {
 
                   <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
                     <p className="mb-3 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
-                      WARUM DIESE KOMBINATION EFFEKTIV IST
+                      Warum diese Kombination effektiv ist
                     </p>
                     <p>{activeBundle.why}</p>
                   </div>
 
                   <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
                     <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
-                      KLICKBARE KI WERKZEUGE
+                      Klickbare KI-Werkzeuge
                     </p>
 
                     <div className="flex flex-wrap gap-3">
@@ -619,19 +682,20 @@ export default function Home() {
                   </div>
 
                   <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
-                    <p>
-                      <span className="text-[#7cff9b]">&gt;</span> ZIELGRUPPE:{" "}
-                      {activeBundle.audience}
-                    </p>
-                    <p>
-                      <span className="text-[#7cff9b]">&gt;</span> IDEAL FÜR:{" "}
-                      {activeBundle.bestFor.join(" / ")}
-                    </p>
+                    <DetailRow
+                      label="KATEGORIE"
+                      value={getCategoryLabel(activeBundle.category)}
+                    />
+                    <DetailRow label="ZIELGRUPPE" value={activeBundle.audience} />
+                    <DetailRow
+                      label="IDEAL FÜR"
+                      value={activeBundle.bestFor.join(" / ")}
+                    />
                   </div>
 
                   <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
                     <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
-                      WORKFLOW
+                      Workflow
                     </p>
 
                     {activeBundle.workflow.map((step, index) => (
@@ -663,28 +727,30 @@ export default function Home() {
               <div className="terminal-copy mt-5 grid gap-2 md:grid-cols-2">
                 <p>
                   <span className="text-[#7cff9b]">&gt;</span> toolregister
-                  geladen
+                  geladen: {tools.length}
                 </p>
                 <p>
                   <span className="text-[#7cff9b]">&gt;</span> bundlestacks
-                  geladen
+                  geladen: {bundles.length}
                 </p>
                 <p>
-                  <span className="text-[#7cff9b]">&gt;</span> menschliche
-                  prüfung erforderlich
+                  <span className="text-[#7cff9b]">&gt;</span> menschliche Prüfung
+                  empfohlen
                 </p>
                 <p>
                   <span className="text-[#7cff9b]">&gt;</span> system bereit{" "}
                   <span className="terminal-cursor" />
                 </p>
-              </div><div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-[#164e63] pt-5 text-xs uppercase tracking-[0.28em] text-[#14566a]">
-  <a href="/impressum" className="hover:text-[#7cff9b]">
-    impressum
-  </a>
-  <a href="/datenschutz" className="hover:text-[#7cff9b]">
-    datenschutz
-  </a>
-</div>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-[#164e63] pt-5 text-xs uppercase tracking-[0.28em] text-[#14566a]">
+                <a href="/impressum" className="hover:text-[#7cff9b]">
+                  Impressum
+                </a>
+                <a href="/datenschutz" className="hover:text-[#7cff9b]">
+                  Datenschutz
+                </a>
+              </div>
             </div>
           </section>
         </div>

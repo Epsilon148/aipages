@@ -6,9 +6,9 @@ export type Category = {
 
 export const categories: Category[] = [
   {
-    name: "Alle Tools",
+    name: "Alle Einträge",
     slug: "alle",
-    description: "Alle einzelnen KI-Tools im AI Pages Verzeichnis.",
+    description: "Alle KI-Tools und KI-Bundles im AI Pages Verzeichnis.",
   },
   {
     name: "Produktivität",
@@ -26,13 +26,19 @@ export const categories: Category[] = [
     name: "Marketing & Content",
     slug: "marketing-content",
     description:
-      "KI-Tools für Texte, Kampagnen, Social Media, SEO, Newsletter und Content-Produktion.",
+      "KI-Tools für Texte, Kampagnen, Social Media, Newsletter und Content-Produktion.",
   },
   {
     name: "Design & Kreativität",
     slug: "design-kreativitaet",
     description:
       "Tools für Bilder, Logos, Design, Branding, Video, Audio und kreative Konzepte.",
+  },
+  {
+    name: "Medienproduktion",
+    slug: "media",
+    description:
+      "KI-Tools für Foto, Video, Voice, Audio, Schnitt und generative Medienproduktion.",
   },
   {
     name: "Automatisierung",
@@ -45,5 +51,29 @@ export const categories: Category[] = [
     slug: "recherche-wissen",
     description:
       "KI-Tools für Recherche, Lernen, Zusammenfassungen, Analyse und Wissensarbeit.",
+  },
+  {
+    name: "Coding & No-Code",
+    slug: "coding-no-code",
+    description:
+      "Tools für Code, Prototypen, Web-Apps, No-Code-MVPs und technische Workflows.",
+  },
+  {
+    name: "Websites & Landingpages",
+    slug: "website-landingpages",
+    description:
+      "Tools und Bundles für Websites, Landingpages, Design, Copy und Conversion.",
+  },
+  {
+    name: "SEO & GEO",
+    slug: "seo-geo",
+    description:
+      "Tools für Suchmaschinen, KI-Sichtbarkeit, Content-Optimierung und Recherche.",
+  },
+  {
+    name: "E-Commerce",
+    slug: "e-commerce",
+    description:
+      "KI-Tools für Shops, Produktdaten, Produktbilder, Support, Ads und Verkauf.",
   },
 ];

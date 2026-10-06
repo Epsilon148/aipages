@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { site } from "@/lib/site";
-import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -57,7 +57,7 @@ export default function RootLayout({
           <div className="terminal-noise" />
           {children}
         </div>
-<Analytics />
+        <Analytics />
       </body>
     </html>
   );
