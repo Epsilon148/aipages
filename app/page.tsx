@@ -13,26 +13,35 @@ const bootPrompt = "AIPAGES BEITRETEN (Y/N)";
 
 const bootLines = [
   "PROZESS WIRD GESTARTET",
-  "SYSTEMKERN WIRD GEWECKT",
-  "SIGNAL WIRD GESUCHT",
-  "VERBINDUNG WIRD AUFGEBAUT",
-  "WERKZEUGDATEN WERDEN GEPRÜFT",
+  "ARCHIVKERN WIRD GEWECKT",
+  "KI-WERKZEUGE WERDEN INDEXIERT",
   "BUNDLESTACKS WERDEN GELADEN",
-  "INTERFACE WIRD GELADEN",
+  "FILTERSYSTEM WIRD AKTIVIERT",
   "AIPAGES BEREIT",
 ];
 
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
-    <p>
-      <span className="text-[#7cff9b]">&gt;</span> {label}: {value}
+    <div className="border-b border-[#164e63]/70 pb-4">
+      <p className="text-[10px] uppercase tracking-[0.28em] text-[#14566a]">
+        {label}
+      </p>
+      <p className="mt-2 text-sm leading-7 text-[#b7f3ff]">{value}</p>
+    </div>
+  );
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[10px] uppercase tracking-[0.32em] text-[#7cff9b]">
+      {children}
     </p>
   );
 }
 
 function EmptyState({ mode }: { mode: ViewMode }) {
   return (
-    <div className="terminal-panel px-5 py-8 text-sm uppercase tracking-[0.22em] text-[#14566a]">
+    <div className="border border-[#164e63] bg-black/70 p-6 text-sm uppercase tracking-[0.22em] text-[#14566a]">
       Keine Einträge gefunden. Suchsignal oder Kategorie ändern. Modus: {mode}.
     </div>
   );
@@ -75,8 +84,8 @@ export default function Home() {
 
           return current + 1;
         });
-      }, 70);
-    }, 500);
+      }, 62);
+    }, 420);
 
     return () => {
       window.clearTimeout(startTimer);
@@ -105,7 +114,7 @@ export default function Home() {
       const timer = window.setTimeout(() => {
         setBootIndex(0);
         setPhase("boot");
-      }, 750);
+      }, 620);
 
       return () => window.clearTimeout(timer);
     }
@@ -113,7 +122,7 @@ export default function Home() {
     if (phase === "denied") {
       const timer = window.setTimeout(() => {
         setPhase("intro");
-      }, 1400);
+      }, 1200);
 
       return () => window.clearTimeout(timer);
     }
@@ -125,14 +134,14 @@ export default function Home() {
     if (bootIndex >= bootLines.length) {
       const timer = window.setTimeout(() => {
         setPhase("terminal");
-      }, 750);
+      }, 640);
 
       return () => window.clearTimeout(timer);
     }
 
     const timer = window.setTimeout(() => {
       setBootIndex((current) => current + 1);
-    }, 460);
+    }, 360);
 
     return () => window.clearTimeout(timer);
   }, [phase, bootIndex]);
@@ -207,12 +216,18 @@ export default function Home() {
   const resultCount =
     viewMode === "tools" ? visibleTools.length : visibleBundles.length;
 
-  const categoryName =
+  const activeCategoryName =
     categories.find((category) => category.slug === activeCategory)?.name ??
     activeCategory;
 
   function getCategoryLabel(slug: string) {
     return categories.find((category) => category.slug === slug)?.name ?? slug;
+  }
+
+  function resetArchive(mode: ViewMode) {
+    setViewMode(mode);
+    setActiveCategory("alle");
+    setQuery("");
   }
 
   if (phase !== "terminal") {
@@ -266,7 +281,7 @@ export default function Home() {
         {phase === "boot" ? (
           <div className="pt-6">
             <MatrixText
-              text="ACCEPTED"
+              text="AIPAGES ARCHIV"
               pixel={4}
               gap={2}
               charGap={7}
@@ -304,188 +319,157 @@ export default function Home() {
   }
 
   return (
-    <main className="relative z-10 min-h-screen px-4 py-4 sm:px-6 sm:py-6">
-      <div className="mx-auto max-w-[1440px]">
-        <header className="terminal-panel-strong mb-8 px-4 py-4 sm:mb-10 sm:px-5 sm:py-5">
-          <div className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
-            <div>
-              <div className="hidden sm:block">
-                <MatrixText text="AIPAGES" pixel={7} gap={2} charGap={8} />
+    <main className="relative z-10 min-h-screen px-3 py-3 sm:px-5 sm:py-5">
+      <div className="mx-auto max-w-[1540px]">
+        <header className="border border-[#164e63] bg-black/75 px-4 py-4 sm:px-5">
+          <div className="grid gap-5 xl:grid-cols-[1fr_auto] xl:items-center">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between xl:justify-start xl:gap-10">
+              <div>
+                <div className="hidden sm:block">
+                  <MatrixText text="AIPAGES" pixel={5} gap={2} charGap={7} />
+                </div>
+                <div className="sm:hidden">
+                  <MatrixText text="AIPAGES" pixel={4} gap={1} charGap={5} />
+                </div>
+                <p className="mt-3 text-[10px] uppercase tracking-[0.32em] text-[#14566a]">
+                  KI-ARCHIV // TOOL-DATENBANK // BUNDLE-KONTROLLE
+                </p>
               </div>
-              <div className="sm:hidden">
-                <MatrixText text="AIPAGES" pixel={5} gap={1} charGap={5} />
+
+              <div className="grid grid-cols-3 gap-2 text-center text-[10px] uppercase tracking-[0.22em] text-[#14566a] sm:w-[360px]">
+                <div className="border border-[#164e63] px-3 py-3">
+                  <span className="block text-lg text-[#7ee7ff]">{tools.length}</span>
+                  Tools
+                </div>
+                <div className="border border-[#164e63] px-3 py-3">
+                  <span className="block text-lg text-[#7ee7ff]">{bundles.length}</span>
+                  Bundles
+                </div>
+                <div className="border border-[#164e63] px-3 py-3">
+                  <span className="block text-lg text-[#7cff9b]">{resultCount}</span>
+                  Aktiv
+                </div>
               </div>
-              <p className="mt-4 text-xs uppercase tracking-[0.22em] text-[#3ca7bf] sm:tracking-[0.24em]">
-                KI TOOLS // KI BUNDLES // DIGITALES VERZEICHNIS
-              </p>
             </div>
 
-            <div className="flex flex-col gap-4 lg:items-end">
-              <nav className="flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setViewMode("tools");
-                    setActiveCategory("alle");
-                    setQuery("");
-                  }}
-                  className="border border-[#164e63] bg-transparent px-4 py-3"
-                >
-                  <MatrixText
-                    text="TOOLS"
-                    pixel={3}
-                    gap={1}
-                    charGap={4}
-                    onColor={viewMode === "tools" ? "#7cff9b" : "#7ee7ff"}
-                    offColor={
-                      viewMode === "tools"
-                        ? "rgba(31, 107, 63, 0.14)"
-                        : "rgba(20, 90, 110, 0.12)"
-                    }
-                  />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setViewMode("bundles");
-                    setActiveCategory("alle");
-                    setQuery("");
-                  }}
-                  className="border border-[#164e63] bg-transparent px-4 py-3"
-                >
-                  <MatrixText
-                    text="BUNDLES"
-                    pixel={3}
-                    gap={1}
-                    charGap={4}
-                    onColor={viewMode === "bundles" ? "#7cff9b" : "#7ee7ff"}
-                    offColor={
-                      viewMode === "bundles"
-                        ? "rgba(31, 107, 63, 0.14)"
-                        : "rgba(20, 90, 110, 0.12)"
-                    }
-                  />
-                </button>
-              </nav>
-
-              <p className="text-xs uppercase tracking-[0.28em] text-[#14566a]">
-                System bereit // {resultCount} Einträge
-              </p>
-            </div>
+            <nav className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => resetArchive("tools")}
+                className={
+                  viewMode === "tools"
+                    ? "flex-1 border border-[#7cff9b] bg-[#7cff9b]/10 px-4 py-3 text-xs uppercase tracking-[0.26em] text-[#7cff9b] xl:flex-none"
+                    : "flex-1 border border-[#164e63] bg-transparent px-4 py-3 text-xs uppercase tracking-[0.26em] text-[#14566a] hover:text-[#7ee7ff] xl:flex-none"
+                }
+              >
+                Tools
+              </button>
+              <button
+                type="button"
+                onClick={() => resetArchive("bundles")}
+                className={
+                  viewMode === "bundles"
+                    ? "flex-1 border border-[#7cff9b] bg-[#7cff9b]/10 px-4 py-3 text-xs uppercase tracking-[0.26em] text-[#7cff9b] xl:flex-none"
+                    : "flex-1 border border-[#164e63] bg-transparent px-4 py-3 text-xs uppercase tracking-[0.26em] text-[#14566a] hover:text-[#7ee7ff] xl:flex-none"
+                }
+              >
+                Bundles
+              </button>
+            </nav>
           </div>
         </header>
 
-        <section className="mb-10 sm:mb-12">
-          <div className="max-w-[1000px]">
-            <div className="hidden sm:block">
-              <MatrixText
-                text="KI TOOLS FINDEN"
-                pixel={6}
-                gap={2}
-                charGap={8}
-              />
-              <div className="mt-5">
-                <MatrixText
-                  text="KI BUNDLES NUTZEN"
-                  pixel={6}
-                  gap={2}
-                  charGap={8}
-                  onColor="#7cff9b"
-                  offColor="rgba(31, 107, 63, 0.14)"
-                />
-              </div>
-            </div>
-
-            <div className="sm:hidden">
-              <MatrixText
-                text="KI TOOLS FINDEN"
-                pixel={4}
-                gap={1}
-                charGap={5}
-              />
-              <div className="mt-4">
-                <MatrixText
-                  text="KI BUNDLES NUTZEN"
-                  pixel={4}
-                  gap={1}
-                  charGap={5}
-                  onColor="#7cff9b"
-                  offColor="rgba(31, 107, 63, 0.14)"
-                />
-              </div>
-            </div>
-
-            <p className="terminal-copy mt-8 max-w-4xl">
-              AIPAGES IST EIN VERZEICHNIS FÜR KI-WERKZEUGE UND KI-BUNDLES.
-              EINZELNE TOOLS ZEIGEN, WAS EIN SYSTEM KANN. BUNDLES ZEIGEN,
-              WELCHE TOOLS ZUSAMMEN GUT FUNKTIONIEREN UND FÜR WELCHEN ZWECK
-              SIE SINNVOLL SIND.
+        <section className="mt-4 grid gap-4 xl:grid-cols-[0.72fr_1fr]">
+          <div className="border border-[#164e63] bg-black/65 p-4 sm:p-6">
+            <SectionLabel>Suchzentrale</SectionLabel>
+            <h1 className="mt-4 max-w-4xl text-3xl font-black uppercase leading-tight tracking-[-0.04em] text-[#d9fbff] sm:text-5xl xl:text-6xl">
+              Finde KI-Tools. Verstehe Bundles. Kombiniere besser.
+            </h1>
+            <p className="terminal-copy mt-6 max-w-3xl">
+              AI Pages ist ein dunkles KI-Archiv für einzelne Werkzeuge und
+              sinnvolle Tool-Kombinationen. Suche nach Aufgabe, Kategorie oder
+              Toolname und prüfe rechts den aktiven Eintrag.
             </p>
           </div>
-        </section>
 
-        <section className="terminal-rule mb-10 pb-8">
-          <div className="grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
-            <div>
-              <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#3ca7bf]">
-                Kategorie Signal // {categoryName}
-              </p>
-
-              <div className="flex gap-x-6 gap-y-3 overflow-x-auto pb-2 no-scrollbar md:flex-wrap md:overflow-visible">
-                {categories.map((category) => {
-                  const isActive = activeCategory === category.slug;
-
-                  return (
-                    <button
-                      key={category.slug}
-                      type="button"
-                      onClick={() => setActiveCategory(category.slug)}
-                      className="shrink-0 border-0 bg-transparent px-0 py-1 text-left"
-                    >
-                      <span
-                        className={
-                          isActive
-                            ? "whitespace-nowrap text-xs uppercase tracking-[0.24em] text-[#7cff9b] sm:tracking-[0.28em]"
-                            : "whitespace-nowrap text-xs uppercase tracking-[0.24em] text-[#14566a] sm:tracking-[0.28em]"
-                        }
-                      >
-                        {category.name}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
+          <div className="border border-[#164e63] bg-black/80 p-4 sm:p-6">
             <label className="block">
-              <span className="mb-3 block text-xs uppercase tracking-[0.28em] text-[#3ca7bf]">
+              <span className="mb-3 block text-[10px] uppercase tracking-[0.32em] text-[#7cff9b]">
                 Suchsignal
               </span>
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder={
-                  viewMode === "tools" ? "tool suchen" : "bundle suchen"
+                  viewMode === "tools"
+                    ? "tool, aufgabe oder tag suchen"
+                    : "bundle, workflow oder ziel suchen"
                 }
-                className="w-full border border-[#164e63] bg-black px-4 py-3 text-sm uppercase tracking-[0.18em] text-[#7ee7ff] outline-none placeholder:text-[#14566a]"
+                className="w-full border border-[#164e63] bg-[#020606] px-4 py-5 text-base uppercase tracking-[0.16em] text-[#7ee7ff] outline-none placeholder:text-[#14566a] focus:border-[#7cff9b] sm:text-lg"
               />
             </label>
+
+            <div className="mt-5 grid gap-3 text-xs uppercase tracking-[0.22em] text-[#14566a] sm:grid-cols-3">
+              <p className="border border-[#164e63] px-3 py-3">
+                Modus: <span className="text-[#7ee7ff]">{viewMode}</span>
+              </p>
+              <p className="border border-[#164e63] px-3 py-3">
+                Kategorie:{" "}
+                <span className="text-[#7ee7ff]">{activeCategoryName}</span>
+              </p>
+              <p className="border border-[#164e63] px-3 py-3">
+                Treffer: <span className="text-[#7cff9b]">{resultCount}</span>
+              </p>
+            </div>
           </div>
         </section>
 
-        <div className="grid gap-10 xl:grid-cols-[0.58fr_1fr] xl:gap-12">
-          <section>
-            <div className="mb-6 flex items-center justify-between gap-4">
-              <p className="text-xs uppercase tracking-[0.35em] text-[#3ca7bf]">
+        <section className="mt-4 grid gap-4 xl:grid-cols-[260px_0.72fr_1fr]">
+          <aside className="border border-[#164e63] bg-black/72 p-4">
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <SectionLabel>Kategorien</SectionLabel>
+              <button
+                type="button"
+                onClick={() => setActiveCategory("alle")}
+                className="text-[10px] uppercase tracking-[0.22em] text-[#14566a] hover:text-[#7cff9b]"
+              >
+                Reset
+              </button>
+            </div>
+
+            <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar xl:block xl:space-y-2 xl:overflow-visible xl:pb-0">
+              {categories.map((category) => {
+                const isActive = activeCategory === category.slug;
+
+                return (
+                  <button
+                    key={category.slug}
+                    type="button"
+                    onClick={() => setActiveCategory(category.slug)}
+                    className={
+                      isActive
+                        ? "min-w-max border border-[#7cff9b] bg-[#7cff9b]/10 px-3 py-3 text-left text-xs uppercase tracking-[0.2em] text-[#7cff9b] xl:w-full"
+                        : "min-w-max border border-[#164e63] bg-transparent px-3 py-3 text-left text-xs uppercase tracking-[0.2em] text-[#14566a] hover:text-[#7ee7ff] xl:w-full"
+                    }
+                  >
+                    {category.name}
+                  </button>
+                );
+              })}
+            </div>
+          </aside>
+
+          <section className="border border-[#164e63] bg-black/72 p-4">
+            <div className="mb-5 flex items-center justify-between gap-3 border-b border-[#164e63] pb-4">
+              <SectionLabel>
                 {viewMode === "tools" ? "Werkzeugregister" : "Bundleregister"}
-              </p>
-              <p className="text-xs uppercase tracking-[0.28em] text-[#14566a]">
+              </SectionLabel>
+              <p className="text-[10px] uppercase tracking-[0.26em] text-[#14566a]">
                 {resultCount} Einträge
               </p>
             </div>
 
-            <div className="max-h-[430px] overflow-y-auto pr-2 no-scrollbar sm:max-h-[680px] sm:pr-3">
+            <div className="max-h-[620px] space-y-2 overflow-y-auto pr-1 no-scrollbar">
               {viewMode === "tools" && visibleTools.length === 0 ? (
                 <EmptyState mode={viewMode} />
               ) : null}
@@ -504,30 +488,35 @@ export default function Home() {
                         type="button"
                         onClick={() => setActiveToolSlug(tool.slug)}
                         onMouseEnter={() => setActiveToolSlug(tool.slug)}
-                        className="block w-full border-0 border-b border-[#164e63] bg-transparent py-5 text-left"
+                        className={
+                          isActive
+                            ? "block w-full border border-[#7cff9b] bg-[#7cff9b]/10 p-4 text-left"
+                            : "block w-full border border-[#164e63] bg-[#020606] p-4 text-left hover:border-[#3ca7bf]"
+                        }
                       >
-                        <p
-                          className={
-                            isActive
-                              ? "mb-3 text-xs uppercase tracking-[0.35em] text-[#7cff9b]"
-                              : "mb-3 text-xs uppercase tracking-[0.35em] text-[#14566a]"
-                          }
-                        >
-                          {String(index + 1).padStart(2, "0")} // {tool.badge}
-                        </p>
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <p className="text-[10px] uppercase tracking-[0.26em] text-[#14566a]">
+                              {String(index + 1).padStart(2, "0")} // {tool.badge}
+                            </p>
+                            <h2
+                              className={
+                                isActive
+                                  ? "mt-2 text-xl font-black uppercase tracking-[-0.03em] text-[#7cff9b]"
+                                  : "mt-2 text-xl font-black uppercase tracking-[-0.03em] text-[#d9fbff]"
+                              }
+                            >
+                              {tool.name}
+                            </h2>
+                          </div>
+                          <span className="shrink-0 text-[10px] uppercase tracking-[0.2em] text-[#14566a]">
+                            {tool.pricing}
+                          </span>
+                        </div>
 
-                        <MatrixText
-                          text={tool.name.toUpperCase()}
-                          pixel={4}
-                          gap={1}
-                          charGap={5}
-                          onColor={isActive ? "#7cff9b" : "#3ca7bf"}
-                          offColor={
-                            isActive
-                              ? "rgba(31, 107, 63, 0.14)"
-                              : "rgba(20, 90, 110, 0.09)"
-                          }
-                        />
+                        <p className="mt-3 line-clamp-2 text-sm leading-6 text-[#6bb8c8]">
+                          {tool.description}
+                        </p>
                       </button>
                     );
                   })
@@ -540,164 +529,132 @@ export default function Home() {
                         type="button"
                         onClick={() => setActiveBundleSlug(bundle.slug)}
                         onMouseEnter={() => setActiveBundleSlug(bundle.slug)}
-                        className="block w-full border-0 border-b border-[#164e63] bg-transparent py-5 text-left"
+                        className={
+                          isActive
+                            ? "block w-full border border-[#7cff9b] bg-[#7cff9b]/10 p-4 text-left"
+                            : "block w-full border border-[#164e63] bg-[#020606] p-4 text-left hover:border-[#3ca7bf]"
+                        }
                       >
-                        <p
-                          className={
-                            isActive
-                              ? "mb-3 text-xs uppercase tracking-[0.35em] text-[#7cff9b]"
-                              : "mb-3 text-xs uppercase tracking-[0.35em] text-[#14566a]"
-                          }
-                        >
+                        <p className="text-[10px] uppercase tracking-[0.26em] text-[#14566a]">
                           {String(index + 1).padStart(2, "0")} // {bundle.badge}
                         </p>
-
-                        <MatrixText
-                          text={bundle.name.toUpperCase()}
-                          pixel={4}
-                          gap={1}
-                          charGap={5}
-                          onColor={isActive ? "#7cff9b" : "#3ca7bf"}
-                          offColor={
+                        <h2
+                          className={
                             isActive
-                              ? "rgba(31, 107, 63, 0.14)"
-                              : "rgba(20, 90, 110, 0.09)"
+                              ? "mt-2 text-xl font-black uppercase tracking-[-0.03em] text-[#7cff9b]"
+                              : "mt-2 text-xl font-black uppercase tracking-[-0.03em] text-[#d9fbff]"
                           }
-                        />
+                        >
+                          {bundle.name}
+                        </h2>
+                        <p className="mt-3 line-clamp-2 text-sm leading-6 text-[#6bb8c8]">
+                          {bundle.description}
+                        </p>
                       </button>
                     );
                   })}
             </div>
           </section>
 
-          <section>
-            <div className="terminal-panel-strong px-4 py-4 sm:px-6 sm:py-6">
-              <div className="terminal-rule pb-5">
-                <MatrixText
-                  text={
-                    viewMode === "tools"
-                      ? "AKTIVES WERKZEUG"
-                      : "AKTIVES BUNDLE"
-                  }
-                  pixel={3}
-                  gap={1}
-                  charGap={4}
-                  onColor="#7cff9b"
-                  offColor="rgba(31, 107, 63, 0.12)"
-                />
-              </div>
+          <section className="border border-[#164e63] bg-black/82 p-4 sm:p-5">
+            <div className="flex items-center justify-between gap-3 border-b border-[#164e63] pb-4">
+              <SectionLabel>
+                {viewMode === "tools" ? "Aktives Werkzeug" : "Aktives Bundle"}
+              </SectionLabel>
+              <p className="text-[10px] uppercase tracking-[0.24em] text-[#14566a]">
+                Detailkanal
+              </p>
+            </div>
 
-              {viewMode === "tools" && activeTool ? (
-                <div>
-                  <div className="mt-8 hidden sm:block">
-                    <MatrixText
-                      text={activeTool.name.toUpperCase()}
-                      pixel={6}
-                      gap={2}
-                      charGap={8}
-                    />
-                  </div>
-                  <div className="mt-8 sm:hidden">
-                    <MatrixText
-                      text={activeTool.name.toUpperCase()}
-                      pixel={4}
-                      gap={1}
-                      charGap={5}
-                    />
-                  </div>
-
-                  <p className="terminal-copy mt-8 max-w-4xl">
-                    {activeTool.description}
+            {viewMode === "tools" && activeTool ? (
+              <div>
+                <div className="mt-6">
+                  <p className="text-[10px] uppercase tracking-[0.28em] text-[#14566a]">
+                    {activeTool.badge} // {activeTool.pricing}
                   </p>
-
-                  <div className="terminal-copy mt-8 grid gap-2 border-t border-[#164e63] pt-6 md:grid-cols-2">
-                    <DetailRow
-                      label="KATEGORIE"
-                      value={getCategoryLabel(activeTool.category)}
-                    />
-                    <DetailRow label="PREISMODELL" value={activeTool.pricing} />
-                    <DetailRow label="ZIELGRUPPE" value={activeTool.audience} />
-                    <DetailRow label="TAGS" value={activeTool.tags.join(" / ")} />
-                  </div>
-
-                  <a
-                    href={activeTool.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-8 inline-block border border-[#164e63] px-4 py-3 text-xs uppercase tracking-[0.25em] text-[#7cff9b]"
-                  >
-                    &gt; externes Ziel öffnen
-                  </a>
+                  <h2 className="mt-3 text-4xl font-black uppercase leading-none tracking-[-0.06em] text-[#d9fbff] sm:text-6xl">
+                    {activeTool.name}
+                  </h2>
                 </div>
-              ) : null}
 
-              {viewMode === "bundles" && activeBundle ? (
-                <div>
-                  <div className="mt-8 hidden sm:block">
-                    <MatrixText
-                      text={activeBundle.name.toUpperCase()}
-                      pixel={5}
-                      gap={2}
-                      charGap={7}
-                    />
-                  </div>
-                  <div className="mt-8 sm:hidden">
-                    <MatrixText
-                      text={activeBundle.name.toUpperCase()}
-                      pixel={4}
-                      gap={1}
-                      charGap={5}
-                    />
-                  </div>
+                <p className="terminal-copy mt-8 max-w-4xl">
+                  {activeTool.description}
+                </p>
 
-                  <p className="terminal-copy mt-8 max-w-4xl">
-                    {activeBundle.description}
+                <div className="mt-8 grid gap-4 md:grid-cols-2">
+                  <DetailRow
+                    label="Kategorie"
+                    value={getCategoryLabel(activeTool.category)}
+                  />
+                  <DetailRow label="Preismodell" value={activeTool.pricing} />
+                  <DetailRow label="Zielgruppe" value={activeTool.audience} />
+                  <DetailRow label="Tags" value={activeTool.tags.join(" / ")} />
+                </div>
+
+                <a
+                  href={activeTool.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-8 inline-block border border-[#7cff9b] bg-[#7cff9b]/10 px-5 py-4 text-xs uppercase tracking-[0.28em] text-[#7cff9b] hover:bg-[#7cff9b]/20"
+                >
+                  &gt; externes Ziel öffnen
+                </a>
+              </div>
+            ) : null}
+
+            {viewMode === "bundles" && activeBundle ? (
+              <div>
+                <div className="mt-6">
+                  <p className="text-[10px] uppercase tracking-[0.28em] text-[#14566a]">
+                    {activeBundle.badge} // Bundle
                   </p>
+                  <h2 className="mt-3 text-4xl font-black uppercase leading-none tracking-[-0.06em] text-[#d9fbff] sm:text-6xl">
+                    {activeBundle.name}
+                  </h2>
+                </div>
 
-                  <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
-                    <p className="mb-3 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
-                      Warum diese Kombination effektiv ist
-                    </p>
-                    <p>{activeBundle.why}</p>
+                <p className="terminal-copy mt-8 max-w-4xl">
+                  {activeBundle.description}
+                </p>
+
+                <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
+                  <SectionLabel>Warum diese Kombination funktioniert</SectionLabel>
+                  <p className="mt-4">{activeBundle.why}</p>
+                </div>
+
+                <div className="mt-8 grid gap-4 md:grid-cols-2">
+                  <DetailRow
+                    label="Kategorie"
+                    value={getCategoryLabel(activeBundle.category)}
+                  />
+                  <DetailRow label="Zielgruppe" value={activeBundle.audience} />
+                  <DetailRow
+                    label="Ideal für"
+                    value={activeBundle.bestFor.join(" / ")}
+                  />
+                  <DetailRow label="Nicht ideal" value={activeBundle.notFor} />
+                </div>
+
+                <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
+                  <SectionLabel>Klickbare KI-Werkzeuge</SectionLabel>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    {activeBundle.toolLinks.map((tool) => (
+                      <a
+                        key={`${activeBundle.slug}-${tool.name}`}
+                        href={tool.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="border border-[#164e63] px-3 py-2 text-xs uppercase tracking-[0.2em] text-[#7ee7ff] hover:border-[#7cff9b] hover:text-[#7cff9b]"
+                      >
+                        &gt; {tool.name}
+                      </a>
+                    ))}
                   </div>
+                </div>
 
-                  <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
-                    <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
-                      Klickbare KI-Werkzeuge
-                    </p>
-
-                    <div className="flex flex-wrap gap-3">
-                      {activeBundle.toolLinks.map((tool) => (
-                        <a
-                          key={`${activeBundle.slug}-${tool.name}`}
-                          href={tool.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="border border-[#164e63] px-3 py-2 text-xs uppercase tracking-[0.2em] text-[#7ee7ff] hover:text-[#7cff9b]"
-                        >
-                          &gt; {tool.name}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
-                    <DetailRow
-                      label="KATEGORIE"
-                      value={getCategoryLabel(activeBundle.category)}
-                    />
-                    <DetailRow label="ZIELGRUPPE" value={activeBundle.audience} />
-                    <DetailRow
-                      label="IDEAL FÜR"
-                      value={activeBundle.bestFor.join(" / ")}
-                    />
-                  </div>
-
-                  <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
-                    <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#7cff9b]">
-                      Workflow
-                    </p>
-
+                <div className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
+                  <SectionLabel>Workflow</SectionLabel>
+                  <div className="mt-4 space-y-2">
                     {activeBundle.workflow.map((step, index) => (
                       <p key={step}>
                         <span className="text-[#7cff9b]">&gt;</span>{" "}
@@ -705,55 +662,25 @@ export default function Home() {
                       </p>
                     ))}
                   </div>
-
-                  <p className="terminal-copy mt-8 border-t border-[#164e63] pt-6">
-                    <span className="text-[#7cff9b]">&gt;</span> NICHT IDEAL:{" "}
-                    {activeBundle.notFor}
-                  </p>
                 </div>
-              ) : null}
-            </div>
-
-            <div className="mt-8">
-              <MatrixText
-                text="TERMINAL LOG"
-                pixel={3}
-                gap={1}
-                charGap={4}
-                onColor="#3ca7bf"
-                offColor="rgba(20, 90, 110, 0.09)"
-              />
-
-              <div className="terminal-copy mt-5 grid gap-2 md:grid-cols-2">
-                <p>
-                  <span className="text-[#7cff9b]">&gt;</span> toolregister
-                  geladen: {tools.length}
-                </p>
-                <p>
-                  <span className="text-[#7cff9b]">&gt;</span> bundlestacks
-                  geladen: {bundles.length}
-                </p>
-                <p>
-                  <span className="text-[#7cff9b]">&gt;</span> menschliche Prüfung
-                  empfohlen
-                </p>
-                <p>
-                  <span className="text-[#7cff9b]">&gt;</span> system bereit{" "}
-                  <span className="terminal-cursor" />
-                </p>
               </div>
-
-              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-[#164e63] pt-5 text-xs uppercase tracking-[0.28em] text-[#14566a]">
-                <a href="/impressum" className="hover:text-[#7cff9b]">
-                  Impressum
-                </a>
-                <a href="/datenschutz" className="hover:text-[#7cff9b]">
-                  Datenschutz
-                </a>
-              </div>
-            </div>
+            ) : null}
           </section>
-        </div>
+        </section>
+
+        <footer className="mt-4 flex flex-col gap-4 border border-[#164e63] bg-black/65 px-4 py-4 text-[10px] uppercase tracking-[0.28em] text-[#14566a] sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            System bereit // {tools.length} Tools // {bundles.length} Bundles
+          </p>
+          <div className="flex flex-wrap gap-x-6 gap-y-3">
+            <a href="/impressum" className="hover:text-[#7cff9b]">
+              Impressum
+            </a>
+            <a href="/datenschutz" className="hover:text-[#7cff9b]">
+              Datenschutz
+            </a>
+          </div>
+        </footer>
       </div>
     </main>
   );
