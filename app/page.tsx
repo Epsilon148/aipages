@@ -11,22 +11,37 @@ function cx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
 
+function Kicker({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[10px] font-black uppercase tracking-[0.32em] text-black/38">
+      {children}
+    </p>
+  );
+}
+
+function Info({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="grid gap-1 border-t border-black/10 pt-4 sm:grid-cols-[130px_1fr] sm:gap-5">
+      <p className="text-[10px] font-black uppercase tracking-[0.24em] text-black/35">
+        {label}
+      </p>
+      <p className="text-sm leading-7 text-black/68">{value}</p>
+    </div>
+  );
+}
+
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>("tools");
   const [activeCategory, setActiveCategory] = useState("alle");
   const [query, setQuery] = useState("");
   const [activeToolSlug, setActiveToolSlug] = useState(tools[0]?.slug ?? "");
-  const [activeBundleSlug, setActiveBundleSlug] = useState(
-    bundles[0]?.slug ?? ""
-  );
+  const [activeBundleSlug, setActiveBundleSlug] = useState(bundles[0]?.slug ?? "");
 
   const normalizedQuery = query.trim().toLowerCase();
 
   const visibleTools = useMemo(() => {
     return tools.filter((tool) => {
-      const matchesCategory =
-        activeCategory === "alle" || tool.category === activeCategory;
-
+      const matchesCategory = activeCategory === "alle" || tool.category === activeCategory;
       const searchable = [
         tool.name,
         tool.badge,
@@ -45,9 +60,7 @@ export default function Home() {
 
   const visibleBundles = useMemo(() => {
     return bundles.filter((bundle) => {
-      const matchesCategory =
-        activeCategory === "alle" || bundle.category === activeCategory;
-
+      const matchesCategory = activeCategory === "alle" || bundle.category === activeCategory;
       const searchable = [
         bundle.name,
         bundle.badge,
@@ -67,16 +80,12 @@ export default function Home() {
     });
   }, [activeCategory, normalizedQuery]);
 
-  const activeTool =
-    visibleTools.find((tool) => tool.slug === activeToolSlug) ?? visibleTools[0] ?? null;
-
+  const activeTool = visibleTools.find((tool) => tool.slug === activeToolSlug) ?? visibleTools[0] ?? null;
   const activeBundle =
-    visibleBundles.find((bundle) => bundle.slug === activeBundleSlug) ??
-    visibleBundles[0] ??
-    null;
+    visibleBundles.find((bundle) => bundle.slug === activeBundleSlug) ?? visibleBundles[0] ?? null;
 
   const resultCount = viewMode === "tools" ? visibleTools.length : visibleBundles.length;
-  const totalCount = tools.length + bundles.length;
+  const activeCategoryName = categories.find((category) => category.slug === activeCategory)?.name ?? "Alle";
 
   function getCategoryLabel(slug: string) {
     return categories.find((category) => category.slug === slug)?.name ?? slug;
@@ -89,27 +98,37 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f7f2] text-black">
-      <header className="border-b border-black/10 bg-[#f7f7f2]/90 backdrop-blur">
-        <div className="mx-auto flex max-w-[1500px] flex-col gap-6 px-5 py-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between">
-          <a href="/" className="group w-fit">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-black/45">
-              KI-Verzeichnis
-            </p>
-            <p className="mt-1 text-2xl font-black uppercase tracking-[-0.06em] text-black sm:text-3xl">
+    <main className="min-h-screen bg-[#fbfbf7] text-black">
+      <header className="sticky top-0 z-20 border-b border-black/10 bg-[#fbfbf7]/88 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[1540px] items-center justify-between gap-4 px-5 py-4 sm:px-8">
+          <a href="/" className="flex items-baseline gap-3">
+            <span className="text-2xl font-black uppercase tracking-[-0.075em] sm:text-3xl">
               AI Pages
-            </p>
+            </span>
+            <span className="hidden text-[10px] font-black uppercase tracking-[0.28em] text-black/35 sm:inline">
+              KI Directory
+            </span>
           </a>
 
-          <nav className="flex gap-2">
+          <div className="flex items-center gap-2">
+            <a
+              href="/impressum"
+              className="hidden text-[10px] font-black uppercase tracking-[0.22em] text-black/35 hover:text-black sm:block"
+            >
+              Impressum
+            </a>
+            <a
+              href="/datenschutz"
+              className="hidden text-[10px] font-black uppercase tracking-[0.22em] text-black/35 hover:text-black sm:block"
+            >
+              Datenschutz
+            </a>
             <button
               type="button"
               onClick={() => switchMode("tools")}
               className={cx(
-                "border px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] transition",
-                viewMode === "tools"
-                  ? "border-black bg-black text-white"
-                  : "border-black/15 bg-white text-black hover:border-black"
+                "border px-4 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition sm:px-5",
+                viewMode === "tools" ? "border-black bg-black text-white" : "border-black/15 bg-white text-black hover:border-black"
               )}
             >
               Tools
@@ -118,81 +137,85 @@ export default function Home() {
               type="button"
               onClick={() => switchMode("bundles")}
               className={cx(
-                "border px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] transition",
-                viewMode === "bundles"
-                  ? "border-black bg-black text-white"
-                  : "border-black/15 bg-white text-black hover:border-black"
+                "border px-4 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition sm:px-5",
+                viewMode === "bundles" ? "border-black bg-black text-white" : "border-black/15 bg-white text-black hover:border-black"
               )}
             >
               Bundles
             </button>
-          </nav>
+          </div>
         </div>
       </header>
 
-      <section className="mx-auto max-w-[1500px] px-5 py-8 sm:px-8 sm:py-12">
-        <div className="grid gap-8 border-b border-black/10 pb-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+      <section className="mx-auto max-w-[1540px] px-5 py-8 sm:px-8 sm:py-12">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.32em] text-black/45">
-              Suche. Vergleiche. Kombiniere.
-            </p>
-            <h1 className="mt-5 max-w-5xl text-5xl font-black uppercase leading-[0.86] tracking-[-0.075em] text-black sm:text-7xl lg:text-8xl">
-              KI Tools finden.
+            <Kicker>Schwarz Weiss Tech Index</Kicker>
+            <h1 className="mt-5 max-w-6xl text-[15vw] font-black uppercase leading-[0.76] tracking-[-0.095em] text-black sm:text-[110px] lg:text-[132px] xl:text-[158px]">
+              KI Tools.
               <br />
-              Besser bauen.
+              Klar.
             </h1>
           </div>
 
-          <div className="grid gap-5">
-            <p className="max-w-xl text-base leading-7 text-black/65 sm:text-lg">
-              Ein simples Verzeichnis für KI-Werkzeuge und KI-Bundles. Einzelne
-              Tools zeigen, was ein System kann. Bundles zeigen, welche Tools
-              zusammen sinnvoll funktionieren.
+          <div className="grid gap-6 lg:pb-2">
+            <p className="max-w-2xl text-xl font-semibold leading-8 tracking-[-0.035em] text-black/72 sm:text-2xl sm:leading-9">
+              Ein simples Verzeichnis für KI-Werkzeuge und KI-Bundles. Schnell
+              finden, verstehen, kombinieren und direkt öffnen.
             </p>
 
-            <div className="grid grid-cols-3 border border-black/10 bg-white">
-              <div className="border-r border-black/10 p-4">
-                <p className="text-3xl font-black tracking-[-0.06em]">{tools.length}</p>
-                <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-black/45">
-                  Tools
-                </p>
+            <div className="grid grid-cols-3 overflow-hidden border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.045)]">
+              <div className="border-r border-black/10 p-5">
+                <p className="text-4xl font-black tracking-[-0.08em]">{tools.length}</p>
+                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.23em] text-black/35">Tools</p>
               </div>
-              <div className="border-r border-black/10 p-4">
-                <p className="text-3xl font-black tracking-[-0.06em]">{bundles.length}</p>
-                <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-black/45">
-                  Bundles
-                </p>
+              <div className="border-r border-black/10 p-5">
+                <p className="text-4xl font-black tracking-[-0.08em]">{bundles.length}</p>
+                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.23em] text-black/35">Bundles</p>
               </div>
-              <div className="p-4">
-                <p className="text-3xl font-black tracking-[-0.06em]">{totalCount}</p>
-                <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-black/45">
-                  Index
-                </p>
+              <div className="p-5">
+                <p className="text-4xl font-black tracking-[-0.08em]">{resultCount}</p>
+                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.23em] text-black/35">Aktiv</p>
               </div>
             </div>
           </div>
         </div>
 
-        <section className="mt-6 grid gap-4 lg:grid-cols-[260px_0.75fr_1fr] xl:grid-cols-[300px_0.78fr_1fr]">
-          <aside className="border border-black/10 bg-white p-4 lg:sticky lg:top-5 lg:self-start">
-            <p className="mb-4 text-[11px] font-black uppercase tracking-[0.24em] text-black/45">
-              Kategorien
-            </p>
+        <div className="mt-10 border-y border-black py-5 sm:mt-14">
+          <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <Kicker>Live Suche</Kicker>
+              <input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder={viewMode === "tools" ? "Tool, Aufgabe oder Tag suchen" : "Bundle, Workflow oder Ziel suchen"}
+                className="mt-3 w-full bg-transparent text-4xl font-black uppercase leading-none tracking-[-0.075em] text-black outline-none placeholder:text-black/18 sm:text-6xl"
+              />
+            </div>
+            <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.24em] text-black/38">
+              <span>{activeCategoryName}</span>
+              <span className="h-px w-10 bg-black/25" />
+              <span>{resultCount} Einträge</span>
+            </div>
+          </div>
+        </div>
 
-            <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar lg:block lg:space-y-1 lg:overflow-visible lg:pb-0">
+        <section className="mt-6 grid gap-5 lg:grid-cols-[280px_minmax(360px,0.8fr)_1fr] xl:grid-cols-[320px_minmax(420px,0.85fr)_1fr]">
+          <aside className="border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.035)] lg:sticky lg:top-24 lg:self-start">
+            <Kicker>Kategorien</Kicker>
+            <div className="mt-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar lg:block lg:space-y-1 lg:overflow-visible lg:pb-0">
               {categories.map((category) => {
                 const active = category.slug === activeCategory;
-
                 return (
                   <button
                     key={category.slug}
                     type="button"
                     onClick={() => setActiveCategory(category.slug)}
                     className={cx(
-                      "shrink-0 border px-3 py-2 text-left text-xs font-bold uppercase tracking-[0.12em] transition lg:block lg:w-full",
+                      "shrink-0 border px-3 py-2 text-left text-xs font-black uppercase tracking-[0.13em] transition lg:block lg:w-full",
                       active
                         ? "border-black bg-black text-white"
-                        : "border-transparent bg-white text-black/55 hover:border-black/20 hover:text-black"
+                        : "border-transparent bg-white text-black/45 hover:border-black/10 hover:bg-[#f4f4ee] hover:text-black"
                     )}
                   >
                     {category.name}
@@ -202,31 +225,18 @@ export default function Home() {
             </div>
           </aside>
 
-          <section className="grid gap-4">
-            <div className="border border-black/10 bg-white p-4">
-              <label className="block">
-                <span className="mb-3 block text-[11px] font-black uppercase tracking-[0.24em] text-black/45">
-                  Suche
-                </span>
-                <input
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder={viewMode === "tools" ? "Tool suchen" : "Bundle suchen"}
-                  className="w-full border border-black/15 bg-[#f7f7f2] px-4 py-4 text-lg font-semibold tracking-[-0.02em] outline-none transition placeholder:text-black/30 focus:border-black"
-                />
-              </label>
-
-              <div className="mt-4 flex items-center justify-between gap-4 text-[11px] font-bold uppercase tracking-[0.2em] text-black/45">
-                <span>{viewMode === "tools" ? "Tool-Liste" : "Bundle-Liste"}</span>
-                <span>{resultCount} Einträge</span>
-              </div>
+          <section className="overflow-hidden border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.035)]">
+            <div className="flex items-center justify-between border-b border-black/10 p-4">
+              <Kicker>{viewMode === "tools" ? "Werkzeuge" : "Bundles"}</Kicker>
+              <span className="text-[10px] font-black uppercase tracking-[0.24em] text-black/35">
+                {resultCount}
+              </span>
             </div>
 
-            <div className="max-h-[680px] overflow-y-auto border border-black/10 bg-white no-scrollbar">
+            <div className="max-h-[720px] overflow-y-auto no-scrollbar">
               {viewMode === "tools" && visibleTools.length === 0 ? (
                 <div className="p-5 text-sm text-black/45">Keine Tools gefunden.</div>
               ) : null}
-
               {viewMode === "bundles" && visibleBundles.length === 0 ? (
                 <div className="p-5 text-sm text-black/45">Keine Bundles gefunden.</div>
               ) : null}
@@ -234,7 +244,6 @@ export default function Home() {
               {viewMode === "tools"
                 ? visibleTools.map((tool, index) => {
                     const active = activeTool?.slug === tool.slug;
-
                     return (
                       <button
                         key={tool.slug}
@@ -243,19 +252,19 @@ export default function Home() {
                         onMouseEnter={() => setActiveToolSlug(tool.slug)}
                         className={cx(
                           "block w-full border-b border-black/10 p-5 text-left transition last:border-b-0",
-                          active ? "bg-black text-white" : "bg-white text-black hover:bg-[#f1f1ec]"
+                          active ? "bg-black text-white" : "bg-white text-black hover:bg-[#f4f4ee]"
                         )}
                       >
-                        <div className="flex items-start justify-between gap-4">
+                        <div className="flex items-start justify-between gap-5">
                           <div>
-                            <p className={cx("text-[10px] font-black uppercase tracking-[0.22em]", active ? "text-white/45" : "text-black/35")}>
+                            <p className={cx("text-[10px] font-black uppercase tracking-[0.24em]", active ? "text-white/45" : "text-black/35")}>
                               {String(index + 1).padStart(2, "0")} / {tool.badge}
                             </p>
-                            <p className="mt-3 text-2xl font-black uppercase leading-none tracking-[-0.055em]">
+                            <p className="mt-3 text-3xl font-black uppercase leading-[0.88] tracking-[-0.075em]">
                               {tool.name}
                             </p>
                           </div>
-                          <span className={cx("text-xs font-bold uppercase tracking-[0.18em]", active ? "text-white/55" : "text-black/35")}>
+                          <span className={cx("text-[10px] font-black uppercase tracking-[0.2em]", active ? "text-white/45" : "text-black/35")}>
                             {tool.pricing}
                           </span>
                         </div>
@@ -264,7 +273,6 @@ export default function Home() {
                   })
                 : visibleBundles.map((bundle, index) => {
                     const active = activeBundle?.slug === bundle.slug;
-
                     return (
                       <button
                         key={bundle.slug}
@@ -273,13 +281,13 @@ export default function Home() {
                         onMouseEnter={() => setActiveBundleSlug(bundle.slug)}
                         className={cx(
                           "block w-full border-b border-black/10 p-5 text-left transition last:border-b-0",
-                          active ? "bg-black text-white" : "bg-white text-black hover:bg-[#f1f1ec]"
+                          active ? "bg-black text-white" : "bg-white text-black hover:bg-[#f4f4ee]"
                         )}
                       >
-                        <p className={cx("text-[10px] font-black uppercase tracking-[0.22em]", active ? "text-white/45" : "text-black/35")}>
+                        <p className={cx("text-[10px] font-black uppercase tracking-[0.24em]", active ? "text-white/45" : "text-black/35")}>
                           {String(index + 1).padStart(2, "0")} / {bundle.badge}
                         </p>
-                        <p className="mt-3 text-2xl font-black uppercase leading-none tracking-[-0.055em]">
+                        <p className="mt-3 text-3xl font-black uppercase leading-[0.88] tracking-[-0.075em]">
                           {bundle.name}
                         </p>
                       </button>
@@ -288,24 +296,22 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="border border-black/10 bg-white p-5 sm:p-7 lg:sticky lg:top-5 lg:self-start">
-            <p className="text-[11px] font-black uppercase tracking-[0.24em] text-black/45">
-              Aktiver Eintrag
-            </p>
+          <section className="border border-black/10 bg-white p-5 shadow-[0_18px_60px_rgba(0,0,0,0.045)] sm:p-7 lg:sticky lg:top-24 lg:self-start">
+            <Kicker>Detail</Kicker>
 
             {viewMode === "tools" && activeTool ? (
-              <div className="mt-8">
-                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-black/35">
+              <div className="mt-7">
+                <p className="text-[10px] font-black uppercase tracking-[0.26em] text-black/35">
                   {activeTool.badge} / {getCategoryLabel(activeTool.category)}
                 </p>
-                <h2 className="mt-3 text-5xl font-black uppercase leading-[0.9] tracking-[-0.08em] text-black sm:text-6xl">
+                <h2 className="mt-4 text-6xl font-black uppercase leading-[0.78] tracking-[-0.095em] text-black sm:text-7xl xl:text-8xl">
                   {activeTool.name}
                 </h2>
-                <p className="mt-6 text-lg leading-8 text-black/70">
+                <p className="mt-7 text-xl font-semibold leading-8 tracking-[-0.035em] text-black/70">
                   {activeTool.description}
                 </p>
 
-                <div className="mt-8 grid gap-3 border-t border-black/10 pt-6">
+                <div className="mt-8 grid gap-4">
                   <Info label="Preis" value={activeTool.pricing} />
                   <Info label="Zielgruppe" value={activeTool.audience} />
                   <Info label="Tags" value={activeTool.tags.join(" / ")} />
@@ -323,28 +329,24 @@ export default function Home() {
             ) : null}
 
             {viewMode === "bundles" && activeBundle ? (
-              <div className="mt-8">
-                <p className="text-[11px] font-black uppercase tracking-[0.24em] text-black/35">
+              <div className="mt-7">
+                <p className="text-[10px] font-black uppercase tracking-[0.26em] text-black/35">
                   {activeBundle.badge} / {getCategoryLabel(activeBundle.category)}
                 </p>
-                <h2 className="mt-3 text-5xl font-black uppercase leading-[0.9] tracking-[-0.08em] text-black sm:text-6xl">
+                <h2 className="mt-4 text-5xl font-black uppercase leading-[0.82] tracking-[-0.09em] text-black sm:text-6xl xl:text-7xl">
                   {activeBundle.name}
                 </h2>
-                <p className="mt-6 text-lg leading-8 text-black/70">
+                <p className="mt-7 text-xl font-semibold leading-8 tracking-[-0.035em] text-black/70">
                   {activeBundle.description}
                 </p>
 
-                <div className="mt-8 border-t border-black/10 pt-6">
-                  <p className="text-[11px] font-black uppercase tracking-[0.24em] text-black/45">
-                    Warum sinnvoll
-                  </p>
-                  <p className="mt-3 leading-7 text-black/70">{activeBundle.why}</p>
+                <div className="mt-8 border-t border-black/10 pt-5">
+                  <Kicker>Warum sinnvoll</Kicker>
+                  <p className="mt-3 leading-7 text-black/68">{activeBundle.why}</p>
                 </div>
 
-                <div className="mt-8 border-t border-black/10 pt-6">
-                  <p className="text-[11px] font-black uppercase tracking-[0.24em] text-black/45">
-                    Tools im Bundle
-                  </p>
+                <div className="mt-8 border-t border-black/10 pt-5">
+                  <Kicker>Tools im Bundle</Kicker>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {activeBundle.toolLinks.map((tool) => (
                       <a
@@ -352,7 +354,7 @@ export default function Home() {
                         href={tool.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="border border-black/15 px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-black transition hover:border-black hover:bg-black hover:text-white"
+                        className="border border-black/15 px-3 py-2 text-xs font-black uppercase tracking-[0.14em] text-black transition hover:border-black hover:bg-black hover:text-white"
                       >
                         {tool.name}
                       </a>
@@ -360,7 +362,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="mt-8 grid gap-3 border-t border-black/10 pt-6">
+                <div className="mt-8 grid gap-4">
                   <Info label="Zielgruppe" value={activeBundle.audience} />
                   <Info label="Ideal für" value={activeBundle.bestFor.join(" / ")} />
                   <Info label="Nicht ideal" value={activeBundle.notFor} />
@@ -369,26 +371,7 @@ export default function Home() {
             ) : null}
           </section>
         </section>
-
-        <footer className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 py-6 text-[11px] font-bold uppercase tracking-[0.22em] text-black/40">
-          <span>AI Pages / MVP</span>
-          <div className="flex gap-5">
-            <a href="/impressum" className="hover:text-black">Impressum</a>
-            <a href="/datenschutz" className="hover:text-black">Datenschutz</a>
-          </div>
-        </footer>
       </section>
     </main>
-  );
-}
-
-function Info({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="grid gap-1 border-b border-black/10 pb-3 last:border-b-0">
-      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-black/35">
-        {label}
-      </p>
-      <p className="text-sm leading-6 text-black/70">{value}</p>
-    </div>
   );
 }
