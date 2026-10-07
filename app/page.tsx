@@ -101,12 +101,9 @@ export default function Home() {
     <main className="min-h-screen bg-[#fbfbf7] text-black">
       <header className="sticky top-0 z-20 border-b border-black/10 bg-[#fbfbf7]/88 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1540px] items-center justify-between gap-4 px-5 py-4 sm:px-8">
-          <a href="/" className="flex items-baseline gap-3">
+          <a href="/" className="flex items-baseline">
             <span className="text-2xl font-black uppercase tracking-[-0.075em] sm:text-3xl">
               AI Pages
-            </span>
-            <span className="hidden text-[10px] font-black uppercase tracking-[0.28em] text-black/35 sm:inline">
-              KI Directory
             </span>
           </a>
 
@@ -150,32 +147,31 @@ export default function Home() {
       <section className="mx-auto max-w-[1540px] px-5 py-8 sm:px-8 sm:py-12">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div>
-            <Kicker>Schwarz Weiss Tech Index</Kicker>
-            <h1 className="mt-5 max-w-6xl text-[15vw] font-black uppercase leading-[0.76] tracking-[-0.095em] text-black sm:text-[110px] lg:text-[132px] xl:text-[158px]">
+            <h1 className="max-w-6xl text-[15vw] font-black uppercase leading-[0.76] tracking-[-0.095em] text-black sm:text-[110px] lg:text-[132px] xl:text-[158px]">
               KI Tools.
               <br />
               Klar.
             </h1>
           </div>
 
-          <div className="grid gap-6 lg:pb-2">
+          <div className="grid gap-8 lg:pb-2">
             <p className="max-w-2xl text-xl font-semibold leading-8 tracking-[-0.035em] text-black/72 sm:text-2xl sm:leading-9">
               Ein simples Verzeichnis für KI-Werkzeuge und KI-Bundles. Schnell
               finden, verstehen, kombinieren und direkt öffnen.
             </p>
 
-            <div className="grid grid-cols-3 overflow-hidden border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.045)]">
-              <div className="border-r border-black/10 p-5">
-                <p className="text-4xl font-black tracking-[-0.08em]">{tools.length}</p>
-                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.23em] text-black/35">Tools</p>
+            <div className="grid grid-cols-3 gap-8 sm:gap-12">
+              <div>
+                <p className="text-5xl font-black tracking-[-0.09em] sm:text-6xl">{tools.length}</p>
+                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.26em] text-black/35">Tools</p>
               </div>
-              <div className="border-r border-black/10 p-5">
-                <p className="text-4xl font-black tracking-[-0.08em]">{bundles.length}</p>
-                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.23em] text-black/35">Bundles</p>
+              <div>
+                <p className="text-5xl font-black tracking-[-0.09em] sm:text-6xl">{bundles.length}</p>
+                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.26em] text-black/35">Bundles</p>
               </div>
-              <div className="p-5">
-                <p className="text-4xl font-black tracking-[-0.08em]">{resultCount}</p>
-                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.23em] text-black/35">Aktiv</p>
+              <div>
+                <p className="text-5xl font-black tracking-[-0.09em] sm:text-6xl">{resultCount}</p>
+                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.26em] text-black/35">Aktiv</p>
               </div>
             </div>
           </div>
