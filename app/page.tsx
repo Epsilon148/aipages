@@ -364,7 +364,7 @@ export default function Home() {
                 <div className="mt-7 flex flex-wrap gap-3 lg:mt-auto lg:pt-5">
                   <a
                     href={`/tools/${activeTool.slug}`}
-                    className="inline-flex border border-black bg-black px-5 py-4 text-xs font-black uppercase tracking-[0.22em] text-white transition hover:bg-white hover:text-black"
+                    className="inline-flex border border-black bg-white px-5 py-4 text-xs font-black uppercase tracking-[0.22em] text-black transition hover:bg-black hover:text-white"
                   >
                     Detail ansehen
                   </a>
@@ -423,7 +423,7 @@ export default function Home() {
                 <div className="mt-5">
                   <a
                     href={`/bundles/${activeBundle.slug}`}
-                    className="inline-flex border border-black bg-black px-5 py-4 text-xs font-black uppercase tracking-[0.22em] text-white transition hover:bg-white hover:text-black"
+                    className="inline-flex border border-black bg-white px-5 py-4 text-xs font-black uppercase tracking-[0.22em] text-black transition hover:bg-black hover:text-white"
                   >
                     Detail ansehen
                   </a>
