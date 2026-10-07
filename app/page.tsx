@@ -106,9 +106,9 @@ export default function Home() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#fbfbf7] text-black">
       <header className="sticky top-0 z-20 border-b border-black/10 bg-[#fbfbf7]/92 backdrop-blur-xl">
-        <div className="mx-auto flex h-[69px] w-full max-w-[1540px] items-center justify-between gap-4 px-5 sm:px-8">
+        <div className="mx-auto flex min-h-[64px] w-full max-w-[1540px] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:h-[69px] sm:flex-nowrap sm:px-8 sm:py-0">
           <a href="/" className="flex min-w-0 items-baseline">
-            <span className="text-2xl font-black uppercase tracking-[-0.075em] sm:text-3xl">
+            <span className="text-xl font-black uppercase tracking-[-0.075em] sm:text-3xl">
               AI Pages
             </span>
           </a>
@@ -118,7 +118,7 @@ export default function Home() {
               type="button"
               onClick={() => switchMode("tools")}
               className={cx(
-                "border px-4 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition sm:px-5",
+                "border px-3 py-2.5 text-[10px] font-black uppercase tracking-[0.2em] transition sm:px-5 sm:py-3",
                 viewMode === "tools" ? "border-black bg-black text-white" : "border-black/15 bg-white text-black hover:border-black"
               )}
             >
@@ -128,7 +128,7 @@ export default function Home() {
               type="button"
               onClick={() => switchMode("bundles")}
               className={cx(
-                "border px-4 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition sm:px-5",
+                "border px-3 py-2.5 text-[10px] font-black uppercase tracking-[0.2em] transition sm:px-5 sm:py-3",
                 viewMode === "bundles" ? "border-black bg-black text-white" : "border-black/15 bg-white text-black hover:border-black"
               )}
             >
@@ -138,33 +138,33 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="mx-auto flex min-h-[calc(100vh-69px)] w-full max-w-[1540px] items-center px-5 py-12 sm:px-8">
-        <div className="grid w-full min-w-0 gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+      <section className="mx-auto flex min-h-[72vh] w-full max-w-[1540px] items-center px-4 py-10 sm:min-h-[calc(100vh-69px)] sm:px-8 sm:py-12">
+        <div className="grid w-full min-w-0 gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div className="min-w-0">
-            <h1 className="max-w-6xl text-[15vw] font-black uppercase leading-[0.76] tracking-[-0.095em] text-black sm:text-[110px] lg:text-[132px] xl:text-[158px]">
+            <h1 className="max-w-6xl text-[18vw] font-black uppercase leading-[0.76] tracking-[-0.095em] text-black sm:text-[110px] lg:text-[132px] xl:text-[158px]">
               KI Tools.
               <br />
               Klar.
             </h1>
           </div>
 
-          <div className="grid min-w-0 gap-8 lg:pb-2">
-            <p className="max-w-2xl text-xl font-semibold leading-8 tracking-[-0.035em] text-black/72 sm:text-2xl sm:leading-9">
+          <div className="grid min-w-0 gap-7 lg:pb-2">
+            <p className="max-w-2xl text-lg font-semibold leading-7 tracking-[-0.035em] text-black/72 sm:text-2xl sm:leading-9">
               Ein simples Verzeichnis für KI-Werkzeuge und KI-Bundles. Schnell
               finden, verstehen, kombinieren und direkt öffnen.
             </p>
 
-            <div className="grid grid-cols-3 gap-8 sm:gap-12">
+            <div className="grid grid-cols-3 gap-4 sm:gap-12">
               <div>
-                <p className="text-5xl font-black tracking-[-0.09em] sm:text-6xl">{tools.length}</p>
+                <p className="text-4xl font-black tracking-[-0.09em] sm:text-6xl">{tools.length}</p>
                 <p className="mt-2 text-[10px] font-black uppercase tracking-[0.26em] text-black/35">Tools</p>
               </div>
               <div>
-                <p className="text-5xl font-black tracking-[-0.09em] sm:text-6xl">{bundles.length}</p>
+                <p className="text-4xl font-black tracking-[-0.09em] sm:text-6xl">{bundles.length}</p>
                 <p className="mt-2 text-[10px] font-black uppercase tracking-[0.26em] text-black/35">Bundles</p>
               </div>
               <div>
-                <p className="text-5xl font-black tracking-[-0.09em] sm:text-6xl">{resultCount}</p>
+                <p className="text-4xl font-black tracking-[-0.09em] sm:text-6xl">{resultCount}</p>
                 <p className="mt-2 text-[10px] font-black uppercase tracking-[0.26em] text-black/35">Aktiv</p>
               </div>
             </div>
@@ -206,7 +206,7 @@ export default function Home() {
               </span>
             </div>
 
-            <div className="max-h-[720px] overflow-y-auto overflow-x-hidden no-scrollbar lg:h-[calc(100%-57px)] lg:max-h-none">
+            <div className="max-h-[560px] overflow-y-auto overflow-x-hidden no-scrollbar sm:max-h-[720px] lg:h-[calc(100%-57px)] lg:max-h-none">
               {viewMode === "tools" && visibleTools.length === 0 ? (
                 <div className="p-4 text-sm text-black/45">Keine Tools gefunden.</div>
               ) : null}
@@ -266,7 +266,7 @@ export default function Home() {
                               {bundle.name}
                             </p>
                           </div>
-                          <span className={cx("shrink-0 text-[10px] font-black uppercase tracking-[0.2em]", active ? "text-white/45" : "text-black/35")}>
+                          <span className={cx("hidden shrink-0 text-[10px] font-black uppercase tracking-[0.2em] text-right sm:block", active ? "text-white/45" : "text-black/35")}>
                             {getCategoryLabel(bundle.category)}
                           </span>
                         </div>
@@ -276,9 +276,9 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="min-w-0 min-h-0 overflow-hidden border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.045)] sm:p-5 lg:h-full">
+          <section className="min-w-0 min-h-0 overflow-visible border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.045)] sm:p-5 lg:h-full lg:overflow-hidden">
             {viewMode === "tools" && activeTool ? (
-              <div className="flex h-full min-w-0 flex-col overflow-hidden">
+              <div className="flex min-w-0 flex-col lg:h-full lg:overflow-hidden">
                 <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black">
                   {getCategoryLabel(activeTool.category)}
                 </p>
@@ -295,7 +295,7 @@ export default function Home() {
                   <Info label="Tags" value={activeTool.tags.join(" / ")} />
                 </div>
 
-                <div className="mt-auto pt-5">
+                <div className="mt-7 lg:mt-auto lg:pt-5">
                   <a
                     href={activeTool.url}
                     target="_blank"
@@ -309,7 +309,7 @@ export default function Home() {
             ) : null}
 
             {viewMode === "bundles" && activeBundle ? (
-              <div className="flex h-full min-w-0 flex-col overflow-hidden">
+              <div className="flex min-w-0 flex-col lg:h-full lg:overflow-hidden">
                 <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black">
                   {getCategoryLabel(activeBundle.category)}
                 </p>
@@ -342,7 +342,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="mt-auto grid gap-2 pt-4">
+                <div className="mt-7 grid gap-2 lg:mt-auto lg:pt-4">
                   <Info label="Zielgruppe" value={activeBundle.audience} />
                   <Info label="Ideal für" value={activeBundle.bestFor.join(" / ")} />
                   <Info label="Nicht ideal" value={activeBundle.notFor} />
