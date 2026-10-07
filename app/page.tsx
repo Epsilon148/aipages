@@ -33,7 +33,7 @@ function Info({ label, value }: { label: string; value: string }) {
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>("tools");
   const [activeCategory, setActiveCategory] = useState("alle");
-  const [query, setQuery] = useState("");
+  const [query] = useState("");
   const [activeToolSlug, setActiveToolSlug] = useState(tools[0]?.slug ?? "");
   const [activeBundleSlug, setActiveBundleSlug] = useState(bundles[0]?.slug ?? "");
 
@@ -85,7 +85,6 @@ export default function Home() {
     visibleBundles.find((bundle) => bundle.slug === activeBundleSlug) ?? visibleBundles[0] ?? null;
 
   const resultCount = viewMode === "tools" ? visibleTools.length : visibleBundles.length;
-  const activeCategoryName = categories.find((category) => category.slug === activeCategory)?.name ?? "Alle";
 
   function getCategoryLabel(slug: string) {
     return categories.find((category) => category.slug === slug)?.name ?? slug;
@@ -94,7 +93,6 @@ export default function Home() {
   function switchMode(mode: ViewMode) {
     setViewMode(mode);
     setActiveCategory("alle");
-    setQuery("");
   }
 
   return (
@@ -144,8 +142,8 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="mx-auto max-w-[1540px] px-5 py-8 sm:px-8 sm:py-12">
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+      <section className="mx-auto flex min-h-[calc(100vh-72px)] max-w-[1540px] items-center px-5 py-12 sm:px-8">
+        <div className="grid w-full gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div>
             <h1 className="max-w-6xl text-[15vw] font-black uppercase leading-[0.76] tracking-[-0.095em] text-black sm:text-[110px] lg:text-[132px] xl:text-[158px]">
               KI Tools.
@@ -176,30 +174,13 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
 
-        <div className="mt-10 border-y border-black py-5 sm:mt-14">
-          <div className="grid gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div>
-              <Kicker>Live Suche</Kicker>
-              <input
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder={viewMode === "tools" ? "Tool, Aufgabe oder Tag suchen" : "Bundle, Workflow oder Ziel suchen"}
-                className="mt-3 w-full bg-transparent text-4xl font-black uppercase leading-none tracking-[-0.075em] text-black outline-none placeholder:text-black/18 sm:text-6xl"
-              />
-            </div>
-            <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.24em] text-black/38">
-              <span>{activeCategoryName}</span>
-              <span className="h-px w-10 bg-black/25" />
-              <span>{resultCount} Einträge</span>
-            </div>
-          </div>
-        </div>
-
-        <section className="mt-6 grid gap-5 lg:grid-cols-[280px_minmax(360px,0.8fr)_1fr] xl:grid-cols-[320px_minmax(420px,0.85fr)_1fr]">
-          <aside className="border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.035)] lg:sticky lg:top-24 lg:self-start">
+      <section className="mx-auto max-w-[1540px] px-5 pb-8 sm:px-8">
+        <section className="grid gap-5 border-t border-black pt-6 lg:h-[calc(100vh-96px)] lg:min-h-[680px] lg:grid-cols-[300px_minmax(430px,0.78fr)_minmax(560px,1.22fr)] xl:grid-cols-[330px_minmax(470px,0.82fr)_minmax(640px,1.25fr)]">
+          <aside className="min-h-0 border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.035)] lg:h-full">
             <Kicker>Kategorien</Kicker>
-            <div className="mt-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar lg:block lg:space-y-1 lg:overflow-visible lg:pb-0">
+            <div className="mt-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar lg:block lg:max-h-[calc(100%-34px)] lg:space-y-1 lg:overflow-y-auto lg:pb-0">
               {categories.map((category) => {
                 const active = category.slug === activeCategory;
                 return (
@@ -221,7 +202,7 @@ export default function Home() {
             </div>
           </aside>
 
-          <section className="overflow-hidden border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.035)]">
+          <section className="min-h-0 overflow-hidden border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.035)] lg:h-full">
             <div className="flex items-center justify-between border-b border-black/10 p-4">
               <Kicker>{viewMode === "tools" ? "Werkzeuge" : "Bundles"}</Kicker>
               <span className="text-[10px] font-black uppercase tracking-[0.24em] text-black/35">
@@ -229,7 +210,7 @@ export default function Home() {
               </span>
             </div>
 
-            <div className="max-h-[720px] overflow-y-auto no-scrollbar">
+            <div className="max-h-[720px] overflow-y-auto no-scrollbar lg:h-[calc(100%-57px)] lg:max-h-none">
               {viewMode === "tools" && visibleTools.length === 0 ? (
                 <div className="p-5 text-sm text-black/45">Keine Tools gefunden.</div>
               ) : null}
@@ -292,18 +273,18 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="border border-black/10 bg-white p-5 shadow-[0_18px_60px_rgba(0,0,0,0.045)] sm:p-7 lg:sticky lg:top-24 lg:self-start">
+          <section className="min-h-0 overflow-hidden border border-black/10 bg-white p-5 shadow-[0_18px_60px_rgba(0,0,0,0.045)] sm:p-7 lg:h-full">
             <Kicker>Detail</Kicker>
 
             {viewMode === "tools" && activeTool ? (
-              <div className="mt-7">
+              <div className="mt-7 flex h-[calc(100%-28px)] flex-col">
                 <p className="text-[10px] font-black uppercase tracking-[0.26em] text-black/35">
                   {activeTool.badge} / {getCategoryLabel(activeTool.category)}
                 </p>
                 <h2 className="mt-4 text-6xl font-black uppercase leading-[0.78] tracking-[-0.095em] text-black sm:text-7xl xl:text-8xl">
                   {activeTool.name}
                 </h2>
-                <p className="mt-7 text-xl font-semibold leading-8 tracking-[-0.035em] text-black/70">
+                <p className="mt-7 max-w-3xl text-xl font-semibold leading-8 tracking-[-0.035em] text-black/70">
                   {activeTool.description}
                 </p>
 
@@ -313,26 +294,28 @@ export default function Home() {
                   <Info label="Tags" value={activeTool.tags.join(" / ")} />
                 </div>
 
-                <a
-                  href={activeTool.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-8 inline-flex border border-black bg-black px-5 py-4 text-xs font-black uppercase tracking-[0.22em] text-white transition hover:bg-white hover:text-black"
-                >
-                  Website öffnen
-                </a>
+                <div className="mt-auto pt-8">
+                  <a
+                    href={activeTool.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex border border-black bg-black px-5 py-4 text-xs font-black uppercase tracking-[0.22em] text-white transition hover:bg-white hover:text-black"
+                  >
+                    Website öffnen
+                  </a>
+                </div>
               </div>
             ) : null}
 
             {viewMode === "bundles" && activeBundle ? (
-              <div className="mt-7">
+              <div className="mt-7 flex h-[calc(100%-28px)] flex-col">
                 <p className="text-[10px] font-black uppercase tracking-[0.26em] text-black/35">
                   {activeBundle.badge} / {getCategoryLabel(activeBundle.category)}
                 </p>
                 <h2 className="mt-4 text-5xl font-black uppercase leading-[0.82] tracking-[-0.09em] text-black sm:text-6xl xl:text-7xl">
                   {activeBundle.name}
                 </h2>
-                <p className="mt-7 text-xl font-semibold leading-8 tracking-[-0.035em] text-black/70">
+                <p className="mt-7 max-w-3xl text-xl font-semibold leading-8 tracking-[-0.035em] text-black/70">
                   {activeBundle.description}
                 </p>
 
@@ -358,7 +341,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="mt-8 grid gap-4">
+                <div className="mt-auto pt-8">
                   <Info label="Zielgruppe" value={activeBundle.audience} />
                   <Info label="Ideal für" value={activeBundle.bestFor.join(" / ")} />
                   <Info label="Nicht ideal" value={activeBundle.notFor} />
