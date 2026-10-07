@@ -361,7 +361,13 @@ export default function Home() {
                   <Info label="Tags" value={activeTool.tags.join(" / ")} />
                 </div>
 
-                <div className="mt-7 lg:mt-auto lg:pt-5">
+                <div className="mt-7 flex flex-wrap gap-3 lg:mt-auto lg:pt-5">
+                  <a
+                    href={`/tools/${activeTool.slug}`}
+                    className="inline-flex border border-black bg-black px-5 py-4 text-xs font-black uppercase tracking-[0.22em] text-white transition hover:bg-white hover:text-black"
+                  >
+                    Detail ansehen
+                  </a>
                   <a
                     href={activeTool.url}
                     target="_blank"
@@ -412,6 +418,15 @@ export default function Home() {
                   <Info label="Zielgruppe" value={activeBundle.audience} />
                   <Info label="Ideal für" value={activeBundle.bestFor.join(" / ")} />
                   <Info label="Nicht ideal" value={activeBundle.notFor} />
+                </div>
+
+                <div className="mt-5">
+                  <a
+                    href={`/bundles/${activeBundle.slug}`}
+                    className="inline-flex border border-black bg-black px-5 py-4 text-xs font-black uppercase tracking-[0.22em] text-white transition hover:bg-white hover:text-black"
+                  >
+                    Detail ansehen
+                  </a>
                 </div>
               </div>
             ) : null}
