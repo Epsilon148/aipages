@@ -299,7 +299,7 @@ export default function Home() {
                     href={activeTool.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex border border-black bg-black px-5 py-4 text-xs font-black uppercase tracking-[0.22em] text-white transition hover:bg-white hover:text-black"
+                    className="inline-flex border border-black bg-white px-5 py-4 text-xs font-black uppercase tracking-[0.22em] text-black transition hover:bg-black hover:text-white"
                   >
                     Website öffnen
                   </a>
