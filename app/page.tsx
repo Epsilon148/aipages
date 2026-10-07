@@ -114,18 +114,6 @@ export default function Home() {
           </a>
 
           <div className="flex shrink-0 items-center gap-2">
-            <a
-              href="/impressum"
-              className="hidden text-[10px] font-black uppercase tracking-[0.22em] text-black/35 hover:text-black sm:block"
-            >
-              Impressum
-            </a>
-            <a
-              href="/datenschutz"
-              className="hidden text-[10px] font-black uppercase tracking-[0.22em] text-black/35 hover:text-black sm:block"
-            >
-              Datenschutz
-            </a>
             <button
               type="button"
               onClick={() => switchMode("tools")}
@@ -363,6 +351,18 @@ export default function Home() {
             ) : null}
           </section>
         </section>
+
+        <footer className="mt-5 flex flex-col gap-3 border-t border-black/10 py-5 text-[11px] font-medium uppercase tracking-[0.22em] text-black sm:flex-row sm:items-center sm:justify-between">
+          <p>AI Pages</p>
+          <nav className="flex gap-5">
+            <a href="/impressum" className="text-black/50 transition hover:text-black">
+              Impressum
+            </a>
+            <a href="/datenschutz" className="text-black/50 transition hover:text-black">
+              Datenschutz
+            </a>
+          </nav>
+        </footer>
       </section>
     </main>
   );
