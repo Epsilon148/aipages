@@ -96,9 +96,9 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-[#fbfbf7] text-black lg:h-screen lg:overflow-hidden">
-      <header className="z-20 border-b border-black/10 bg-[#fbfbf7]/92 backdrop-blur-xl lg:h-[69px]">
-        <div className="mx-auto flex h-full max-w-[1540px] items-center justify-between gap-4 px-5 py-4 sm:px-8 lg:py-0">
+    <main className="min-h-screen bg-[#fbfbf7] text-black">
+      <header className="sticky top-0 z-20 border-b border-black/10 bg-[#fbfbf7]/92 backdrop-blur-xl">
+        <div className="mx-auto flex h-[69px] max-w-[1540px] items-center justify-between gap-4 px-5 sm:px-8">
           <a href="/" className="flex items-baseline">
             <span className="text-2xl font-black uppercase tracking-[-0.075em] sm:text-3xl">
               AI Pages
@@ -142,40 +142,42 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="mx-auto max-w-[1540px] px-5 py-8 sm:px-8 lg:grid lg:h-[calc(100vh-69px)] lg:grid-rows-[auto_minmax(0,1fr)] lg:overflow-hidden lg:py-4">
-        <div className="grid gap-6 border-b border-black/10 pb-4 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+      <section className="mx-auto flex min-h-[calc(100vh-69px)] max-w-[1540px] items-center px-5 py-12 sm:px-8">
+        <div className="grid w-full gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div>
-            <h1 className="max-w-6xl text-[15vw] font-black uppercase leading-[0.76] tracking-[-0.095em] text-black sm:text-[92px] lg:text-[76px] xl:text-[92px]">
+            <h1 className="max-w-6xl text-[15vw] font-black uppercase leading-[0.76] tracking-[-0.095em] text-black sm:text-[110px] lg:text-[132px] xl:text-[158px]">
               KI Tools.
               <br />
               Klar.
             </h1>
           </div>
 
-          <div className="grid gap-5 lg:pb-1">
-            <p className="max-w-2xl text-lg font-semibold leading-7 tracking-[-0.035em] text-black/72 sm:text-xl sm:leading-8">
+          <div className="grid gap-8 lg:pb-2">
+            <p className="max-w-2xl text-xl font-semibold leading-8 tracking-[-0.035em] text-black/72 sm:text-2xl sm:leading-9">
               Ein simples Verzeichnis für KI-Werkzeuge und KI-Bundles. Schnell
               finden, verstehen, kombinieren und direkt öffnen.
             </p>
 
-            <div className="grid max-w-xl grid-cols-3 gap-8 sm:gap-12">
+            <div className="grid grid-cols-3 gap-8 sm:gap-12">
               <div>
-                <p className="text-4xl font-black tracking-[-0.09em] sm:text-5xl">{tools.length}</p>
-                <p className="mt-1 text-[10px] font-black uppercase tracking-[0.26em] text-black/35">Tools</p>
+                <p className="text-5xl font-black tracking-[-0.09em] sm:text-6xl">{tools.length}</p>
+                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.26em] text-black/35">Tools</p>
               </div>
               <div>
-                <p className="text-4xl font-black tracking-[-0.09em] sm:text-5xl">{bundles.length}</p>
-                <p className="mt-1 text-[10px] font-black uppercase tracking-[0.26em] text-black/35">Bundles</p>
+                <p className="text-5xl font-black tracking-[-0.09em] sm:text-6xl">{bundles.length}</p>
+                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.26em] text-black/35">Bundles</p>
               </div>
               <div>
-                <p className="text-4xl font-black tracking-[-0.09em] sm:text-5xl">{resultCount}</p>
-                <p className="mt-1 text-[10px] font-black uppercase tracking-[0.26em] text-black/35">Aktiv</p>
+                <p className="text-5xl font-black tracking-[-0.09em] sm:text-6xl">{resultCount}</p>
+                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.26em] text-black/35">Aktiv</p>
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <section className="mt-5 grid gap-5 lg:min-h-0 lg:grid-cols-[300px_minmax(430px,0.78fr)_minmax(560px,1.22fr)] xl:grid-cols-[330px_minmax(470px,0.82fr)_minmax(640px,1.25fr)]">
+      <section className="mx-auto max-w-[1540px] px-5 pb-8 sm:px-8">
+        <section className="grid gap-5 border-t border-black pt-6 lg:h-[calc(100vh-96px)] lg:min-h-[680px] lg:grid-cols-[300px_minmax(430px,0.78fr)_minmax(560px,1.22fr)] xl:grid-cols-[330px_minmax(470px,0.82fr)_minmax(640px,1.25fr)]">
           <aside className="min-h-0 border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.035)] lg:h-full lg:overflow-hidden">
             <Kicker>Kategorien</Kicker>
             <div className="mt-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar lg:block lg:h-[calc(100%-34px)] lg:space-y-1 lg:overflow-y-auto lg:pb-0">
