@@ -177,8 +177,8 @@ export default function Home() {
       </section>
 
       <section className="mx-auto w-full max-w-[1540px] overflow-x-hidden px-4 pb-4 sm:px-6 xl:px-8">
-        <section className="grid min-w-0 gap-4 border-t border-black pt-4 lg:h-[calc(100vh-128px)] lg:grid-cols-[260px_minmax(0,0.86fr)_minmax(0,1.14fr)] xl:grid-cols-[290px_minmax(0,0.86fr)_minmax(0,1.14fr)]">
-          <aside className="min-w-0 min-h-0 border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.035)] lg:h-full lg:overflow-hidden">
+        <section className="grid min-w-0 gap-3 border-t border-black pt-4 lg:h-[calc(100vh-128px)] lg:grid-cols-[240px_minmax(0,0.94fr)_minmax(0,1.06fr)] xl:grid-cols-[260px_minmax(0,0.96fr)_minmax(0,1.04fr)]">
+          <aside className="min-w-0 min-h-0 border border-black/10 bg-white p-3 shadow-[0_18px_60px_rgba(0,0,0,0.035)] sm:p-4 lg:h-full lg:overflow-hidden">
             <Kicker>Kategorien</Kicker>
             <div className="mt-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar lg:block lg:h-[calc(100%-34px)] lg:space-y-1 lg:overflow-y-auto lg:pb-0">
               {categories.map((category) => {
@@ -203,7 +203,7 @@ export default function Home() {
           </aside>
 
           <section className="min-w-0 min-h-0 overflow-hidden border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.035)] lg:h-full">
-            <div className="flex items-center justify-between border-b border-black/10 p-4">
+            <div className="flex items-center justify-between border-b border-black/10 p-3 sm:p-4">
               <Kicker>{viewMode === "tools" ? "Werkzeuge" : "Bundles"}</Kicker>
               <span className="text-[10px] font-black uppercase tracking-[0.24em] text-black/35">
                 {resultCount}
@@ -212,10 +212,10 @@ export default function Home() {
 
             <div className="max-h-[720px] overflow-y-auto overflow-x-hidden no-scrollbar lg:h-[calc(100%-57px)] lg:max-h-none">
               {viewMode === "tools" && visibleTools.length === 0 ? (
-                <div className="p-5 text-sm text-black/45">Keine Tools gefunden.</div>
+                <div className="p-4 text-sm text-black/45">Keine Tools gefunden.</div>
               ) : null}
               {viewMode === "bundles" && visibleBundles.length === 0 ? (
-                <div className="p-5 text-sm text-black/45">Keine Bundles gefunden.</div>
+                <div className="p-4 text-sm text-black/45">Keine Bundles gefunden.</div>
               ) : null}
 
               {viewMode === "tools"
@@ -228,16 +228,16 @@ export default function Home() {
                         onClick={() => setActiveToolSlug(tool.slug)}
                         onMouseEnter={() => setActiveToolSlug(tool.slug)}
                         className={cx(
-                          "block w-full border-b border-black/10 p-5 text-left transition last:border-b-0",
+                          "block w-full border-b border-black/10 p-4 text-left transition last:border-b-0",
                           active ? "bg-black text-white" : "bg-white text-black hover:bg-[#f4f4ee]"
                         )}
                       >
-                        <div className="flex min-w-0 items-start justify-between gap-5">
+                        <div className="flex min-w-0 items-start justify-between gap-4">
                           <div className="min-w-0">
                             <p className={cx("text-[10px] font-black uppercase tracking-[0.24em]", active ? "text-white/45" : "text-black/35")}>
                               {String(index + 1).padStart(2, "0")} / {tool.badge}
                             </p>
-                            <p className="mt-3 break-words text-2xl font-black uppercase leading-[0.88] tracking-[-0.075em] xl:text-3xl">
+                            <p className="mt-3 break-words text-2xl font-black uppercase leading-[0.88] tracking-[-0.075em] xl:text-[30px]">
                               {tool.name}
                             </p>
                           </div>
@@ -257,14 +257,14 @@ export default function Home() {
                         onClick={() => setActiveBundleSlug(bundle.slug)}
                         onMouseEnter={() => setActiveBundleSlug(bundle.slug)}
                         className={cx(
-                          "block w-full border-b border-black/10 p-5 text-left transition last:border-b-0",
+                          "block w-full border-b border-black/10 p-4 text-left transition last:border-b-0",
                           active ? "bg-black text-white" : "bg-white text-black hover:bg-[#f4f4ee]"
                         )}
                       >
                         <p className={cx("text-[10px] font-black uppercase tracking-[0.24em]", active ? "text-white/45" : "text-black/35")}>
                           {String(index + 1).padStart(2, "0")} / {bundle.badge}
                         </p>
-                        <p className="mt-3 break-words text-2xl font-black uppercase leading-[0.88] tracking-[-0.075em] xl:text-3xl">
+                        <p className="mt-3 break-words text-2xl font-black uppercase leading-[0.88] tracking-[-0.075em] xl:text-[30px]">
                           {bundle.name}
                         </p>
                       </button>
@@ -281,7 +281,7 @@ export default function Home() {
                 <p className="text-[10px] font-black uppercase tracking-[0.26em] text-black/35">
                   {activeTool.badge} / {getCategoryLabel(activeTool.category)}
                 </p>
-                <h2 className="mt-3 break-words text-4xl font-black uppercase leading-[0.86] tracking-[-0.095em] text-black sm:text-5xl xl:text-6xl">
+                <h2 className="mt-3 break-words text-4xl font-black uppercase leading-[0.86] tracking-[-0.085em] text-black sm:text-5xl xl:text-5xl 2xl:text-6xl">
                   {activeTool.name}
                 </h2>
                 <p className="mt-4 max-w-3xl text-base font-semibold leading-7 tracking-[-0.035em] text-black/70 xl:text-lg">
@@ -312,7 +312,7 @@ export default function Home() {
                 <p className="text-[10px] font-black uppercase tracking-[0.26em] text-black/35">
                   {activeBundle.badge} / {getCategoryLabel(activeBundle.category)}
                 </p>
-                <h2 className="mt-3 break-words text-3xl font-black uppercase leading-[0.9] tracking-[-0.09em] text-black sm:text-4xl xl:text-5xl">
+                <h2 className="mt-3 break-words text-3xl font-black uppercase leading-[0.9] tracking-[-0.08em] text-black sm:text-4xl xl:text-5xl">
                   {activeBundle.name}
                 </h2>
                 <p className="mt-4 max-w-3xl text-base font-semibold leading-6 tracking-[-0.035em] text-black/70 xl:text-lg">
