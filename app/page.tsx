@@ -19,6 +19,14 @@ function Kicker({ children }: { children: React.ReactNode }) {
   );
 }
 
+function ColumnLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black">
+      {children}
+    </p>
+  );
+}
+
 function Info({ label, value }: { label: string; value: string }) {
   return (
     <div className="grid gap-1 border-t border-black/10 pt-3 sm:grid-cols-[120px_1fr] sm:gap-4">
@@ -179,7 +187,7 @@ export default function Home() {
       <section className="mx-auto w-full max-w-[1540px] overflow-x-hidden px-4 pb-4 sm:px-6 xl:px-8">
         <section className="grid min-w-0 gap-3 border-t border-black pt-4 lg:h-[calc(100vh-128px)] lg:grid-cols-[240px_minmax(0,0.94fr)_minmax(0,1.06fr)] xl:grid-cols-[260px_minmax(0,0.96fr)_minmax(0,1.04fr)]">
           <aside className="min-w-0 min-h-0 border border-black/10 bg-white p-3 shadow-[0_18px_60px_rgba(0,0,0,0.035)] sm:p-4 lg:h-full lg:overflow-hidden">
-            <Kicker>Kategorien</Kicker>
+            <ColumnLabel>Kategorien</ColumnLabel>
             <div className="mt-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar lg:block lg:h-[calc(100%-34px)] lg:space-y-1 lg:overflow-y-auto lg:pb-0">
               {categories.map((category) => {
                 const active = category.slug === activeCategory;
@@ -204,8 +212,8 @@ export default function Home() {
 
           <section className="min-w-0 min-h-0 overflow-hidden border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.035)] lg:h-full">
             <div className="flex items-center justify-between border-b border-black/10 p-3 sm:p-4">
-              <Kicker>{viewMode === "tools" ? "Werkzeuge" : "Bundles"}</Kicker>
-              <span className="text-[10px] font-black uppercase tracking-[0.24em] text-black/35">
+              <ColumnLabel>{viewMode === "tools" ? "Tools" : "Bundles"}</ColumnLabel>
+              <span className="text-[10px] font-medium uppercase tracking-[0.24em] text-black">
                 {resultCount}
               </span>
             </div>
@@ -274,14 +282,12 @@ export default function Home() {
           </section>
 
           <section className="min-w-0 min-h-0 overflow-hidden border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.045)] sm:p-5 lg:h-full">
-            <Kicker>Detail</Kicker>
-
             {viewMode === "tools" && activeTool ? (
-              <div className="mt-5 flex h-[calc(100%-22px)] min-w-0 flex-col overflow-hidden">
-                <p className="text-[10px] font-black uppercase tracking-[0.26em] text-black/35">
-                  {activeTool.badge} / {getCategoryLabel(activeTool.category)}
+              <div className="flex h-full min-w-0 flex-col overflow-hidden">
+                <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black">
+                  {getCategoryLabel(activeTool.category)}
                 </p>
-                <h2 className="mt-3 break-words text-4xl font-black uppercase leading-[0.86] tracking-[-0.085em] text-black sm:text-5xl xl:text-5xl 2xl:text-6xl">
+                <h2 className="mt-5 break-words text-4xl font-black uppercase leading-[0.86] tracking-[-0.085em] text-black sm:text-5xl xl:text-5xl 2xl:text-6xl">
                   {activeTool.name}
                 </h2>
                 <p className="mt-4 max-w-3xl text-base font-semibold leading-7 tracking-[-0.035em] text-black/70 xl:text-lg">
@@ -308,11 +314,11 @@ export default function Home() {
             ) : null}
 
             {viewMode === "bundles" && activeBundle ? (
-              <div className="mt-5 flex h-[calc(100%-22px)] min-w-0 flex-col overflow-hidden">
-                <p className="text-[10px] font-black uppercase tracking-[0.26em] text-black/35">
-                  {activeBundle.badge} / {getCategoryLabel(activeBundle.category)}
+              <div className="flex h-full min-w-0 flex-col overflow-hidden">
+                <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black">
+                  {getCategoryLabel(activeBundle.category)}
                 </p>
-                <h2 className="mt-3 break-words text-3xl font-black uppercase leading-[0.9] tracking-[-0.08em] text-black sm:text-4xl xl:text-5xl">
+                <h2 className="mt-5 break-words text-3xl font-black uppercase leading-[0.9] tracking-[-0.08em] text-black sm:text-4xl xl:text-5xl">
                   {activeBundle.name}
                 </h2>
                 <p className="mt-4 max-w-3xl text-base font-semibold leading-6 tracking-[-0.035em] text-black/70 xl:text-lg">
