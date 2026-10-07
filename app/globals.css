@@ -33,6 +33,10 @@ a {
   text-decoration: none;
 }
 
+a.hover\:bg-black:hover {
+  color: #ffffff !important;
+}
+
 button,
 input,
 textarea,
