@@ -176,8 +176,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-[1540px] overflow-x-hidden px-4 pb-8 sm:px-6 xl:px-8">
-        <section className="grid min-w-0 gap-4 border-t border-black pt-6 lg:h-[calc(100vh-96px)] lg:min-h-[680px] lg:grid-cols-[260px_minmax(0,0.86fr)_minmax(0,1.14fr)] xl:grid-cols-[290px_minmax(0,0.86fr)_minmax(0,1.14fr)]">
+      <section className="mx-auto w-full max-w-[1540px] overflow-x-hidden px-4 pb-4 sm:px-6 xl:px-8">
+        <section className="grid min-w-0 gap-4 border-t border-black pt-4 lg:h-[calc(100vh-128px)] lg:grid-cols-[260px_minmax(0,0.86fr)_minmax(0,1.14fr)] xl:grid-cols-[290px_minmax(0,0.86fr)_minmax(0,1.14fr)]">
           <aside className="min-w-0 min-h-0 border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.035)] lg:h-full lg:overflow-hidden">
             <Kicker>Kategorien</Kicker>
             <div className="mt-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar lg:block lg:h-[calc(100%-34px)] lg:space-y-1 lg:overflow-y-auto lg:pb-0">
@@ -273,28 +273,28 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="min-w-0 min-h-0 overflow-hidden border border-black/10 bg-white p-5 shadow-[0_18px_60px_rgba(0,0,0,0.045)] sm:p-7 lg:h-full">
+          <section className="min-w-0 min-h-0 overflow-hidden border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.045)] sm:p-5 lg:h-full">
             <Kicker>Detail</Kicker>
 
             {viewMode === "tools" && activeTool ? (
-              <div className="mt-6 flex h-[calc(100%-24px)] min-w-0 flex-col overflow-hidden">
+              <div className="mt-5 flex h-[calc(100%-22px)] min-w-0 flex-col overflow-hidden">
                 <p className="text-[10px] font-black uppercase tracking-[0.26em] text-black/35">
                   {activeTool.badge} / {getCategoryLabel(activeTool.category)}
                 </p>
-                <h2 className="mt-3 break-words text-4xl font-black uppercase leading-[0.86] tracking-[-0.095em] text-black sm:text-5xl xl:text-7xl">
+                <h2 className="mt-3 break-words text-4xl font-black uppercase leading-[0.86] tracking-[-0.095em] text-black sm:text-5xl xl:text-6xl">
                   {activeTool.name}
                 </h2>
-                <p className="mt-5 max-w-3xl text-lg font-semibold leading-7 tracking-[-0.035em] text-black/70">
+                <p className="mt-4 max-w-3xl text-base font-semibold leading-7 tracking-[-0.035em] text-black/70 xl:text-lg">
                   {activeTool.description}
                 </p>
 
-                <div className="mt-6 grid gap-3">
+                <div className="mt-5 grid gap-3">
                   <Info label="Preis" value={activeTool.pricing} />
                   <Info label="Zielgruppe" value={activeTool.audience} />
                   <Info label="Tags" value={activeTool.tags.join(" / ")} />
                 </div>
 
-                <div className="mt-auto pt-6">
+                <div className="mt-auto pt-5">
                   <a
                     href={activeTool.url}
                     target="_blank"
@@ -308,23 +308,23 @@ export default function Home() {
             ) : null}
 
             {viewMode === "bundles" && activeBundle ? (
-              <div className="mt-6 flex h-[calc(100%-24px)] min-w-0 flex-col overflow-hidden">
+              <div className="mt-5 flex h-[calc(100%-22px)] min-w-0 flex-col overflow-hidden">
                 <p className="text-[10px] font-black uppercase tracking-[0.26em] text-black/35">
                   {activeBundle.badge} / {getCategoryLabel(activeBundle.category)}
                 </p>
-                <h2 className="mt-3 break-words text-4xl font-black uppercase leading-[0.86] tracking-[-0.09em] text-black sm:text-5xl xl:text-6xl">
+                <h2 className="mt-3 break-words text-3xl font-black uppercase leading-[0.9] tracking-[-0.09em] text-black sm:text-4xl xl:text-5xl">
                   {activeBundle.name}
                 </h2>
-                <p className="mt-5 max-w-3xl text-lg font-semibold leading-7 tracking-[-0.035em] text-black/70">
+                <p className="mt-4 max-w-3xl text-base font-semibold leading-6 tracking-[-0.035em] text-black/70 xl:text-lg">
                   {activeBundle.description}
                 </p>
 
-                <div className="mt-6 border-t border-black/10 pt-4">
+                <div className="mt-5 border-t border-black/10 pt-3">
                   <Kicker>Warum sinnvoll</Kicker>
-                  <p className="mt-3 text-sm leading-6 text-black/68">{activeBundle.why}</p>
+                  <p className="mt-2 text-sm leading-6 text-black/68">{activeBundle.why}</p>
                 </div>
 
-                <div className="mt-6 border-t border-black/10 pt-4">
+                <div className="mt-5 border-t border-black/10 pt-3">
                   <Kicker>Tools im Bundle</Kicker>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {activeBundle.toolLinks.map((tool) => (
@@ -341,7 +341,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="mt-auto grid gap-3 pt-5">
+                <div className="mt-auto grid gap-2 pt-4">
                   <Info label="Zielgruppe" value={activeBundle.audience} />
                   <Info label="Ideal für" value={activeBundle.bestFor.join(" / ")} />
                   <Info label="Nicht ideal" value={activeBundle.notFor} />
