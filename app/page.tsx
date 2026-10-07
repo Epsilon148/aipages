@@ -269,12 +269,19 @@ export default function Home() {
                           active ? "bg-black text-white" : "bg-white text-black hover:bg-[#f4f4ee]"
                         )}
                       >
-                        <p className={cx("text-[10px] font-black uppercase tracking-[0.24em]", active ? "text-white/45" : "text-black/35")}>
-                          {String(index + 1).padStart(2, "0")} / {bundle.badge}
-                        </p>
-                        <p className="mt-3 break-words text-2xl font-black uppercase leading-[0.88] tracking-[-0.075em] xl:text-[30px]">
-                          {bundle.name}
-                        </p>
+                        <div className="flex min-w-0 items-start justify-between gap-4">
+                          <div className="min-w-0">
+                            <p className={cx("text-[10px] font-black uppercase tracking-[0.24em]", active ? "text-white/45" : "text-black/35")}>
+                              {String(index + 1).padStart(2, "0")} / {bundle.badge}
+                            </p>
+                            <p className="mt-3 break-words text-2xl font-black uppercase leading-[0.88] tracking-[-0.075em] xl:text-[30px]">
+                              {bundle.name}
+                            </p>
+                          </div>
+                          <span className={cx("shrink-0 text-[10px] font-black uppercase tracking-[0.2em]", active ? "text-white/45" : "text-black/35")}>
+                            {getCategoryLabel(bundle.category)}
+                          </span>
+                        </div>
                       </button>
                     );
                   })}
@@ -326,12 +333,12 @@ export default function Home() {
                 </p>
 
                 <div className="mt-5 border-t border-black/10 pt-3">
-                  <Kicker>Warum sinnvoll</Kicker>
+                  <ColumnLabel>Warum sinnvoll</ColumnLabel>
                   <p className="mt-2 text-sm leading-6 text-black/68">{activeBundle.why}</p>
                 </div>
 
                 <div className="mt-5 border-t border-black/10 pt-3">
-                  <Kicker>Tools im Bundle</Kicker>
+                  <ColumnLabel>Tools im Bundle</ColumnLabel>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {activeBundle.toolLinks.map((tool) => (
                       <a
