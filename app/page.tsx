@@ -44,6 +44,7 @@ export default function Home() {
   const [query] = useState("");
   const [activeToolSlug, setActiveToolSlug] = useState(tools[0]?.slug ?? "");
   const [activeBundleSlug, setActiveBundleSlug] = useState(bundles[0]?.slug ?? "");
+  const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
 
   const normalizedQuery = query.trim().toLowerCase();
 
@@ -101,6 +102,7 @@ export default function Home() {
   function switchMode(mode: ViewMode) {
     setViewMode(mode);
     setActiveCategory("alle");
+    setMobileDetailOpen(false);
   }
 
   return (
@@ -174,7 +176,13 @@ export default function Home() {
 
       <section className="mx-auto w-full max-w-[1540px] overflow-x-hidden px-4 pb-4 sm:px-6 xl:px-8">
         <section className="grid min-w-0 gap-3 border-t border-black pt-4 lg:h-[calc(100vh-128px)] lg:grid-cols-[240px_minmax(0,0.94fr)_minmax(0,1.06fr)] xl:grid-cols-[260px_minmax(0,0.96fr)_minmax(0,1.04fr)]">
-          <aside className="min-w-0 min-h-0 border border-black/10 bg-white p-3 shadow-[0_18px_60px_rgba(0,0,0,0.035)] sm:p-4 lg:h-full lg:overflow-hidden">
+          <aside
+            className={cx(
+              "min-w-0 min-h-0 border border-black/10 bg-white p-3 shadow-[0_18px_60px_rgba(0,0,0,0.035)] sm:p-4 lg:h-full lg:overflow-hidden",
+              mobileDetailOpen ? "hidden" : "block",
+              "lg:block"
+            )}
+          >
             <ColumnLabel>Kategorien</ColumnLabel>
             <div className="mt-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar lg:block lg:h-[calc(100%-34px)] lg:space-y-1 lg:overflow-y-auto lg:pb-0">
               {categories.map((category) => {
@@ -183,7 +191,10 @@ export default function Home() {
                   <button
                     key={category.slug}
                     type="button"
-                    onClick={() => setActiveCategory(category.slug)}
+                    onClick={() => {
+                      setActiveCategory(category.slug);
+                      setMobileDetailOpen(false);
+                    }}
                     className={cx(
                       "shrink-0 border px-3 py-2 text-left text-xs font-black uppercase tracking-[0.13em] transition lg:block lg:w-full",
                       active
@@ -198,7 +209,13 @@ export default function Home() {
             </div>
           </aside>
 
-          <section className="min-w-0 min-h-0 overflow-hidden border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.035)] lg:h-full">
+          <section
+            className={cx(
+              "min-w-0 min-h-0 overflow-hidden border border-black/10 bg-white shadow-[0_18px_60px_rgba(0,0,0,0.035)] lg:h-full",
+              mobileDetailOpen ? "hidden" : "block",
+              "lg:block"
+            )}
+          >
             <div className="flex items-center justify-between border-b border-black/10 p-3 sm:p-4">
               <ColumnLabel>{viewMode === "tools" ? "Tools" : "Bundles"}</ColumnLabel>
               <span className="text-[10px] font-medium uppercase tracking-[0.24em] text-black">
@@ -221,7 +238,10 @@ export default function Home() {
                       <button
                         key={tool.slug}
                         type="button"
-                        onClick={() => setActiveToolSlug(tool.slug)}
+                        onClick={() => {
+                          setActiveToolSlug(tool.slug);
+                          setMobileDetailOpen(true);
+                        }}
                         onMouseEnter={() => setActiveToolSlug(tool.slug)}
                         className={cx(
                           "block w-full border-b border-black/10 p-4 text-left transition last:border-b-0",
@@ -250,7 +270,10 @@ export default function Home() {
                       <button
                         key={bundle.slug}
                         type="button"
-                        onClick={() => setActiveBundleSlug(bundle.slug)}
+                        onClick={() => {
+                          setActiveBundleSlug(bundle.slug);
+                          setMobileDetailOpen(true);
+                        }}
                         onMouseEnter={() => setActiveBundleSlug(bundle.slug)}
                         className={cx(
                           "block w-full border-b border-black/10 p-4 text-left transition last:border-b-0",
@@ -276,7 +299,21 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="min-w-0 min-h-0 overflow-visible border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.045)] sm:p-5 lg:h-full lg:overflow-hidden">
+          <section
+            className={cx(
+              "min-w-0 min-h-0 overflow-visible border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.045)] sm:p-5 lg:h-full lg:overflow-hidden",
+              mobileDetailOpen ? "block" : "hidden",
+              "lg:block"
+            )}
+          >
+            <button
+              type="button"
+              onClick={() => setMobileDetailOpen(false)}
+              className="mb-5 inline-flex border border-black/15 bg-white px-3 py-2 text-[10px] font-black uppercase tracking-[0.22em] text-black transition hover:border-black lg:hidden"
+            >
+              ← Zurück
+            </button>
+
             {viewMode === "tools" && activeTool ? (
               <div className="flex min-w-0 flex-col lg:h-full lg:overflow-hidden">
                 <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black">
