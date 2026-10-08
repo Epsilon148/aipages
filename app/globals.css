@@ -65,6 +65,43 @@ header > div > a[href="/"]:first-child * {
   }
 }
 
+@media (min-width: 1024px) {
+  main > section:first-of-type {
+    min-height: 640px !important;
+    padding-top: 56px !important;
+    padding-bottom: 52px !important;
+  }
+
+  main > section:first-of-type > div {
+    gap: 48px !important;
+    grid-template-columns: minmax(0, 0.98fr) minmax(360px, 0.9fr) !important;
+  }
+
+  main > section:first-of-type h1 {
+    font-size: clamp(92px, 8.1vw, 128px) !important;
+    line-height: 0.8 !important;
+  }
+
+  main > section:first-of-type > div > div:last-child {
+    gap: 48px !important;
+  }
+
+  main > section:first-of-type > div > div:last-child > p {
+    max-width: 620px !important;
+    font-size: clamp(22px, 1.9vw, 28px) !important;
+    line-height: 1.18 !important;
+  }
+
+  main > section:first-of-type > div > div:last-child > div {
+    max-width: 520px !important;
+    padding-top: 0 !important;
+  }
+
+  main > section:first-of-type > div > div:last-child > div > div > p:first-child {
+    font-size: clamp(48px, 4.4vw, 64px) !important;
+  }
+}
+
 button,
 input,
 textarea,
