@@ -30,11 +30,11 @@ function Section({
 
 function InfoLine({ label, value }: { label: string; value: string }) {
   return (
-    <div className="border-t border-white/15 pt-4">
-      <p className="text-[10px] font-black uppercase tracking-[0.28em] text-white/40">
+    <div className="border-t border-black/10 pt-4">
+      <p className="text-[10px] font-black uppercase tracking-[0.28em] text-black/35">
         {label}
       </p>
-      <p className="mt-2 break-words text-sm font-semibold leading-6 tracking-[-0.02em] text-white/80">
+      <p className="mt-2 break-words text-sm font-semibold leading-6 tracking-[-0.02em] text-black/68">
         {value}
       </p>
     </div>
@@ -70,20 +70,20 @@ export default function ImpressumPage() {
       </header>
 
       <section className="mx-auto w-full max-w-[1540px] px-4 pb-6 pt-5 sm:px-6 sm:pt-6 xl:px-8">
-        <div className="grid gap-3 border-t border-black pt-4 lg:grid-cols-[minmax(380px,0.62fr)_minmax(0,1.38fr)] lg:items-start">
-          <aside className="min-w-0 border border-black bg-black p-5 text-white shadow-[0_18px_60px_rgba(0,0,0,0.08)] sm:p-6 lg:sticky lg:top-[89px] lg:self-start">
-            <p className="text-[11px] font-black uppercase tracking-[0.32em] text-white/45">
+        <div className="grid gap-8 border-t border-black pt-4 lg:grid-cols-[minmax(300px,0.5fr)_minmax(0,1.5fr)] lg:items-start">
+          <aside className="min-w-0 text-black lg:sticky lg:top-[89px] lg:self-start">
+            <p className="text-[11px] font-black uppercase tracking-[0.32em] text-black/38">
               Rechtliches
             </p>
-            <h1 className="mt-5 whitespace-nowrap text-[42px] font-black uppercase leading-[0.78] tracking-[-0.095em] text-white sm:text-[64px] lg:text-[48px] xl:text-[64px]">
+            <h1 className="mt-5 whitespace-nowrap text-[clamp(40px,4.8vw,64px)] font-black uppercase leading-[0.78] tracking-[-0.095em] text-black">
               Impressum
             </h1>
-            <p className="mt-6 text-base font-semibold leading-7 tracking-[-0.03em] text-white/70">
+            <p className="mt-6 max-w-xl text-base font-semibold leading-7 tracking-[-0.03em] text-black/70">
               Anbieterkennzeichnung für {site.name}. Diese Seite gehört zum
               öffentlichen KI-Tool-Verzeichnis unter {site.domain}.
             </p>
 
-            <div className="mt-8 grid gap-5">
+            <div className="mt-8 grid max-w-xl gap-5">
               <InfoLine label="Seite" value="Impressum" />
               <InfoLine label="Projekt" value="KI-Tools und KI-Bundles" />
               <InfoLine label="Status" value="Informationsangebot im Aufbau" />
