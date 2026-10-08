@@ -69,8 +69,8 @@ export default function ImpressumPage() {
         </div>
       </header>
 
-      <section className="mx-auto flex min-h-[42vh] w-full max-w-[1540px] items-end px-4 py-10 sm:px-8 sm:py-14">
-        <div className="grid w-full min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(360px,0.62fr)] lg:items-end">
+      <section className="mx-auto flex w-full max-w-[1540px] items-start px-4 pt-7 pb-5 sm:px-8 sm:pt-8 sm:pb-6">
+        <div className="grid w-full min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(360px,0.62fr)] lg:items-start">
           <div className="min-w-0">
             <p className="text-[11px] font-black uppercase tracking-[0.32em] text-black/38">
               Rechtliches
@@ -80,7 +80,7 @@ export default function ImpressumPage() {
             </h1>
           </div>
 
-          <p className="max-w-2xl text-lg font-semibold leading-7 tracking-[-0.03em] text-black/70 sm:text-2xl sm:leading-8 lg:pb-2">
+          <p className="max-w-2xl text-lg font-semibold leading-7 tracking-[-0.03em] text-black/70 sm:text-2xl sm:leading-8 lg:pt-8">
             Anbieterkennzeichnung für {site.name}. Diese Seite gehört zum
             öffentlichen KI-Tool-Verzeichnis unter {site.domain}.
           </p>
