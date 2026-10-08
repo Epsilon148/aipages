@@ -180,16 +180,16 @@ export default function Home() {
               finden, verstehen, kombinieren und direkt öffnen.
             </p>
 
-            <div className="grid grid-cols-3 gap-4 border-t border-black pt-5 sm:gap-10">
-              <div className="grid gap-2">
+            <div className="grid grid-cols-3 gap-4 pt-5 sm:gap-10">
+              <div className="grid justify-items-center gap-2 text-center">
                 <p className="text-5xl font-black leading-none tracking-[-0.085em] text-black sm:text-7xl">{tools.length}</p>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-black">Tools</p>
               </div>
-              <div className="grid gap-2">
+              <div className="grid justify-items-center gap-2 text-center">
                 <p className="text-5xl font-black leading-none tracking-[-0.085em] text-black sm:text-7xl">{bundles.length}</p>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-black">Bundles</p>
               </div>
-              <div className="grid gap-2">
+              <div className="grid justify-items-center gap-2 text-center">
                 <p className="text-5xl font-black leading-none tracking-[-0.085em] text-black sm:text-7xl">{categoryCount}</p>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-black">Kategorien</p>
               </div>
