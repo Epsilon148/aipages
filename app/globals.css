@@ -37,6 +37,34 @@ a.hover\:bg-black:hover {
   color: #ffffff !important;
 }
 
+header > div > a[href="/"]:first-child {
+  display: block !important;
+  width: 86px;
+  height: 56px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-image: url("/aip-logo.svg");
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
+header > div > a[href="/"]:first-child * {
+  color: transparent !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
+@media (min-width: 640px) {
+  header > div > a[href="/"]:first-child {
+    width: 104px;
+    height: 64px;
+  }
+}
+
 button,
 input,
 textarea,
