@@ -213,10 +213,10 @@ export default function Home() {
                     type="button"
                     onClick={() => selectCategory(category.slug)}
                     className={cx(
-                      "shrink-0 border px-3 py-2 text-left text-xs font-black uppercase tracking-[0.13em] transition lg:block lg:w-full",
+                      "category-button shrink-0 border border-transparent bg-transparent px-3 py-2 text-left font-black uppercase leading-[1.15] tracking-[0.17em] text-white/70 transition-all duration-150 ease-out lg:block lg:w-full",
                       active
-                        ? "border-white bg-white text-black"
-                        : "border-transparent bg-black text-white/70 hover:border-white/25 hover:bg-white/10 hover:text-white"
+                        ? "category-button-active translate-x-2 text-[17px] text-white"
+                        : "text-[12px] hover:translate-x-2 hover:text-[17px] hover:text-white"
                     )}
                   >
                     {category.name}
