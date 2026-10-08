@@ -60,6 +60,9 @@ header > div > a[href="/"]:first-child * {
 
 main > section:nth-of-type(2) aside button {
   position: relative;
+  background: transparent !important;
+  border-color: transparent !important;
+  color: rgba(255, 255, 255, 0.76) !important;
   font-weight: 950 !important;
   letter-spacing: 0.17em !important;
   line-height: 1.15 !important;
@@ -69,14 +72,15 @@ main > section:nth-of-type(2) aside button {
   will-change: transform;
   transition:
     transform 160ms ease,
-    background-color 160ms ease,
-    border-color 160ms ease,
     color 160ms ease !important;
 }
 
 main > section:nth-of-type(2) aside button:hover,
 main > section:nth-of-type(2) aside button[class*="bg-white"] {
-  transform: translateX(2px) scale(1.035);
+  background: transparent !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+  transform: translateX(2px) scale(1.045);
   z-index: 1;
 }
 
