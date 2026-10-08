@@ -63,14 +63,16 @@ main > section:nth-of-type(2) aside button {
   background: transparent !important;
   border-color: transparent !important;
   color: rgba(255, 255, 255, 0.76) !important;
+  font-size: 12px !important;
   font-weight: 950 !important;
   letter-spacing: 0.17em !important;
   line-height: 1.15 !important;
   text-shadow: 0 0 0.01px currentColor;
-  transform: translateZ(0) scale(1);
+  transform: translateZ(0);
   transform-origin: left center;
-  will-change: transform;
+  will-change: font-size, transform;
   transition:
+    font-size 160ms ease,
     transform 160ms ease,
     color 160ms ease !important;
 }
@@ -80,7 +82,8 @@ main > section:nth-of-type(2) aside button[class*="bg-white"] {
   background: transparent !important;
   border-color: transparent !important;
   color: #ffffff !important;
-  transform: translateX(2px) scale(1.045);
+  font-size: 13.6px !important;
+  transform: translateX(4px);
   z-index: 1;
 }
 
