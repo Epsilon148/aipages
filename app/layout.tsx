@@ -14,6 +14,11 @@ export const metadata: Metadata = {
   authors: [{ name: site.author }],
   creator: site.author,
   publisher: site.author,
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    shortcut: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/icon.svg", type: "image/svg+xml" }],
+  },
   alternates: {
     canonical: "/",
   },
