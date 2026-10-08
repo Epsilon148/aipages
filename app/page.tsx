@@ -200,8 +200,10 @@ export default function Home() {
 
       <section className="mx-auto w-full max-w-[1540px] overflow-x-hidden px-4 pb-4 sm:px-6 xl:px-8">
         <section className="grid min-w-0 gap-3 border-t border-black pt-4 lg:h-[calc(100vh-128px)] lg:grid-cols-[240px_minmax(0,0.94fr)_minmax(0,1.06fr)] xl:grid-cols-[260px_minmax(0,0.96fr)_minmax(0,1.04fr)]">
-          <aside className="min-w-0 min-h-0 border border-black/10 bg-white p-3 shadow-[0_18px_60px_rgba(0,0,0,0.035)] sm:p-4 lg:h-full lg:overflow-hidden">
-            <ColumnLabel>Kategorien</ColumnLabel>
+          <aside className="min-w-0 min-h-0 border border-black bg-black p-3 shadow-[0_18px_60px_rgba(0,0,0,0.08)] sm:p-4 lg:h-full lg:overflow-hidden">
+            <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white">
+              Kategorien
+            </p>
             <div className="mt-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar lg:block lg:h-[calc(100%-34px)] lg:space-y-1 lg:overflow-y-auto lg:pb-0">
               {categories.map((category) => {
                 const active = category.slug === activeCategory;
@@ -213,8 +215,8 @@ export default function Home() {
                     className={cx(
                       "shrink-0 border px-3 py-2 text-left text-xs font-black uppercase tracking-[0.13em] transition lg:block lg:w-full",
                       active
-                        ? "border-black bg-black text-white"
-                        : "border-transparent bg-white text-black/45 hover:border-black/10 hover:bg-[#f4f4ee] hover:text-black"
+                        ? "border-white bg-white text-black"
+                        : "border-transparent bg-black text-white/70 hover:border-white/25 hover:bg-white/10 hover:text-white"
                     )}
                   >
                     {category.name}
