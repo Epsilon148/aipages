@@ -65,6 +65,89 @@ header > div > a[href="/"]:first-child * {
   }
 }
 
+@media (min-width: 1024px) {
+  main > section:first-of-type {
+    min-height: 640px !important;
+    padding-top: 56px !important;
+    padding-bottom: 52px !important;
+  }
+
+  main > section:first-of-type > div {
+    gap: 48px !important;
+    grid-template-columns: minmax(0, 0.98fr) minmax(360px, 0.9fr) !important;
+  }
+
+  main > section:first-of-type h1 {
+    font-size: clamp(92px, 8.1vw, 128px) !important;
+    line-height: 0.8 !important;
+  }
+
+  main > section:first-of-type > div > div:last-child {
+    gap: 48px !important;
+  }
+
+  main > section:first-of-type > div > div:last-child > p {
+    max-width: 620px !important;
+    font-size: clamp(22px, 1.9vw, 28px) !important;
+    line-height: 1.18 !important;
+  }
+
+  main > section:first-of-type > div > div:last-child > div {
+    max-width: 520px !important;
+    padding-top: 0 !important;
+  }
+
+  main > section:first-of-type > div > div:last-child > div > div > p:first-child {
+    font-size: clamp(48px, 4.4vw, 64px) !important;
+  }
+
+  main > section:nth-of-type(2) > section {
+    gap: 14px !important;
+    padding-top: 12px !important;
+    grid-template-columns: 220px minmax(0, 0.95fr) minmax(0, 1.05fr) !important;
+  }
+
+  main > section:nth-of-type(2) aside {
+    background: #000000 !important;
+    border-color: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  main > section:nth-of-type(2) aside > p {
+    color: #ffffff !important;
+  }
+
+  main > section:nth-of-type(2) aside button {
+    background: #000000 !important;
+    border-color: transparent !important;
+    color: rgba(255, 255, 255, 0.72) !important;
+  }
+
+  main > section:nth-of-type(2) aside button:hover {
+    border-color: rgba(255, 255, 255, 0.28) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+  }
+
+  main > section:nth-of-type(2) aside button[class*="bg-white"] {
+    background: #ffffff !important;
+    border-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  main > section:nth-of-type(2) input {
+    font-size: 14px !important;
+  }
+
+  main > section:nth-of-type(2) button p.mt-3 {
+    font-size: clamp(24px, 2.1vw, 30px) !important;
+  }
+
+  main > section:nth-of-type(2) h2 {
+    font-size: clamp(44px, 3.8vw, 58px) !important;
+  }
+}
+
 button,
 input,
 textarea,
