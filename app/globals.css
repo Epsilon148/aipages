@@ -244,3 +244,21 @@ button {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.category-button {
+  font-weight: 1000 !important;
+  -webkit-text-stroke: 0.22px currentColor;
+  text-shadow:
+    0.28px 0 currentColor,
+    -0.12px 0 currentColor,
+    0 0.28px currentColor;
+}
+
+.category-button:hover,
+.category-button-active {
+  -webkit-text-stroke: 0.32px currentColor;
+  text-shadow:
+    0.42px 0 currentColor,
+    -0.18px 0 currentColor,
+    0 0.42px currentColor;
+}
