@@ -334,7 +334,7 @@ export default function Home() {
 
           <section
             className={cx(
-              "min-w-0 min-h-0 overflow-visible border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.045)] sm:p-5 lg:block lg:h-full lg:overflow-hidden",
+              "min-w-0 min-h-0 overflow-visible border border-black/10 bg-white p-4 shadow-[0_18px_60px_rgba(0,0,0,0.045)] sm:p-5 lg:block lg:h-full lg:overflow-y-auto lg:overflow-x-hidden lg:no-scrollbar",
               mobileDetailOpen ? "block" : "hidden"
             )}
           >
@@ -347,7 +347,7 @@ export default function Home() {
             </button>
 
             {viewMode === "tools" && activeTool ? (
-              <div className="flex min-w-0 flex-col lg:h-full lg:overflow-hidden">
+              <div className="flex min-w-0 flex-col lg:min-h-full">
                 <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black">
                   {getCategoryLabel(activeTool.category)}
                 </p>
@@ -384,7 +384,7 @@ export default function Home() {
             ) : null}
 
             {viewMode === "bundles" && activeBundle ? (
-              <div className="flex min-w-0 flex-col lg:h-full lg:overflow-hidden">
+              <div className="flex min-w-0 flex-col lg:min-h-full">
                 <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black">
                   {getCategoryLabel(activeBundle.category)}
                 </p>
