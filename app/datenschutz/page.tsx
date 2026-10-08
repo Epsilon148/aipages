@@ -75,7 +75,7 @@ export default function DatenschutzPage() {
             <p className="text-[11px] font-black uppercase tracking-[0.32em] text-black/38">
               Rechtliches
             </p>
-            <h1 className="mt-5 whitespace-nowrap text-[clamp(34px,4.1vw,54px)] font-black uppercase leading-[0.78] tracking-[-0.095em] text-black">
+            <h1 className="mt-5 whitespace-nowrap text-[clamp(28px,3.3vw,44px)] font-black uppercase leading-[0.78] tracking-[-0.095em] text-black">
               Datenschutz
             </h1>
             <p className="mt-6 max-w-xl text-base font-semibold leading-7 tracking-[-0.03em] text-black/70">
