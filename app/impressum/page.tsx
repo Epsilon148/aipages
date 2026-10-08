@@ -70,12 +70,12 @@ export default function ImpressumPage() {
       </header>
 
       <section className="mx-auto w-full max-w-[1540px] px-4 pb-6 pt-5 sm:px-6 sm:pt-6 xl:px-8">
-        <div className="grid gap-3 border-t border-black pt-4 lg:grid-cols-[minmax(280px,0.52fr)_minmax(0,1.48fr)] lg:items-start">
+        <div className="grid gap-3 border-t border-black pt-4 lg:grid-cols-[minmax(380px,0.62fr)_minmax(0,1.38fr)] lg:items-start">
           <aside className="min-w-0 border border-black bg-black p-5 text-white shadow-[0_18px_60px_rgba(0,0,0,0.08)] sm:p-6 lg:sticky lg:top-[89px] lg:self-start">
             <p className="text-[11px] font-black uppercase tracking-[0.32em] text-white/45">
               Rechtliches
             </p>
-            <h1 className="mt-5 break-words text-[15vw] font-black uppercase leading-[0.78] tracking-[-0.095em] text-white sm:text-[76px] lg:text-[82px] xl:text-[92px]">
+            <h1 className="mt-5 whitespace-nowrap text-[42px] font-black uppercase leading-[0.78] tracking-[-0.095em] text-white sm:text-[64px] lg:text-[48px] xl:text-[64px]">
               Impressum
             </h1>
             <p className="mt-6 text-base font-semibold leading-7 tracking-[-0.03em] text-white/70">
