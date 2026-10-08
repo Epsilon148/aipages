@@ -58,6 +58,28 @@ header > div > a[href="/"]:first-child * {
   line-height: 0 !important;
 }
 
+main > section:nth-of-type(2) aside button {
+  position: relative;
+  font-weight: 950 !important;
+  letter-spacing: 0.17em !important;
+  line-height: 1.15 !important;
+  text-shadow: 0 0 0.01px currentColor;
+  transform: translateZ(0) scale(1);
+  transform-origin: left center;
+  will-change: transform;
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease !important;
+}
+
+main > section:nth-of-type(2) aside button:hover,
+main > section:nth-of-type(2) aside button[class*="bg-white"] {
+  transform: translateX(2px) scale(1.035);
+  z-index: 1;
+}
+
 @media (min-width: 640px) {
   header > div > a[href="/"]:first-child {
     width: 104px;
