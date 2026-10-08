@@ -108,6 +108,14 @@ header > div > a[href="/"]:first-child * {
 
   main > section:nth-of-type(2) > section > section:last-child > div {
     min-height: 0 !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  main > section:nth-of-type(2) > section > section:last-child > div > div:has(> a[href^="http"]) {
+    margin-top: auto !important;
+    padding-top: 12px !important;
   }
 
   main > section:nth-of-type(2) > section > section:last-child p:first-child {
