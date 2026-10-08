@@ -58,35 +58,6 @@ header > div > a[href="/"]:first-child * {
   line-height: 0 !important;
 }
 
-main > section:nth-of-type(2) aside button {
-  position: relative;
-  background: transparent !important;
-  border-color: transparent !important;
-  color: rgba(255, 255, 255, 0.76) !important;
-  font-size: 12px !important;
-  font-weight: 950 !important;
-  letter-spacing: 0.17em !important;
-  line-height: 1.15 !important;
-  text-shadow: 0 0 0.01px currentColor;
-  transform: translateZ(0);
-  transform-origin: left center;
-  will-change: font-size, transform;
-  transition:
-    font-size 160ms ease,
-    transform 160ms ease,
-    color 160ms ease !important;
-}
-
-main > section:nth-of-type(2) aside button:hover,
-main > section:nth-of-type(2) aside button[class*="bg-white"] {
-  background: transparent !important;
-  border-color: transparent !important;
-  color: #ffffff !important;
-  font-size: 13.6px !important;
-  transform: translateX(4px);
-  z-index: 1;
-}
-
 @media (min-width: 640px) {
   header > div > a[href="/"]:first-child {
     width: 104px;
@@ -272,30 +243,4 @@ button {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
-}
-
-aside.bg-black button,
-aside[class*="bg-black"] button {
-  background: transparent !important;
-  border-color: transparent !important;
-  color: rgba(255, 255, 255, 0.76) !important;
-  font-size: 12px !important;
-  font-weight: 950 !important;
-  letter-spacing: 0.17em !important;
-  transform: translateX(0) !important;
-  transform-origin: left center !important;
-  transition: font-size 150ms ease, transform 150ms ease, color 150ms ease !important;
-}
-
-aside.bg-black button:hover,
-aside[class*="bg-black"] button:hover,
-aside.bg-black button.bg-white,
-aside[class*="bg-black"] button.bg-white,
-aside.bg-black button[class*="bg-white"],
-aside[class*="bg-black"] button[class*="bg-white"] {
-  background: transparent !important;
-  border-color: transparent !important;
-  color: #ffffff !important;
-  font-size: 17px !important;
-  transform: translateX(8px) !important;
 }
