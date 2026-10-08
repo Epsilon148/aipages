@@ -165,34 +165,34 @@ export default function Home() {
       </header>
 
       <section className="mx-auto flex min-h-[72vh] w-full max-w-[1540px] items-center px-4 py-10 sm:min-h-[calc(100vh-69px)] sm:px-8 sm:py-12">
-        <div className="grid w-full min-w-0 gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-          <div className="min-w-0">
-            <h1 className="max-w-6xl text-[18vw] font-semibold uppercase leading-[0.82] tracking-[-0.085em] text-black sm:text-[110px] lg:text-[132px] xl:text-[158px]">
-              KI Tools.
-              <br />
-              Klar.
-            </h1>
-          </div>
+        <div className="grid w-full min-w-0 gap-8 sm:gap-10">
+          <div className="grid min-w-0 gap-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)] lg:items-center">
+            <div className="min-w-0">
+              <h1 className="max-w-6xl text-[18vw] font-black uppercase leading-[0.78] tracking-[-0.095em] text-black sm:text-[110px] lg:text-[132px] xl:text-[158px]">
+                KI Tools.
+                <br />
+                Klar.
+              </h1>
+            </div>
 
-          <div className="grid min-w-0 gap-7 lg:pb-2">
-            <p className="max-w-2xl text-lg font-normal leading-7 tracking-[-0.025em] text-black/76 sm:text-2xl sm:leading-9">
+            <p className="max-w-2xl text-xl font-semibold leading-7 tracking-[-0.035em] text-black sm:text-2xl sm:leading-8 lg:justify-self-end lg:text-3xl lg:leading-[1.08] xl:text-[34px]">
               Ein simples Verzeichnis für KI-Werkzeuge und KI-Bundles. Schnell
               finden, verstehen, kombinieren und direkt öffnen.
             </p>
+          </div>
 
-            <div className="grid grid-cols-3 gap-4 sm:gap-12">
-              <div>
-                <p className="text-4xl font-medium tracking-[-0.07em] text-black sm:text-6xl">{tools.length}</p>
-                <p className="mt-2 text-[10px] font-medium uppercase tracking-[0.26em] text-black">Tools</p>
-              </div>
-              <div>
-                <p className="text-4xl font-medium tracking-[-0.07em] text-black sm:text-6xl">{bundles.length}</p>
-                <p className="mt-2 text-[10px] font-medium uppercase tracking-[0.26em] text-black">Bundles</p>
-              </div>
-              <div>
-                <p className="text-4xl font-medium tracking-[-0.07em] text-black sm:text-6xl">{categoryCount}</p>
-                <p className="mt-2 text-[10px] font-medium uppercase tracking-[0.26em] text-black">Kategorien</p>
-              </div>
+          <div className="grid grid-cols-3 gap-4 border-t border-black pt-5 sm:gap-10 lg:max-w-[840px]">
+            <div className="grid gap-2">
+              <p className="text-5xl font-black leading-none tracking-[-0.085em] text-black sm:text-7xl">{tools.length}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-black">Tools</p>
+            </div>
+            <div className="grid gap-2">
+              <p className="text-5xl font-black leading-none tracking-[-0.085em] text-black sm:text-7xl">{bundles.length}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-black">Bundles</p>
+            </div>
+            <div className="grid gap-2">
+              <p className="text-5xl font-black leading-none tracking-[-0.085em] text-black sm:text-7xl">{categoryCount}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-black">Kategorien</p>
             </div>
           </div>
         </div>
