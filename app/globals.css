@@ -273,3 +273,29 @@ button {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+aside.bg-black button,
+aside[class*="bg-black"] button {
+  background: transparent !important;
+  border-color: transparent !important;
+  color: rgba(255, 255, 255, 0.76) !important;
+  font-size: 12px !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.17em !important;
+  transform: translateX(0) !important;
+  transform-origin: left center !important;
+  transition: font-size 150ms ease, transform 150ms ease, color 150ms ease !important;
+}
+
+aside.bg-black button:hover,
+aside[class*="bg-black"] button:hover,
+aside.bg-black button.bg-white,
+aside[class*="bg-black"] button.bg-white,
+aside.bg-black button[class*="bg-white"],
+aside[class*="bg-black"] button[class*="bg-white"] {
+  background: transparent !important;
+  border-color: transparent !important;
+  color: #ffffff !important;
+  font-size: 17px !important;
+  transform: translateX(8px) !important;
+}
