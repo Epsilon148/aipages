@@ -17,50 +17,91 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="border-t border-black/10 pt-6">
-      <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.32em] text-black">
+    <section className="border-t border-black/10 pt-5">
+      <p className="mb-4 text-[11px] font-black uppercase tracking-[0.32em] text-black">
         {title}
       </p>
-      <div className="space-y-3 text-base leading-7 text-black/68">{children}</div>
+      <div className="space-y-3 text-base leading-7 tracking-[-0.02em] text-black/68">
+        {children}
+      </div>
     </section>
+  );
+}
+
+function InfoLine({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="border-t border-white/15 pt-4">
+      <p className="text-[10px] font-black uppercase tracking-[0.28em] text-white/40">
+        {label}
+      </p>
+      <p className="mt-2 break-words text-sm font-semibold leading-6 tracking-[-0.02em] text-white/80">
+        {value}
+      </p>
+    </div>
   );
 }
 
 export default function DatenschutzPage() {
   return (
-    <main className="min-h-screen bg-[#fbfbf7] px-5 py-6 text-black sm:px-8 sm:py-8">
-      <section className="mx-auto max-w-[1100px]">
-        <header className="flex items-center justify-between border-b border-black pb-5">
-          <a
-            href="/"
-            className="text-2xl font-black uppercase tracking-[-0.075em] sm:text-3xl"
-          >
-            AI Pages
+    <main className="min-h-screen overflow-x-hidden bg-[#fbfbf7] text-black">
+      <header className="sticky top-0 z-20 border-b border-black/10 bg-[#fbfbf7]/92 backdrop-blur-xl">
+        <div className="mx-auto flex min-h-[64px] w-full max-w-[1540px] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:h-[69px] sm:flex-nowrap sm:px-8 sm:py-0">
+          <a href="/" className="flex min-w-0 items-baseline">
+            <span className="text-xl font-black uppercase tracking-[-0.075em] sm:text-3xl">
+              AI Pages
+            </span>
           </a>
-          <a
-            href="/"
-            className="text-[10px] font-medium uppercase tracking-[0.24em] text-black/50 transition hover:text-black"
-          >
-            Zurück
-          </a>
-        </header>
 
-        <div className="grid gap-10 py-10 lg:grid-cols-[0.9fr_1.1fr] lg:py-14">
-          <div>
-            <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black">
+          <nav className="flex shrink-0 items-center gap-2">
+            <a
+              href="/"
+              className="border border-black/15 bg-white px-3 py-2.5 text-[10px] font-black uppercase tracking-[0.2em] text-black transition hover:border-black hover:bg-black hover:text-white sm:px-5 sm:py-3"
+            >
+              Zurück
+            </a>
+            <a
+              href="/impressum"
+              className="border border-black bg-black px-3 py-2.5 text-[10px] font-black uppercase tracking-[0.2em] text-white transition hover:bg-white hover:text-black sm:px-5 sm:py-3"
+            >
+              Impressum
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      <section className="mx-auto flex min-h-[42vh] w-full max-w-[1540px] items-end px-4 py-10 sm:px-8 sm:py-14">
+        <div className="grid w-full min-w-0 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(360px,0.62fr)] lg:items-end">
+          <div className="min-w-0">
+            <p className="text-[11px] font-black uppercase tracking-[0.32em] text-black/38">
               Rechtliches
             </p>
-            <h1 className="mt-6 text-6xl font-black uppercase leading-[0.82] tracking-[-0.095em] sm:text-7xl lg:text-8xl">
+            <h1 className="mt-5 max-w-6xl text-[16vw] font-black uppercase leading-[0.78] tracking-[-0.095em] text-black sm:text-[96px] lg:text-[118px] xl:text-[138px]">
               Datenschutz
             </h1>
-            <p className="mt-8 max-w-xl text-xl font-semibold leading-8 tracking-[-0.035em] text-black/70">
-              Diese Datenschutzhinweise beschreiben die aktuelle MVP-Version von
-              {" "}{site.name}. Die finale Fassung sollte vor größerer
-              Veröffentlichung rechtlich geprüft werden.
-            </p>
           </div>
 
-          <div className="grid gap-8 border border-black/10 bg-white p-5 shadow-[0_18px_60px_rgba(0,0,0,0.035)] sm:p-7">
+          <p className="max-w-2xl text-lg font-semibold leading-7 tracking-[-0.03em] text-black/70 sm:text-2xl sm:leading-8 lg:pb-2">
+            Diese Datenschutzhinweise beschreiben die aktuelle MVP-Version von{" "}
+            {site.name}. Die finale Fassung sollte vor größerer Veröffentlichung
+            rechtlich geprüft werden.
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto w-full max-w-[1540px] px-4 pb-6 sm:px-6 xl:px-8">
+        <div className="grid gap-3 border-t border-black pt-4 lg:grid-cols-[320px_minmax(0,1fr)]">
+          <aside className="min-w-0 border border-black bg-black p-5 shadow-[0_18px_60px_rgba(0,0,0,0.08)] lg:sticky lg:top-[89px] lg:self-start">
+            <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white">
+              AI Pages
+            </p>
+            <div className="mt-8 grid gap-5">
+              <InfoLine label="Seite" value="Datenschutz" />
+              <InfoLine label="Projekt" value="KI-Tool-Verzeichnis" />
+              <InfoLine label="Stand" value="Oktober 2026" />
+            </div>
+          </aside>
+
+          <article className="grid min-w-0 gap-5 border border-black/10 bg-white p-5 shadow-[0_18px_60px_rgba(0,0,0,0.035)] sm:p-7 lg:p-8">
             <Section title="1. Verantwortlicher">
               <p>{site.legalName}</p>
               <p>{site.legalStreet}</p>
@@ -143,8 +184,20 @@ export default function DatenschutzPage() {
             <Section title="8. Stand">
               <p>Stand: Oktober 2026</p>
             </Section>
-          </div>
+          </article>
         </div>
+
+        <footer className="mt-5 flex flex-col gap-3 border-t border-black/10 py-5 text-[11px] font-medium uppercase tracking-[0.22em] text-black sm:flex-row sm:items-center sm:justify-between">
+          <p>AI Pages</p>
+          <nav className="flex gap-5">
+            <a href="/" className="text-black/50 transition hover:text-black">
+              Start
+            </a>
+            <a href="/impressum" className="text-black/50 transition hover:text-black">
+              Impressum
+            </a>
+          </nav>
+        </footer>
       </section>
     </main>
   );
