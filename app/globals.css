@@ -427,3 +427,17 @@ main > section:nth-of-type(2) > section > section:first-of-type input::placehold
   color: rgba(0, 0, 0, 0.34) !important;
   opacity: 1 !important;
 }
+
+main > section:first-of-type > div:has(.aip-network) {
+  left: 50% !important;
+  right: auto !important;
+  width: min(148vw, 2300px) !important;
+  max-width: none !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+@media (max-width: 767px) {
+  main > section:first-of-type > div:has(.aip-network) {
+    width: 185vw !important;
+  }
+}
