@@ -4,7 +4,7 @@ export default function AIHeroNetwork() {
       <style>{`
         .aip-network {
           width: 100%;
-          max-width: 620px;
+          max-width: none;
           aspect-ratio: 1200 / 440;
           background: transparent;
           overflow: hidden;
@@ -81,13 +81,6 @@ export default function AIHeroNetwork() {
         @keyframes aip-ambient {
           0%, 100% { opacity: .16; }
           50% { opacity: .65; }
-        }
-
-        @media (max-width: 767px) {
-          .aip-network {
-            max-width: 100%;
-            margin-top: 4px;
-          }
         }
 
         @media (prefers-reduced-motion: reduce) {
