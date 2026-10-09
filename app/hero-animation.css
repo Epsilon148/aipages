@@ -1,0 +1,23 @@
+main > section:first-of-type > div:has(.aip-network) {
+  left: clamp(28px, 4vw, 72px) !important;
+  right: clamp(28px, 4vw, 72px) !important;
+  top: 54% !important;
+  width: auto !important;
+  max-width: none !important;
+  transform: translateY(-50%) !important;
+}
+
+main > section:first-of-type .aip-network {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+@media (max-width: 767px) {
+  main > section:first-of-type > div:has(.aip-network) {
+    left: 18px !important;
+    right: 18px !important;
+    top: 51% !important;
+    width: auto !important;
+    transform: translateY(-50%) !important;
+  }
+}
