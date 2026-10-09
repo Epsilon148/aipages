@@ -183,9 +183,9 @@ export default function Home() {
                 type="button"
                 onClick={() => switchMode("tools")}
                 className={cx(
-                  "category-button px-2 py-4 text-center text-[13px] font-black uppercase leading-none tracking-[0.13em] transition",
+                  "category-button px-2 py-4 text-center text-[13px] font-black uppercase leading-none tracking-[0.13em] outline-none ring-0 shadow-none transition focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
                   viewMode === "tools"
-                    ? "category-button-active bg-white text-black"
+                    ? "category-button-active bg-white text-black outline-none ring-0 shadow-none"
                     : "bg-black text-white hover:bg-white/10"
                 )}
               >
@@ -195,9 +195,9 @@ export default function Home() {
                 type="button"
                 onClick={() => switchMode("bundles")}
                 className={cx(
-                  "category-button px-2 py-4 text-center text-[13px] font-black uppercase leading-none tracking-[0.13em] transition",
+                  "category-button px-2 py-4 text-center text-[13px] font-black uppercase leading-none tracking-[0.13em] outline-none ring-0 shadow-none transition focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
                   viewMode === "bundles"
-                    ? "category-button-active bg-white text-black"
+                    ? "category-button-active bg-white text-black outline-none ring-0 shadow-none"
                     : "bg-black text-white hover:bg-white/10"
                 )}
               >
