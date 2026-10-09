@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import AIHeroNetwork from "@/components/AIHeroNetwork";
 import { bundles } from "@/data/bundles";
 import { categories } from "@/data/categories";
 import { tools } from "@/data/tools";
@@ -141,7 +142,7 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="mx-auto flex min-h-[72vh] w-full max-w-[1540px] items-center px-4 py-10 sm:min-h-[calc(100vh-69px)] sm:px-8 sm:py-12">
+      <section className="mx-auto flex min-h-[72vh] w-full max-w-[1540px] items-center overflow-hidden px-4 py-10 sm:min-h-[calc(100vh-69px)] sm:px-8 sm:py-12">
         <div className="grid w-full min-w-0 gap-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(360px,0.92fr)] lg:items-start">
           <div className="min-w-0">
             <h1 className="max-w-6xl text-[18vw] font-black uppercase leading-[0.78] tracking-[-0.095em] text-black sm:text-[110px] lg:text-[132px] xl:text-[158px]">
@@ -152,6 +153,10 @@ export default function Home() {
           </div>
 
           <div className="grid min-w-0 gap-8 lg:justify-self-end lg:pt-2">
+            <figure className="m-0 w-full max-w-[620px] overflow-hidden">
+              <AIHeroNetwork />
+            </figure>
+
             <p className="max-w-2xl text-lg font-normal leading-7 tracking-[-0.025em] text-black sm:text-2xl sm:leading-8 lg:text-3xl lg:leading-[1.12] xl:text-[34px]">
               Ein simples Verzeichnis für KI-Werkzeuge und KI-Bundles. Schnell
               finden, verstehen, kombinieren und direkt öffnen.
