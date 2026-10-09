@@ -11,6 +11,11 @@ export const categories: Category[] = [
     description: "Alle KI-Tools und KI-Bundles im AI Pages Verzeichnis.",
   },
   {
+    name: "Newcomer",
+    slug: "newcomer",
+    description: "Neue KI-Tools, die frisch ins AI Pages Verzeichnis aufgenommen wurden.",
+  },
+  {
     name: "Produktivität",
     slug: "produktivitaet",
     description:
