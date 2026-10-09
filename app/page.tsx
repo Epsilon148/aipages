@@ -2,11 +2,14 @@
 
 import { useMemo, useState } from "react";
 import AIHeroNetwork from "@/components/AIHeroNetwork";
+import ThemeToggle from "@/components/ThemeToggle";
 import { bundles } from "@/data/bundles";
 import { categories } from "@/data/categories";
 import { tools } from "@/data/tools";
 
 type ViewMode = "tools" | "bundles";
+
+const NEWCOMER_LIMIT = 6;
 
 function cx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
@@ -48,14 +51,17 @@ export default function Home() {
   const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
 
   const normalizedQuery = query.trim().toLowerCase();
+  const isNewcomer = activeCategory === "newcomer";
 
   function getCategoryLabel(slug: string) {
     return categories.find((category) => category.slug === slug)?.name ?? slug;
   }
 
   const visibleTools = useMemo(() => {
-    return tools.filter((tool) => {
-      const matchesCategory = activeCategory === "alle" || tool.category === activeCategory;
+    const sourceTools = isNewcomer ? tools.slice(0, NEWCOMER_LIMIT) : tools;
+
+    return sourceTools.filter((tool) => {
+      const matchesCategory = isNewcomer || activeCategory === "alle" || tool.category === activeCategory;
       const searchable = [
         tool.name,
         tool.badge,
@@ -71,9 +77,11 @@ export default function Home() {
 
       return matchesCategory && (!normalizedQuery || searchable.includes(normalizedQuery));
     });
-  }, [activeCategory, normalizedQuery]);
+  }, [activeCategory, isNewcomer, normalizedQuery]);
 
   const visibleBundles = useMemo(() => {
+    if (isNewcomer) return [];
+
     return bundles.filter((bundle) => {
       const matchesCategory = activeCategory === "alle" || bundle.category === activeCategory;
       const searchable = [
@@ -95,14 +103,16 @@ export default function Home() {
 
       return matchesCategory && (!normalizedQuery || searchable.includes(normalizedQuery));
     });
-  }, [activeCategory, normalizedQuery]);
+  }, [activeCategory, isNewcomer, normalizedQuery]);
 
   const activeTool = visibleTools.find((tool) => tool.slug === activeToolSlug) ?? visibleTools[0] ?? null;
   const activeBundle =
     visibleBundles.find((bundle) => bundle.slug === activeBundleSlug) ?? visibleBundles[0] ?? null;
 
   const resultCount = viewMode === "tools" ? visibleTools.length : visibleBundles.length;
-  const categoryCount = Math.max(categories.length - 1, 0);
+  const categoryCount = categories.filter(
+    (category) => category.slug !== "alle" && category.slug !== "newcomer"
+  ).length;
 
   function switchMode(mode: ViewMode) {
     setViewMode(mode);
@@ -111,6 +121,10 @@ export default function Home() {
   }
 
   function selectCategory(slug: string) {
+    if (slug === "newcomer") {
+      setViewMode("tools");
+    }
+
     setActiveCategory(slug);
     setMobileDetailOpen(false);
   }
@@ -133,12 +147,13 @@ export default function Home() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#fbfbf7] text-black">
       <header className="sticky top-0 z-20 border-b border-black/10 bg-[#fbfbf7]/92 backdrop-blur-xl">
-        <div className="mx-auto flex min-h-[64px] w-full max-w-[1540px] items-center px-4 py-3 sm:h-[69px] sm:px-8 sm:py-0">
+        <div className="mx-auto flex min-h-[64px] w-full max-w-[1540px] items-center justify-between px-4 py-3 sm:h-[69px] sm:px-8 sm:py-0">
           <a href="/" className="flex min-w-0 items-baseline">
             <span className="text-xl font-black uppercase tracking-[-0.075em] sm:text-3xl">
               AI Pages
             </span>
           </a>
+          <ThemeToggle />
         </div>
       </header>
 
@@ -244,7 +259,7 @@ export default function Home() {
             )}
           >
             <div className="flex shrink-0 items-center justify-between border-b border-black/10 p-3 sm:p-4">
-              <ColumnLabel>{viewMode === "tools" ? "Tools" : "Bundles"}</ColumnLabel>
+              <ColumnLabel>{isNewcomer ? "Newcomer" : viewMode === "tools" ? "Tools" : "Bundles"}</ColumnLabel>
               <span className="text-[10px] font-medium uppercase tracking-[0.24em] text-black">
                 {resultCount}
               </span>
@@ -298,7 +313,7 @@ export default function Home() {
                         <div className="flex min-w-0 items-start justify-between gap-4">
                           <div className="min-w-0">
                             <p className={cx("text-[10px] font-black uppercase tracking-[0.24em]", active ? "text-white/45" : "text-black/35")}>
-                              {String(index + 1).padStart(2, "0")} / {tool.badge}
+                              {String(index + 1).padStart(2, "0")} / {isNewcomer ? "Newcomer" : tool.badge}
                             </p>
                             <p className="mt-3 break-words text-2xl font-black uppercase leading-[0.88] tracking-[-0.075em] xl:text-[30px]">
                               {tool.name}
@@ -360,7 +375,7 @@ export default function Home() {
             {viewMode === "tools" && activeTool ? (
               <div className="flex min-w-0 flex-col lg:min-h-full">
                 <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black">
-                  {getCategoryLabel(activeTool.category)}
+                  {isNewcomer ? "Newcomer" : getCategoryLabel(activeTool.category)}
                 </p>
                 <h2 className="mt-5 break-words text-4xl font-black uppercase leading-[0.86] tracking-[-0.085em] text-black sm:text-5xl xl:text-5xl 2xl:text-6xl">
                   {activeTool.name}
