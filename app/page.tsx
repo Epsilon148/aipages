@@ -132,35 +132,12 @@ export default function Home() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#fbfbf7] text-black">
       <header className="sticky top-0 z-20 border-b border-black/10 bg-[#fbfbf7]/92 backdrop-blur-xl">
-        <div className="mx-auto flex min-h-[64px] w-full max-w-[1540px] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:h-[69px] sm:flex-nowrap sm:px-8 sm:py-0">
+        <div className="mx-auto flex min-h-[64px] w-full max-w-[1540px] items-center px-4 py-3 sm:h-[69px] sm:px-8 sm:py-0">
           <a href="/" className="flex min-w-0 items-baseline">
             <span className="text-xl font-black uppercase tracking-[-0.075em] sm:text-3xl">
               AI Pages
             </span>
           </a>
-
-          <div className="flex shrink-0 items-center gap-2">
-            <button
-              type="button"
-              onClick={() => switchMode("tools")}
-              className={cx(
-                "border px-3 py-2.5 text-[10px] font-black uppercase tracking-[0.2em] transition sm:px-5 sm:py-3",
-                viewMode === "tools" ? "border-black bg-black text-white" : "border-black/15 bg-white text-black hover:border-black"
-              )}
-            >
-              Tools
-            </button>
-            <button
-              type="button"
-              onClick={() => switchMode("bundles")}
-              className={cx(
-                "border px-3 py-2.5 text-[10px] font-black uppercase tracking-[0.2em] transition sm:px-5 sm:py-3",
-                viewMode === "bundles" ? "border-black bg-black text-white" : "border-black/15 bg-white text-black hover:border-black"
-              )}
-            >
-              Bundles
-            </button>
-          </div>
         </div>
       </header>
 
@@ -200,29 +177,58 @@ export default function Home() {
 
       <section className="mx-auto w-full max-w-[1540px] overflow-x-hidden px-4 pb-4 sm:px-6 xl:px-8">
         <section className="grid min-w-0 gap-3 border-t border-black pt-4 lg:h-[calc(100vh-128px)] lg:grid-cols-[240px_minmax(0,0.94fr)_minmax(0,1.06fr)] xl:grid-cols-[260px_minmax(0,0.96fr)_minmax(0,1.04fr)]">
-          <aside className="min-w-0 min-h-0 border border-black bg-black p-3 shadow-[0_18px_60px_rgba(0,0,0,0.08)] sm:p-4 lg:h-full lg:overflow-hidden">
-            <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white">
-              Kategorien
-            </p>
-            <div className="mt-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar lg:block lg:h-[calc(100%-34px)] lg:space-y-1 lg:overflow-y-auto lg:pb-0">
-              {categories.map((category) => {
-                const active = category.slug === activeCategory;
-                return (
-                  <button
-                    key={category.slug}
-                    type="button"
-                    onClick={() => selectCategory(category.slug)}
-                    className={cx(
-                      "category-button shrink-0 border border-transparent bg-transparent px-3 py-2 text-left font-black uppercase leading-[1.15] tracking-[0.17em] text-white/70 transition-all duration-150 ease-out lg:block lg:w-full",
-                      active
-                        ? "category-button-active translate-x-2 text-[17px] text-white"
-                        : "text-[12px] hover:translate-x-2 hover:text-[17px] hover:text-white"
-                    )}
-                  >
-                    {category.name}
-                  </button>
-                );
-              })}
+          <aside className="flex min-w-0 min-h-0 flex-col border border-black bg-black shadow-[0_18px_60px_rgba(0,0,0,0.08)] lg:h-full lg:overflow-hidden">
+            <div className="grid shrink-0 grid-cols-2 border-b border-white/25">
+              <button
+                type="button"
+                onClick={() => switchMode("tools")}
+                className={cx(
+                  "border-r border-white/25 px-2 py-4 text-center text-[11px] font-black uppercase leading-none tracking-[0.16em] transition",
+                  viewMode === "tools"
+                    ? "bg-white text-black"
+                    : "bg-black text-white hover:bg-white/10"
+                )}
+              >
+                Tools
+              </button>
+              <button
+                type="button"
+                onClick={() => switchMode("bundles")}
+                className={cx(
+                  "px-2 py-4 text-center text-[11px] font-black uppercase leading-none tracking-[0.16em] transition",
+                  viewMode === "bundles"
+                    ? "bg-white text-black"
+                    : "bg-black text-white hover:bg-white/10"
+                )}
+              >
+                Bundles
+              </button>
+            </div>
+
+            <div className="flex min-h-0 flex-1 flex-col p-3 sm:p-4">
+              <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white">
+                Kategorien
+              </p>
+              <div className="mt-4 flex gap-2 overflow-x-auto pb-1 no-scrollbar lg:block lg:min-h-0 lg:flex-1 lg:space-y-1 lg:overflow-y-auto lg:pb-0">
+                {categories.map((category) => {
+                  const active = category.slug === activeCategory;
+                  return (
+                    <button
+                      key={category.slug}
+                      type="button"
+                      onClick={() => selectCategory(category.slug)}
+                      className={cx(
+                        "category-button shrink-0 border border-transparent bg-transparent px-3 py-2 text-left font-black uppercase leading-[1.15] tracking-[0.17em] text-white/70 transition-all duration-150 ease-out lg:block lg:w-full",
+                        active
+                          ? "category-button-active translate-x-2 text-[17px] text-white"
+                          : "text-[12px] hover:translate-x-2 hover:text-[17px] hover:text-white"
+                      )}
+                    >
+                      {category.name}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </aside>
 
