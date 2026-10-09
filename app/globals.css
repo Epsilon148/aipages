@@ -443,3 +443,50 @@ main > section:first-of-type > div:has(.aip-network) {
     width: 138vw !important;
   }
 }
+
+.aip-theme-toggle {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 1000;
+  width: 18px;
+  height: 18px;
+  border: 0;
+  padding: 0;
+  background: #000000;
+  cursor: pointer;
+}
+
+.aip-theme-toggle:hover,
+.aip-theme-toggle:focus,
+.aip-theme-toggle:focus-visible {
+  outline: none;
+  box-shadow: none;
+  transform: none;
+}
+
+html.aip-inverted {
+  background: #000000;
+}
+
+html.aip-inverted body,
+html.aip-inverted .terminal-screen {
+  background: #000000 !important;
+}
+
+html.aip-inverted .terminal-screen > *:not(.aip-theme-toggle) {
+  filter: invert(1);
+}
+
+html.aip-inverted .aip-theme-toggle {
+  background: #ffffff;
+}
+
+@media (max-width: 767px) {
+  .aip-theme-toggle {
+    top: 22px;
+    right: 18px;
+    width: 16px;
+    height: 16px;
+  }
+}
