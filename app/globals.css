@@ -430,6 +430,7 @@ main > section:nth-of-type(2) > section > section:first-of-type input::placehold
 
 main > section:first-of-type > div:has(.aip-network) {
   left: 50% !important;
+  top: 56% !important;
   right: auto !important;
   width: min(118vw, 1760px) !important;
   max-width: none !important;
@@ -438,6 +439,7 @@ main > section:first-of-type > div:has(.aip-network) {
 
 @media (max-width: 767px) {
   main > section:first-of-type > div:has(.aip-network) {
+    top: 54% !important;
     width: 138vw !important;
   }
 }
