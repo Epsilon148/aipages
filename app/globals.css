@@ -377,3 +377,51 @@ main > section:nth-of-type(2) > section > section:last-child {
 main > section:nth-of-type(2) > section > aside {
   border: 0 !important;
 }
+
+main > section:nth-of-type(2) > section > section:first-of-type {
+  border-color: rgba(0, 0, 0, 0.18) !important;
+}
+
+main > section:nth-of-type(2) > section > section:first-of-type > div:first-child {
+  min-height: 72px !important;
+  border-bottom-color: rgba(0, 0, 0, 0.14) !important;
+  padding: 18px 24px !important;
+}
+
+main > section:nth-of-type(2) > section > section:first-of-type > div:first-child p,
+main > section:nth-of-type(2) > section > section:first-of-type > div:first-child span {
+  color: #000000 !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.34em !important;
+}
+
+main > section:nth-of-type(2) > section > section:first-of-type > div:nth-child(2) {
+  border-bottom-color: rgba(0, 0, 0, 0.14) !important;
+  padding: 24px !important;
+}
+
+main > section:nth-of-type(2) > section > section:first-of-type > div:nth-child(2) label {
+  color: #000000 !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.36em !important;
+}
+
+main > section:nth-of-type(2) > section > section:first-of-type > div:nth-child(2) > div {
+  border-color: rgba(0, 0, 0, 0.22) !important;
+  background: #fbfbf7 !important;
+  padding: 18px 18px !important;
+}
+
+main > section:nth-of-type(2) > section > section:first-of-type input {
+  color: #000000 !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.035em !important;
+}
+
+main > section:nth-of-type(2) > section > section:first-of-type input::placeholder {
+  color: rgba(0, 0, 0, 0.44) !important;
+  opacity: 1 !important;
+}
