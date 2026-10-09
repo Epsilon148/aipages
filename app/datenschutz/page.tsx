@@ -75,10 +75,10 @@ export default function DatenschutzPage() {
             <p className="text-[11px] font-black uppercase tracking-[0.32em] text-black/38">
               Rechtliches
             </p>
-            <h1 className="mt-5 whitespace-nowrap text-[clamp(28px,3.3vw,44px)] font-black uppercase leading-[0.78] tracking-[-0.095em] text-black">
+            <h1 className="mt-5 whitespace-nowrap text-[clamp(24px,2.65vw,36px)] font-black uppercase leading-none tracking-[-0.075em] text-black">
               Datenschutz
             </h1>
-            <p className="mt-6 max-w-xl text-base font-semibold leading-7 tracking-[-0.03em] text-black/70">
+            <p className="mt-8 max-w-xl text-base font-semibold leading-7 tracking-[-0.03em] text-black/70">
               Diese Datenschutzhinweise beschreiben die aktuelle MVP-Version von{" "}
               {site.name}. Die finale Fassung sollte vor größerer Veröffentlichung
               rechtlich geprüft werden.
