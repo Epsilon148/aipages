@@ -369,3 +369,7 @@ main > header {
 main > section > div:has(> aside h1) {
   border-top: 0 !important;
 }
+
+main > section:nth-of-type(2) > section > section:last-child {
+  border: 0 !important;
+}
