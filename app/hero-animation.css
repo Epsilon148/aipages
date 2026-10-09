@@ -1,7 +1,7 @@
 main > section:first-of-type > div:has(.aip-network) {
   left: clamp(28px, 4vw, 72px) !important;
   right: clamp(28px, 4vw, 72px) !important;
-  top: 66% !important;
+  top: 75% !important;
   width: auto !important;
   max-width: none !important;
   transform: translateY(-50%) !important;
@@ -12,6 +12,8 @@ main > section:first-of-type > div:has(.aip-network) {
 main > section:first-of-type .aip-network {
   width: 100% !important;
   max-width: none !important;
+  transform: scale(1.08) !important;
+  transform-origin: center center !important;
 }
 
 main > section:first-of-type > div:not(:has(.aip-network)) {
@@ -23,9 +25,13 @@ main > section:first-of-type > div:not(:has(.aip-network)) {
   main > section:first-of-type > div:has(.aip-network) {
     left: 18px !important;
     right: 18px !important;
-    top: 61% !important;
+    top: 66% !important;
     width: auto !important;
     transform: translateY(-50%) !important;
     opacity: 0.45 !important;
+  }
+
+  main > section:first-of-type .aip-network {
+    transform: scale(1.03) !important;
   }
 }
