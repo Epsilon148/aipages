@@ -333,3 +333,22 @@ main > header:has(+ section > div > div > h1) {
 main > section:nth-of-type(2) > section {
   border-top: 0 !important;
 }
+
+header > div > nav a,
+header > div > nav a:hover {
+  border: 0 !important;
+  background: transparent !important;
+  color: #000000 !important;
+  font-size: 16px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 0.19em !important;
+  line-height: 1 !important;
+  text-transform: uppercase !important;
+  -webkit-text-stroke: 0.34px currentColor;
+  text-shadow:
+    0.42px 0 currentColor,
+    -0.18px 0 currentColor,
+    0 0.42px currentColor;
+  transform: translateY(0) !important;
+  transition: none !important;
+}
