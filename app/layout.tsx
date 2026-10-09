@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import "./hero-animation.css";
+import ThemeToggle from "@/components/ThemeToggle";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -61,6 +62,7 @@ export default function RootLayout({
       <body>
         <div className="terminal-screen min-h-screen antialiased">
           <div className="terminal-noise" />
+          <ThemeToggle />
           {children}
         </div>
         <Analytics />
