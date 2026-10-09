@@ -178,12 +178,12 @@ export default function Home() {
       <section className="mx-auto w-full max-w-[1540px] overflow-x-hidden px-4 pb-4 sm:px-6 xl:px-8">
         <section className="grid min-w-0 gap-3 border-t border-black pt-4 lg:h-[calc(100vh-128px)] lg:grid-cols-[240px_minmax(0,0.94fr)_minmax(0,1.06fr)] xl:grid-cols-[260px_minmax(0,0.96fr)_minmax(0,1.04fr)]">
           <aside className="flex min-w-0 min-h-0 flex-col border border-black bg-black shadow-[0_18px_60px_rgba(0,0,0,0.08)] lg:h-full lg:overflow-hidden">
-            <div className="grid shrink-0 grid-cols-2 border-b border-white/25">
+            <div className="grid shrink-0 grid-cols-2">
               <button
                 type="button"
                 onClick={() => switchMode("tools")}
                 className={cx(
-                  "category-button border-r border-white/25 px-2 py-4 text-center text-[13px] font-black uppercase leading-none tracking-[0.13em] transition",
+                  "category-button px-2 py-4 text-center text-[13px] font-black uppercase leading-none tracking-[0.13em] transition",
                   viewMode === "tools"
                     ? "category-button-active bg-white text-black"
                     : "bg-black text-white hover:bg-white/10"
