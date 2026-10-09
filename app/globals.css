@@ -102,7 +102,8 @@ header > div > a[href="/"]:first-child * {
   }
 
   main > section:nth-of-type(2) > section > section:last-child {
-    overflow: visible !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
     padding: 14px !important;
   }
 
