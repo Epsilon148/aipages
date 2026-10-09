@@ -361,3 +361,11 @@ header > div > nav a.hover\:text-white:hover {
   outline: none !important;
   box-shadow: none !important;
 }
+
+main > header {
+  border-bottom: 0 !important;
+}
+
+main > section > div:has(> aside h1) {
+  border-top: 0 !important;
+}
