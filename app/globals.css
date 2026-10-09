@@ -334,21 +334,30 @@ main > section:nth-of-type(2) > section {
   border-top: 0 !important;
 }
 
+header > div > nav {
+  gap: 34px !important;
+}
+
 header > div > nav a,
-header > div > nav a:hover {
+header > div > nav a:hover,
+header > div > nav a:focus,
+header > div > nav a:focus-visible {
   border: 0 !important;
   background: transparent !important;
+  padding: 0 !important;
   color: #000000 !important;
-  font-size: 16px !important;
+  font-size: 13px !important;
   font-weight: 1000 !important;
-  letter-spacing: 0.19em !important;
+  letter-spacing: 0.18em !important;
   line-height: 1 !important;
   text-transform: uppercase !important;
-  -webkit-text-stroke: 0.34px currentColor;
+  -webkit-text-stroke: 0.24px currentColor;
   text-shadow:
-    0.42px 0 currentColor,
-    -0.18px 0 currentColor,
-    0 0.42px currentColor;
-  transform: translateY(0) !important;
+    0.3px 0 currentColor,
+    -0.12px 0 currentColor,
+    0 0.3px currentColor;
+  transform: none !important;
   transition: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
