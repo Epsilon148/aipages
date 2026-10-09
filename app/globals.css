@@ -287,3 +287,41 @@ main > section:first-of-type aside h1 {
     font-size: 30px !important;
   }
 }
+
+header > div > div:last-child button,
+header > div > nav a {
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  color: #000000 !important;
+  font-size: 11px !important;
+  font-weight: 1000 !important;
+  letter-spacing: 0.22em !important;
+  line-height: 1 !important;
+  text-transform: uppercase !important;
+  -webkit-text-stroke: 0.18px currentColor;
+  text-shadow:
+    0.22px 0 currentColor,
+    -0.1px 0 currentColor,
+    0 0.22px currentColor;
+  transform: translateY(0);
+  transform-origin: center center;
+  transition:
+    font-size 150ms ease,
+    transform 150ms ease,
+    color 150ms ease !important;
+}
+
+header > div > div:last-child button:hover,
+header > div > nav a:hover {
+  border: 0 !important;
+  background: transparent !important;
+  color: #000000 !important;
+  font-size: 14px !important;
+  -webkit-text-stroke: 0.28px currentColor;
+  text-shadow:
+    0.36px 0 currentColor,
+    -0.14px 0 currentColor,
+    0 0.36px currentColor;
+  transform: translateY(-1px);
+}
