@@ -8,7 +8,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} – KI-Tools und KI-Bundles`,
+    default: `${site.name} – KI-Tools, Agents, Modelle und Workflows`,
     template: `%s – ${site.name}`,
   },
   description: site.description,
