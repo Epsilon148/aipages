@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import AIHeroNetwork from "@/components/AIHeroNetwork";
 import ThemeToggle from "@/components/ThemeToggle";
+import { beginnerFriendlyToolSlugs } from "@/data/beginner-friendly";
 import { bundles } from "@/data/bundles";
 import { categories } from "@/data/categories";
 import { newcomerToolSlugs } from "@/data/newcomers";
@@ -389,6 +390,14 @@ export default function Home() {
                   <Info label="Preis" value={activeTool.pricing} />
                   <Info label="Zielgruppe" value={activeTool.audience} />
                   <Info label="Tags" value={activeTool.tags.join(" / ")} />
+                  <Info
+                    label="Einstieg"
+                    value={
+                      beginnerFriendlyToolSlugs.includes(activeTool.slug)
+                        ? "Einsteigerfreundlich"
+                        : "Eher für Fortgeschrittene"
+                    }
+                  />
                 </div>
 
                 <div className="mt-7 flex flex-wrap gap-3 lg:mt-auto lg:pt-5">
