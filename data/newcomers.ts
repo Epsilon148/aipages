@@ -1,8 +1,12 @@
 export const newcomerToolSlugs = [
-  "chatgpt",
-  "claude",
-  "perplexity",
-  "google-gemini",
-  "microsoft-copilot",
-  "notion-ai",
-];
+  "gemini-notebook",
+  "suno",
+  "luma-ai",
+  "ideogram",
+  "krea",
+  "bolt",
+  "lovable",
+  "v0",
+  "windsurf",
+  "lindy",
+] as const;
