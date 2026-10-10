@@ -28,4 +28,12 @@ export const beginnerFriendlyToolSlugs: string[] = [
   "granola",
   "mistral-le-chat",
   "mem",
+  "gpt-store",
+  "zapier-agents",
+  "agentgpt",
+  "flowgpt",
+  "prompthero",
+  "aiprm",
+  "merlin",
+  "sider",
 ];
