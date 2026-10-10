@@ -183,7 +183,7 @@ export default function Home() {
             <div className="grid w-full max-w-[560px] grid-cols-3 gap-4 pt-5 sm:gap-10">
               <div className="grid justify-items-center gap-2 text-center">
                 <p className="text-5xl font-black leading-none tracking-[-0.085em] text-black sm:text-7xl">{tools.length}</p>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-black">Einträge</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-black">Tools</p>
               </div>
               <div className="grid justify-items-center gap-2 text-center">
                 <p className="text-5xl font-black leading-none tracking-[-0.085em] text-black sm:text-7xl">{bundles.length}</p>
@@ -212,7 +212,7 @@ export default function Home() {
                     : "bg-black text-white hover:bg-white/10"
                 )}
               >
-                Einträge
+                Tools
               </button>
               <button
                 type="button"
@@ -262,7 +262,7 @@ export default function Home() {
             )}
           >
             <div className="flex shrink-0 items-center justify-between border-b border-black/10 p-3 sm:p-4">
-              <ColumnLabel>{isNewcomer ? "Newcomer" : viewMode === "tools" ? "Einträge" : "Bundles"}</ColumnLabel>
+              <ColumnLabel>{isNewcomer ? "Newcomer" : viewMode === "tools" ? "Tools" : "Bundles"}</ColumnLabel>
               <span className="text-[10px] font-medium uppercase tracking-[0.24em] text-black">
                 {resultCount}
               </span>
@@ -293,7 +293,7 @@ export default function Home() {
 
             <div className="max-h-[560px] flex-1 overflow-y-auto overflow-x-hidden no-scrollbar sm:max-h-[720px] lg:max-h-none">
               {viewMode === "tools" && visibleTools.length === 0 ? (
-                <div className="p-4 text-sm text-black/45">Keine Einträge gefunden.</div>
+                <div className="p-4 text-sm text-black/45">Keine Tools gefunden.</div>
               ) : null}
               {viewMode === "bundles" && visibleBundles.length === 0 ? (
                 <div className="p-4 text-sm text-black/45">Keine Bundles gefunden.</div>
