@@ -3,9 +3,9 @@ export const site = {
   domain: "aipages.de",
   url: "https://aipages.de",
   email: "kontakt@aipages.de",
-  claim: "Die besten KI-Tools und KI-Bundles für deinen digitalen Alltag.",
+  claim: "Das klare Verzeichnis für KI-Tools, Agents, Modelle, Plugins und Workflows.",
   description:
-    "Entdecke kuratierte KI-Tools, KI-Bundles und digitale Helfer für Business, Produktivität, Marketing, Design, Automatisierung, Content, Recherche und mehr.",
+    "Entdecke kuratierte KI-Tools, Agents, Modelle, Plugins, APIs, Workflows, Bundles und digitale Helfer für Business, Produktivität, Marketing, Design, Automatisierung, Content, Recherche und mehr.",
   locale: "de-DE",
   author: "AI Pages",
 
