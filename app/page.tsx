@@ -175,14 +175,15 @@ export default function Home() {
 
           <div className="grid min-w-0 gap-8 lg:justify-self-end lg:pt-2">
             <p className="max-w-2xl text-lg font-normal leading-7 tracking-[-0.025em] text-black sm:text-2xl sm:leading-8 lg:text-3xl lg:leading-[1.12] xl:text-[34px]">
-              Ein simples Verzeichnis für KI-Werkzeuge und KI-Bundles. Schnell
-              finden, verstehen, kombinieren und direkt öffnen.
+              Ein klares Verzeichnis für KI-Tools, Agents, Modelle, Plugins,
+              Workflows und Bundles. Schnell finden, verstehen, kombinieren und
+              direkt öffnen.
             </p>
 
             <div className="grid w-full max-w-[560px] grid-cols-3 gap-4 pt-5 sm:gap-10">
               <div className="grid justify-items-center gap-2 text-center">
                 <p className="text-5xl font-black leading-none tracking-[-0.085em] text-black sm:text-7xl">{tools.length}</p>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-black">Tools</p>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.26em] text-black">Einträge</p>
               </div>
               <div className="grid justify-items-center gap-2 text-center">
                 <p className="text-5xl font-black leading-none tracking-[-0.085em] text-black sm:text-7xl">{bundles.length}</p>
@@ -211,7 +212,7 @@ export default function Home() {
                     : "bg-black text-white hover:bg-white/10"
                 )}
               >
-                Tools
+                Einträge
               </button>
               <button
                 type="button"
@@ -261,7 +262,7 @@ export default function Home() {
             )}
           >
             <div className="flex shrink-0 items-center justify-between border-b border-black/10 p-3 sm:p-4">
-              <ColumnLabel>{isNewcomer ? "Newcomer" : viewMode === "tools" ? "Tools" : "Bundles"}</ColumnLabel>
+              <ColumnLabel>{isNewcomer ? "Newcomer" : viewMode === "tools" ? "Einträge" : "Bundles"}</ColumnLabel>
               <span className="text-[10px] font-medium uppercase tracking-[0.24em] text-black">
                 {resultCount}
               </span>
@@ -275,7 +276,7 @@ export default function Home() {
                 <input
                   value={query}
                   onChange={(event) => updateQuery(event.target.value)}
-                  placeholder="Tool, Bundle oder Use Case eingeben"
+                  placeholder="Tool, Agent, Plugin, Modell, Bundle oder Use Case eingeben"
                   className="min-w-0 flex-1 bg-transparent text-sm font-semibold tracking-[-0.02em] text-black outline-none placeholder:text-black/30"
                 />
                 {query ? (
@@ -292,7 +293,7 @@ export default function Home() {
 
             <div className="max-h-[560px] flex-1 overflow-y-auto overflow-x-hidden no-scrollbar sm:max-h-[720px] lg:max-h-none">
               {viewMode === "tools" && visibleTools.length === 0 ? (
-                <div className="p-4 text-sm text-black/45">Keine Tools gefunden.</div>
+                <div className="p-4 text-sm text-black/45">Keine Einträge gefunden.</div>
               ) : null}
               {viewMode === "bundles" && visibleBundles.length === 0 ? (
                 <div className="p-4 text-sm text-black/45">Keine Bundles gefunden.</div>
