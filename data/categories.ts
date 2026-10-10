@@ -6,7 +6,7 @@ export type Category = {
 
 export const categories: Category[] = [
   {
-    name: "Alle Einträge",
+    name: "Alle Tools",
     slug: "alle",
     description: "Alle KI-Tools, Agents, Plugins, Modelle, Workflows und Bundles im AI Pages Verzeichnis.",
   },
