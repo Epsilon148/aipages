@@ -4,6 +4,7 @@ import { toolsPack3 } from "./tools-pack-3";
 import { toolsPack4 } from "./tools-pack-4";
 import { toolsPack5 } from "./tools-pack-5";
 import { toolsPack6 } from "./tools-pack-6";
+import { toolsPack7 } from "./tools-pack-7";
 
 export const tools = [
   ...baseTools,
@@ -12,4 +13,5 @@ export const tools = [
   ...toolsPack4,
   ...toolsPack5,
   ...toolsPack6,
+  ...toolsPack7,
 ];
