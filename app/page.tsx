@@ -7,7 +7,7 @@ import { beginnerFriendlyToolSlugs } from "@/data/beginner-friendly";
 import { bundles } from "@/data/bundles";
 import { categories } from "@/data/categories";
 import { newcomerToolSlugs } from "@/data/newcomers";
-import { tools } from "@/data/tools";
+import { tools } from "@/data/all-tools";
 
 type ViewMode = "tools" | "bundles";
 
