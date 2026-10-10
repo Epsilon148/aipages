@@ -8,12 +8,12 @@ export const categories: Category[] = [
   {
     name: "Alle Einträge",
     slug: "alle",
-    description: "Alle KI-Tools und KI-Bundles im AI Pages Verzeichnis.",
+    description: "Alle KI-Tools, Agents, Plugins, Modelle, Workflows und Bundles im AI Pages Verzeichnis.",
   },
   {
     name: "Newcomer",
     slug: "newcomer",
-    description: "Neue KI-Tools, die frisch ins AI Pages Verzeichnis aufgenommen wurden.",
+    description: "Neue KI-Tools, Agents, Plugins und Modelle, die frisch ins Verzeichnis aufgenommen wurden.",
   },
   {
     name: "Produktivität",
@@ -50,6 +50,36 @@ export const categories: Category[] = [
     slug: "automation-agents",
     description:
       "No-Code- und KI-Tools für Workflows, Prozesse, Schnittstellen und wiederkehrende Aufgaben.",
+  },
+  {
+    name: "Agents & Bots",
+    slug: "agents-bots",
+    description:
+      "KI-Agenten, Chatbots, Bot-Plattformen und Systeme, die Aufgaben eigenständiger ausführen.",
+  },
+  {
+    name: "Plugins & Extensions",
+    slug: "plugins-extensions",
+    description:
+      "Browser-Erweiterungen, App-Plugins, Integrationen und KI-Zusätze für bestehende Tools.",
+  },
+  {
+    name: "Modelle & APIs",
+    slug: "models-apis",
+    description:
+      "KI-Modelle, Modellplattformen, APIs, Inferenzdienste und technische KI-Infrastruktur.",
+  },
+  {
+    name: "Local & Open Source",
+    slug: "local-open-source",
+    description:
+      "Lokale KI, Open-Source-Tools, selbst hostbare Systeme und datenschutznahe KI-Setups.",
+  },
+  {
+    name: "Prompts & Workflows",
+    slug: "prompts-workflows",
+    description:
+      "Prompt-Sammlungen, Workflow-Vorlagen, Automationsideen und praktische KI-Prozesse.",
   },
   {
     name: "Recherche & Wissen",
