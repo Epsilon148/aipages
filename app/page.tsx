@@ -5,11 +5,10 @@ import AIHeroNetwork from "@/components/AIHeroNetwork";
 import ThemeToggle from "@/components/ThemeToggle";
 import { bundles } from "@/data/bundles";
 import { categories } from "@/data/categories";
+import { newcomerToolSlugs } from "@/data/newcomers";
 import { tools } from "@/data/tools";
 
 type ViewMode = "tools" | "bundles";
-
-const NEWCOMER_LIMIT = 6;
 
 function cx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
@@ -58,7 +57,9 @@ export default function Home() {
   }
 
   const visibleTools = useMemo(() => {
-    const sourceTools = isNewcomer ? tools.slice(0, NEWCOMER_LIMIT) : tools;
+    const sourceTools = isNewcomer
+      ? tools.filter((tool) => newcomerToolSlugs.includes(tool.slug))
+      : tools;
 
     return sourceTools.filter((tool) => {
       const matchesCategory = isNewcomer || activeCategory === "alle" || tool.category === activeCategory;
