@@ -9,7 +9,15 @@ import { categories } from "@/data/categories";
 import { newcomerToolSlugs } from "@/data/newcomers";
 import { tools } from "@/data/all-tools";
 
-type ViewMode = "tools" | "bundles";
+type ViewMode = "tools" | "bundles" | "ecosystem";
+
+const ecosystemCategorySlugs: string[] = [
+  "agents-bots",
+  "plugins-extensions",
+  "models-apis",
+  "local-open-source",
+  "prompts-workflows",
+];
 
 function cx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
@@ -60,7 +68,9 @@ export default function Home() {
   const visibleTools = useMemo(() => {
     const sourceTools = isNewcomer
       ? tools.filter((tool) => newcomerToolSlugs.includes(tool.slug))
-      : tools;
+      : viewMode === "ecosystem"
+        ? tools.filter((tool) => ecosystemCategorySlugs.includes(tool.category))
+        : tools;
 
     return sourceTools.filter((tool) => {
       const matchesCategory = isNewcomer || activeCategory === "alle" || tool.category === activeCategory;
@@ -79,7 +89,7 @@ export default function Home() {
 
       return matchesCategory && (!normalizedQuery || searchable.includes(normalizedQuery));
     });
-  }, [activeCategory, isNewcomer, normalizedQuery]);
+  }, [activeCategory, isNewcomer, normalizedQuery, viewMode]);
 
   const visibleBundles = useMemo(() => {
     if (isNewcomer) return [];
@@ -111,7 +121,7 @@ export default function Home() {
   const activeBundle =
     visibleBundles.find((bundle) => bundle.slug === activeBundleSlug) ?? visibleBundles[0] ?? null;
 
-  const resultCount = viewMode === "tools" ? visibleTools.length : visibleBundles.length;
+  const resultCount = viewMode === "bundles" ? visibleBundles.length : visibleTools.length;
   const categoryCount = categories.filter(
     (category) => category.slug !== "alle" && category.slug !== "newcomer"
   ).length;
@@ -199,35 +209,48 @@ export default function Home() {
       </section>
 
       <section className="mx-auto w-full max-w-[1540px] overflow-x-hidden px-4 pb-4 sm:px-6 xl:px-8">
+        <div className="mb-3 grid min-w-0 grid-cols-3 border border-black bg-black">
+          <button
+            type="button"
+            onClick={() => switchMode("tools")}
+            className={cx(
+              "category-button min-h-[62px] px-2 py-4 text-center text-[12px] font-black uppercase leading-[1.05] tracking-[0.16em] outline-none ring-0 shadow-none transition focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 sm:text-[13px]",
+              viewMode === "tools"
+                ? "category-button-active bg-white text-black outline-none ring-0 shadow-none"
+                : "bg-black text-white hover:bg-white/10"
+            )}
+          >
+            Tools
+          </button>
+          <button
+            type="button"
+            onClick={() => switchMode("bundles")}
+            className={cx(
+              "category-button min-h-[62px] border-l border-white/20 px-2 py-4 text-center text-[12px] font-black uppercase leading-[1.05] tracking-[0.16em] outline-none ring-0 shadow-none transition focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 sm:text-[13px]",
+              viewMode === "bundles"
+                ? "category-button-active bg-white text-black outline-none ring-0 shadow-none"
+                : "bg-black text-white hover:bg-white/10"
+            )}
+          >
+            Bundles
+          </button>
+          <button
+            type="button"
+            onClick={() => switchMode("ecosystem")}
+            className={cx(
+              "category-button min-h-[62px] border-l border-white/20 px-2 py-3 text-center text-[9px] font-black uppercase leading-[1.25] tracking-[0.1em] outline-none ring-0 shadow-none transition focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 sm:text-[11px] sm:tracking-[0.14em]",
+              viewMode === "ecosystem"
+                ? "category-button-active bg-white text-black outline-none ring-0 shadow-none"
+                : "bg-black text-white hover:bg-white/10"
+            )}
+          >
+            <span className="block">Plugins / Agents</span>
+            <span className="block">Modelle / Workflows</span>
+          </button>
+        </div>
+
         <section className="grid min-w-0 gap-3 border-t border-black pt-4 lg:h-[calc(100vh-128px)] lg:grid-cols-[240px_minmax(0,0.94fr)_minmax(0,1.06fr)] xl:grid-cols-[260px_minmax(0,0.96fr)_minmax(0,1.04fr)]">
           <aside className="flex min-w-0 min-h-0 flex-col border border-black bg-black shadow-[0_18px_60px_rgba(0,0,0,0.08)] lg:h-full lg:overflow-hidden">
-            <div className="grid shrink-0 grid-cols-2">
-              <button
-                type="button"
-                onClick={() => switchMode("tools")}
-                className={cx(
-                  "category-button px-2 py-4 text-center text-[13px] font-black uppercase leading-none tracking-[0.13em] outline-none ring-0 shadow-none transition focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
-                  viewMode === "tools"
-                    ? "category-button-active bg-white text-black outline-none ring-0 shadow-none"
-                    : "bg-black text-white hover:bg-white/10"
-                )}
-              >
-                Tools
-              </button>
-              <button
-                type="button"
-                onClick={() => switchMode("bundles")}
-                className={cx(
-                  "category-button px-2 py-4 text-center text-[13px] font-black uppercase leading-none tracking-[0.13em] outline-none ring-0 shadow-none transition focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
-                  viewMode === "bundles"
-                    ? "category-button-active bg-white text-black outline-none ring-0 shadow-none"
-                    : "bg-black text-white hover:bg-white/10"
-                )}
-              >
-                Bundles
-              </button>
-            </div>
-
             <div className="flex min-h-0 flex-1 flex-col p-3 sm:p-4">
               <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white">
                 Kategorien
@@ -262,7 +285,15 @@ export default function Home() {
             )}
           >
             <div className="flex shrink-0 items-center justify-between border-b border-black/10 p-3 sm:p-4">
-              <ColumnLabel>{isNewcomer ? "Newcomer" : viewMode === "tools" ? "Tools" : "Bundles"}</ColumnLabel>
+              <ColumnLabel>
+                {isNewcomer
+                  ? "Newcomer"
+                  : viewMode === "bundles"
+                    ? "Bundles"
+                    : viewMode === "ecosystem"
+                      ? "Plugins / Agents / Modelle / Workflows"
+                      : "Tools"}
+              </ColumnLabel>
               <span className="text-[10px] font-medium uppercase tracking-[0.24em] text-black">
                 {resultCount}
               </span>
@@ -292,14 +323,14 @@ export default function Home() {
             </div>
 
             <div className="max-h-[560px] flex-1 overflow-y-auto overflow-x-hidden no-scrollbar sm:max-h-[720px] lg:max-h-none">
-              {viewMode === "tools" && visibleTools.length === 0 ? (
+              {viewMode !== "bundles" && visibleTools.length === 0 ? (
                 <div className="p-4 text-sm text-black/45">Keine Tools gefunden.</div>
               ) : null}
               {viewMode === "bundles" && visibleBundles.length === 0 ? (
                 <div className="p-4 text-sm text-black/45">Keine Bundles gefunden.</div>
               ) : null}
 
-              {viewMode === "tools"
+              {viewMode !== "bundles"
                 ? visibleTools.map((tool, index) => {
                     const active = activeTool?.slug === tool.slug;
                     return (
@@ -375,7 +406,7 @@ export default function Home() {
               ← Zurück
             </button>
 
-            {viewMode === "tools" && activeTool ? (
+            {viewMode !== "bundles" && activeTool ? (
               <div className="flex min-w-0 flex-col lg:min-h-full">
                 <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-black">
                   {isNewcomer ? "Newcomer" : getCategoryLabel(activeTool.category)}
