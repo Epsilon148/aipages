@@ -9,14 +9,24 @@ import { categories } from "@/data/categories";
 import { newcomerToolSlugs } from "@/data/newcomers";
 import { tools } from "@/data/all-tools";
 
-type ViewMode = "tools" | "bundles" | "ecosystem";
+type ViewMode = "tools" | "bundles" | "plugins" | "agents" | "models" | "workflows";
 
-const ecosystemCategorySlugs: string[] = [
-  "agents-bots",
-  "plugins-extensions",
-  "models-apis",
-  "local-open-source",
-  "prompts-workflows",
+const pillarCategorySlugs: Record<Exclude<ViewMode, "tools" | "bundles">, string[]> = {
+  plugins: ["plugins-extensions"],
+  agents: ["agents-bots"],
+  models: ["models-apis", "local-open-source"],
+  workflows: ["prompts-workflows", "automation-agents"],
+};
+
+const separatedCategorySlugs = Object.values(pillarCategorySlugs).flat();
+
+const viewTabs: Array<{ mode: ViewMode; label: string }> = [
+  { mode: "tools", label: "Tools" },
+  { mode: "bundles", label: "Bundles" },
+  { mode: "plugins", label: "Plugins" },
+  { mode: "agents", label: "Agents" },
+  { mode: "models", label: "Modelle" },
+  { mode: "workflows", label: "Workflows" },
 ];
 
 function cx(...classes: Array<string | false | null | undefined>) {
@@ -50,6 +60,10 @@ function Info({ label, value }: { label: string; value: string }) {
   );
 }
 
+function getViewLabel(mode: ViewMode) {
+  return viewTabs.find((tab) => tab.mode === mode)?.label ?? "Tools";
+}
+
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>("tools");
   const [activeCategory, setActiveCategory] = useState("alle");
@@ -66,11 +80,17 @@ export default function Home() {
   }
 
   const visibleTools = useMemo(() => {
-    const sourceTools = isNewcomer
-      ? tools.filter((tool) => newcomerToolSlugs.includes(tool.slug))
-      : viewMode === "ecosystem"
-        ? tools.filter((tool) => ecosystemCategorySlugs.includes(tool.category))
-        : tools;
+    let sourceTools = tools;
+
+    if (isNewcomer) {
+      sourceTools = tools.filter((tool) => newcomerToolSlugs.includes(tool.slug));
+    } else if (viewMode === "bundles") {
+      sourceTools = [];
+    } else if (viewMode === "tools") {
+      sourceTools = tools.filter((tool) => !separatedCategorySlugs.includes(tool.category));
+    } else {
+      sourceTools = tools.filter((tool) => pillarCategorySlugs[viewMode].includes(tool.category));
+    }
 
     return sourceTools.filter((tool) => {
       const matchesCategory = isNewcomer || activeCategory === "alle" || tool.category === activeCategory;
@@ -92,7 +112,7 @@ export default function Home() {
   }, [activeCategory, isNewcomer, normalizedQuery, viewMode]);
 
   const visibleBundles = useMemo(() => {
-    if (isNewcomer) return [];
+    if (isNewcomer || viewMode !== "bundles") return [];
 
     return bundles.filter((bundle) => {
       const matchesCategory = activeCategory === "alle" || bundle.category === activeCategory;
@@ -115,7 +135,7 @@ export default function Home() {
 
       return matchesCategory && (!normalizedQuery || searchable.includes(normalizedQuery));
     });
-  }, [activeCategory, isNewcomer, normalizedQuery]);
+  }, [activeCategory, isNewcomer, normalizedQuery, viewMode]);
 
   const activeTool = visibleTools.find((tool) => tool.slug === activeToolSlug) ?? visibleTools[0] ?? null;
   const activeBundle =
@@ -209,44 +229,23 @@ export default function Home() {
       </section>
 
       <section className="mx-auto w-full max-w-[1540px] overflow-x-hidden px-4 pb-4 sm:px-6 xl:px-8">
-        <div className="mb-3 grid min-w-0 grid-cols-3 border border-black bg-black">
-          <button
-            type="button"
-            onClick={() => switchMode("tools")}
-            className={cx(
-              "category-button min-h-[62px] px-2 py-4 text-center text-[12px] font-black uppercase leading-[1.05] tracking-[0.16em] outline-none ring-0 shadow-none transition focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 sm:text-[13px]",
-              viewMode === "tools"
-                ? "category-button-active bg-white text-black outline-none ring-0 shadow-none"
-                : "bg-black text-white hover:bg-white/10"
-            )}
-          >
-            Tools
-          </button>
-          <button
-            type="button"
-            onClick={() => switchMode("bundles")}
-            className={cx(
-              "category-button min-h-[62px] border-l border-white/20 px-2 py-4 text-center text-[12px] font-black uppercase leading-[1.05] tracking-[0.16em] outline-none ring-0 shadow-none transition focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 sm:text-[13px]",
-              viewMode === "bundles"
-                ? "category-button-active bg-white text-black outline-none ring-0 shadow-none"
-                : "bg-black text-white hover:bg-white/10"
-            )}
-          >
-            Bundles
-          </button>
-          <button
-            type="button"
-            onClick={() => switchMode("ecosystem")}
-            className={cx(
-              "category-button min-h-[62px] border-l border-white/20 px-2 py-3 text-center text-[9px] font-black uppercase leading-[1.25] tracking-[0.1em] outline-none ring-0 shadow-none transition focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 sm:text-[11px] sm:tracking-[0.14em]",
-              viewMode === "ecosystem"
-                ? "category-button-active bg-white text-black outline-none ring-0 shadow-none"
-                : "bg-black text-white hover:bg-white/10"
-            )}
-          >
-            <span className="block">Plugins / Agents</span>
-            <span className="block">Modelle / Workflows</span>
-          </button>
+        <div className="mb-3 grid min-w-0 grid-cols-2 border border-black bg-black sm:grid-cols-3 lg:grid-cols-6">
+          {viewTabs.map((tab, index) => (
+            <button
+              key={tab.mode}
+              type="button"
+              onClick={() => switchMode(tab.mode)}
+              className={cx(
+                "category-button min-h-[58px] px-2 py-4 text-center text-[11px] font-black uppercase leading-[1.05] tracking-[0.13em] outline-none ring-0 shadow-none transition focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 sm:text-[12px] lg:text-[13px]",
+                index > 0 && "border-l border-white/20",
+                viewMode === tab.mode
+                  ? "category-button-active bg-white text-black outline-none ring-0 shadow-none"
+                  : "bg-black text-white hover:bg-white/10"
+              )}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
         <section className="grid min-w-0 gap-3 border-t border-black pt-4 lg:h-[calc(100vh-128px)] lg:grid-cols-[240px_minmax(0,0.94fr)_minmax(0,1.06fr)] xl:grid-cols-[260px_minmax(0,0.96fr)_minmax(0,1.04fr)]">
@@ -285,15 +284,7 @@ export default function Home() {
             )}
           >
             <div className="flex shrink-0 items-center justify-between border-b border-black/10 p-3 sm:p-4">
-              <ColumnLabel>
-                {isNewcomer
-                  ? "Newcomer"
-                  : viewMode === "bundles"
-                    ? "Bundles"
-                    : viewMode === "ecosystem"
-                      ? "Plugins / Agents / Modelle / Workflows"
-                      : "Tools"}
-              </ColumnLabel>
+              <ColumnLabel>{isNewcomer ? "Newcomer" : getViewLabel(viewMode)}</ColumnLabel>
               <span className="text-[10px] font-medium uppercase tracking-[0.24em] text-black">
                 {resultCount}
               </span>
