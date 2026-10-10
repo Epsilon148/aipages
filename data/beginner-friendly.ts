@@ -21,4 +21,11 @@ export const beginnerFriendlyToolSlugs = [
   "bolt",
   "lovable",
   "v0",
+  "shopify-magic",
+  "hubspot-ai",
+  "fireflies-ai",
+  "tldv",
+  "granola",
+  "mistral-le-chat",
+  "mem",
 ] as const;
