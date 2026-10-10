@@ -1,4 +1,4 @@
-export const newcomerToolSlugs = [
+export const newcomerToolSlugs: string[] = [
   "shopify-magic",
   "intercom-fin",
   "hubspot-ai",
@@ -11,4 +11,4 @@ export const newcomerToolSlugs = [
   "suno",
   "luma-ai",
   "ideogram",
-] as const;
+];
