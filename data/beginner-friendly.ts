@@ -1,4 +1,4 @@
-export const beginnerFriendlyToolSlugs = [
+export const beginnerFriendlyToolSlugs: string[] = [
   "chatgpt",
   "perplexity",
   "google-gemini",
@@ -28,4 +28,4 @@ export const beginnerFriendlyToolSlugs = [
   "granola",
   "mistral-le-chat",
   "mem",
-] as const;
+];
